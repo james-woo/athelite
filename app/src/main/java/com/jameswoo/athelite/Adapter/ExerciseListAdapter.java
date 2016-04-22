@@ -46,9 +46,15 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
         ArrayList<ExerciseSet> exerciseSetList = _exerciseList.get(position).getExerciseSets();
         final Exercise exercise = _exerciseList.get(position);
-        String exerciseSets = "";
+        //String exerciseSets = "";
+        StringBuilder exerciseSets = new StringBuilder();
         for(ExerciseSet es : exerciseSetList) {
-            exerciseSets = exerciseSets + "Set " + es.toString() + "\n";
+            exerciseSets.append(
+                    String.format(
+                            "Set %-20s %s lb %20s reps\n",
+                            es.getSetNumber(), es.getSetWeight(), es.getSetReps()
+                    )
+            );
         }
 
         workoutPlanExerciseName.setText(_exerciseList.get(position).getExerciseName());

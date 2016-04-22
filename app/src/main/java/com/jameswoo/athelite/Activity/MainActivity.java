@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
     private DBHandler _db;
 
+    private final int[] ICONS = new int[]{
+            R.drawable.home,
+            R.drawable.workout,
+            R.drawable.calendar
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setFAB();
         setViewPager();
+        setupTabIcons();
 
         _db = new DBHandler(this);
         _db.deleteDatabase();
@@ -84,6 +91,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setupTabIcons() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        for (int i=0; i < tabLayout.getTabCount(); i++)
+        {
+            tabLayout.getTabAt(i).setIcon(ICONS[i]);
+        }
     }
 
     public void setViewPager() {
