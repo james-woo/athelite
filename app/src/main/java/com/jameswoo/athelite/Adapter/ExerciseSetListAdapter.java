@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jameswoo.athelite.Model.ExerciseSet;
@@ -29,8 +30,8 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
         }
 
         TextView setNumber = (TextView) convertView.findViewById(R.id.set_number);
-        TextView setWeight = (TextView) convertView.findViewById(R.id.set_weight);
-        TextView setReps = (TextView) convertView.findViewById(R.id.set_reps);
+        EditText setWeight = (EditText) convertView.findViewById(R.id.set_weight);
+        EditText setReps = (EditText) convertView.findViewById(R.id.set_reps);
 
         setNumber.setText(String.valueOf(_exerciseSetList.get(position).getSetNumber()));
         setWeight.setText(String.valueOf(_exerciseSetList.get(position).getSetWeight()));

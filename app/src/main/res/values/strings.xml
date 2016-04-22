@@ -10,4 +10,7 @@
 
     <string name="back_to_exercises_page">Exercises</string>
     <string name="new_exercise">New Exercise</string>
+    <string name="reps">reps</string>
+    <string name="lb">lb</string>
+    <string name="set">Set</string>
 </resources>
