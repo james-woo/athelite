@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Athelite</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_delete_db">Delete Database</string>
+    <string name="title_activity_view_workout">ViewWorkout</string>
+
+    <string name="back_to_workout_page">Workouts</string>
+    <string name="new_workout">New Workout</string>
+    <string name="title_activity_view_exercise">ViewExercise</string>
+
+    <string name="back_to_exercises_page">Exercises</string>
+    <string name="new_exercise">New Exercise</string>
+</resources>
