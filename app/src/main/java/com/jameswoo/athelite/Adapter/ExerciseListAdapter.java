@@ -46,7 +46,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
         ArrayList<ExerciseSet> exerciseSetList = _exerciseList.get(position).getExerciseSets();
         final Exercise exercise = _exerciseList.get(position);
-        //String exerciseSets = "";
+
         StringBuilder exerciseSets = new StringBuilder();
         for(ExerciseSet es : exerciseSetList) {
             exerciseSets.append(

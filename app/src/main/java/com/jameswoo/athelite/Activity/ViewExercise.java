@@ -84,6 +84,8 @@ public class ViewExercise extends AppCompatActivity {
         } else {
             _exerciseName.setText(R.string.new_exercise);
         }
+
+        System.out.println(_exercise.getId());
     }
 
     private void addExerciseSet() {

@@ -38,6 +38,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String CREATE_EXERCISE_TABLE =
             "CREATE TABLE " + DBContract.ExerciseTable.TABLE_NAME + "(" +
                     DBContract.ExerciseTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
+                    DBContract.ExerciseTable.COLUMN_WORKOUTPLAN_ID + " INTEGER," +
                     DBContract.ExerciseTable.COLUMN_NAME + " TEXT," +
                     DBContract.ExerciseTable.COLUMN_EXERCISES_SETS + " TEXT"+ ")";
 
@@ -160,7 +161,7 @@ public class DBHandler extends SQLiteOpenHelper {
         WorkoutPlan newWorkout = new WorkoutPlan.Builder("New Workout")
                 .exercise(createExercise())
                 .build();
-
+        //TODO: Updated exercises to contain workoutId's, need to make sure that all functions update the workoutId in exercise
         long id = addWorkoutPlan(newWorkout);
 
         newWorkout.setId(id);
@@ -325,7 +326,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(eCursor.moveToFirst()) {
             exerciseSets = eCursor.getString(2) + exerciseSet.toString() + ",";
-            System.out.println("db: " + exerciseSets);
         }
 
         ContentValues values = new ContentValues();
@@ -337,14 +337,30 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void updateExercise(Exercise exercise, ArrayList<ExerciseSet> exerciseSetList) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        String wQuery = "SELECT * FROM " + DBContract.WorkoutPlanTable.TABLE_NAME +
+                " WHERE " + DBContract.WorkoutPlanTable.COLUMN_ID + " =  \"" + exercise.getWorkoutPlanId() + "\"";
+        Cursor wCursor = db.rawQuery(wQuery, null);
+
+        String exercises = "";
+
+        if(wCursor.moveToFirst()) {
+            exercises = wCursor.getString(2) + exercises + ",";
+        }
+
         ContentValues values = new ContentValues();
+        ContentValues wValues = new ContentValues();
 
         values.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, TextUtils.join(", ", exerciseSetList));
         values.put(DBContract.ExerciseTable.COLUMN_NAME, exercise.getExerciseName());
 
+        wValues.put(DBContract.WorkoutPlanTable.COLUMN_EXERCISES, exercises);
+
+        String whereClauseWorkoutTable = DBContract.WorkoutPlanTable.COLUMN_ID + " = ?";
         String whereClauseExerciseTable = DBContract.ExerciseTable.COLUMN_ID + " =  ?";
 
         db.update(DBContract.ExerciseTable.TABLE_NAME, values, whereClauseExerciseTable, new String[] { String.valueOf(exercise.getId()) });
+        db.update(DBContract.WorkoutPlanTable.TABLE_NAME, wValues, whereClauseWorkoutTable, new String[] { String.valueOf(exercise.getWorkoutPlanId()) });
 
         db.close();
     }

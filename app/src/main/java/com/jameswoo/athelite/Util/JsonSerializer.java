@@ -84,7 +84,7 @@ public class JsonSerializer {
         try {
             JSONObject workoutPlan = new JSONObject(data);
             return new WorkoutPlan.Builder(workoutPlan.getString("workoutPlanName"))
-                        .workoutPlanId(workoutPlan.getInt("workoutPlanId"))
+                        .workoutPlanId(workoutPlan.getLong("workoutPlanId"))
                         .exercises(getExercisesFromJson(data))
                         .build();
         } catch(JSONException ex) {
@@ -101,6 +101,7 @@ public class JsonSerializer {
             for(int i = 0; i < exerciseArray.length(); i++) {
                 JSONObject exerciseJson = exerciseArray.getJSONObject(i);
                 Exercise exercise = new Exercise.Builder(exerciseJson.getString("exerciseName"))
+                                        .exerciseId(exerciseJson.getLong("exerciseId"))
                                         .exerciseSets(getSetFromJson(exerciseJson.toString()))
                                         .build();
                 exercises.add(exercise);
@@ -116,7 +117,7 @@ public class JsonSerializer {
         try {
             JSONObject exerciseJson = new JSONObject(data);
             return new Exercise.Builder(exerciseJson.getString("exerciseName"))
-                    .exerciseId(exerciseJson.getInt("exerciseId"))
+                    .exerciseId(exerciseJson.getLong("exerciseId"))
                     .exerciseSets(getSetFromJson(exerciseJson.toString()))
                     .build();
         } catch (JSONException ex) {

@@ -97,8 +97,9 @@ public class ViewWorkout extends AppCompatActivity {
                                     .exerciseSet(exerciseSet2)
                                     .exerciseSet(exerciseSet3)
                                     .build();
+        long newExerciseId = _db.addExercise(newExercise);
+        newExercise.setId(newExerciseId);
         _workoutExerciseList.add(newExercise);
-        _db.addExercise(newExercise);
         _adapter.notifyDataSetChanged();
     }
 
