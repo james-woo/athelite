@@ -76,8 +76,6 @@ public class ViewExercise extends AppCompatActivity {
         Intent intent = getIntent();
         _workoutPlanExerciseJson = intent.getStringExtra(ExerciseListAdapter.WORKOUT_EXERCISE);
 
-        System.out.println(_workoutPlanExerciseJson);
-
         _exercise = JsonSerializer.getExerciseFromJson(_workoutPlanExerciseJson);
 
         _exerciseName = (EditText) findViewById(R.id.edit_exercise_name);
@@ -91,14 +89,14 @@ public class ViewExercise extends AppCompatActivity {
     private void addExerciseSet() {
         ExerciseSet newSet = new ExerciseSet(_workoutExerciseSetList.size() + 1, 0, 0);
         _workoutExerciseSetList.add(newSet);
-        //_db.addExerciseSet(newSet);
+        _db.addExerciseSetToExercise(_exercise, newSet);
         _adapter.notifyDataSetChanged();
     }
 
     public void updateExercise() {
         _exercise.setExerciseName(_exerciseName.getText().toString());
 
-        //_db.updateExercise(_exercise, _workoutExerciseSetList);
+        _db.updateExercise(_exercise, _workoutExerciseSetList);
     }
 
     @Override

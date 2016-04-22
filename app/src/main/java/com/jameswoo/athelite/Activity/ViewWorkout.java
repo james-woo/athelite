@@ -109,6 +109,14 @@ public class ViewWorkout extends AppCompatActivity {
     }
 
     @Override
+    public void onRestart() {
+        super.onRestart();
+        ArrayList<Exercise> e = _db.getExercisesForWorkoutPlan(_workoutPlan);
+        _adapter.updateExerciseList(e);
+        _adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
         updateWorkoutPlan();

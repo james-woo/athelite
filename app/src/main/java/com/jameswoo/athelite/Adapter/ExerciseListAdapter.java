@@ -58,12 +58,15 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, ViewExercise.class);
-                System.out.println(exercise.getId());
                 intent.putExtra(WORKOUT_EXERCISE, JsonSerializer.workoutPlanExerciseToJson(exercise));
                 _context.startActivity(intent);
             }
         });
 
         return convertView;
+    }
+
+    public void updateExerciseList(ArrayList<Exercise> exercises) {
+        _exerciseList = exercises;
     }
 }

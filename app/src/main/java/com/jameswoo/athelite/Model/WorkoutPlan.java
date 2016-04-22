@@ -37,7 +37,7 @@ public class WorkoutPlan {
     }
 
     public static class Builder {
-        private int bId;
+        private long bId;
         private String bWorkoutPlanName;
         private ArrayList<Exercise> bExercises = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class WorkoutPlan {
             this.bWorkoutPlanName = name;
         }
 
-        public Builder workoutPlanId(int id) {
+        public Builder workoutPlanId(long id) {
             this.bId = id;
             return this;
         }
