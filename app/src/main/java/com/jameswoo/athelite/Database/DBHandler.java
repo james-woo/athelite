@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.ExerciseSet;
@@ -24,7 +25,7 @@ import java.util.List;
 public class DBHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Database Name
     private static final String DATABASE_NAME = "athelite";
@@ -32,15 +33,19 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String CREATE_WORKOUTPLANS_TABLE =
             "CREATE TABLE " + DBContract.WorkoutPlanTable.TABLE_NAME + "(" +
                     DBContract.WorkoutPlanTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
-                    DBContract.WorkoutPlanTable.COLUMN_NAME + " TEXT," +
-                    DBContract.WorkoutPlanTable.COLUMN_EXERCISES + " TEXT" + ")";
+                    DBContract.WorkoutPlanTable.COLUMN_NAME + " TEXT" + ")";
 
     private static final String CREATE_EXERCISE_TABLE =
             "CREATE TABLE " + DBContract.ExerciseTable.TABLE_NAME + "(" +
                     DBContract.ExerciseTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
-                    DBContract.ExerciseTable.COLUMN_WORKOUTPLAN_ID + " INTEGER," +
                     DBContract.ExerciseTable.COLUMN_NAME + " TEXT," +
                     DBContract.ExerciseTable.COLUMN_EXERCISES_SETS + " TEXT"+ ")";
+
+    private static final String CREATE_WORKOUT_EXERCISE_TABLE =
+            "CREATE TABLE " + DBContract.WorkoutExerciseTable.TABLE_NAME + "(" +
+                    DBContract.WorkoutExerciseTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
+                    DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID + " INTEGER," +
+                    DBContract.WorkoutExerciseTable.COLUMN_EXERCISE_ID + " INTEGER"+ ")";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -50,12 +55,14 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_WORKOUTPLANS_TABLE);
         db.execSQL(CREATE_EXERCISE_TABLE);
+        db.execSQL(CREATE_WORKOUT_EXERCISE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutPlanTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
         onCreate(db);
     }
 
@@ -63,71 +70,72 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutPlanTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
         onCreate(db);
+    }
+
+    /*****************************************WORKOUT**********************************************/
+
+    public WorkoutPlan createWorkoutPlan() {
+        WorkoutPlan newWorkout = new WorkoutPlan.Builder("New Workout")
+                .build();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DBContract.WorkoutPlanTable.COLUMN_NAME, newWorkout.getWorkoutPlanName());
+
+        long id = db.insert(DBContract.WorkoutPlanTable.TABLE_NAME, null, values);
+        newWorkout.setId(id);
+
+        Exercise newExercise = createExerciseForWorkoutPlan(id);
+        newWorkout.addExercise(newExercise);
+
+        db.close();
+        return newWorkout;
     }
 
     public ArrayList<WorkoutPlan> getWorkoutPlans() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String eQuery = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME;
-        Cursor eCursor = db.rawQuery(eQuery, null);
-
-        //ArrayList<Exercise> exerciseList = new ArrayList<>();
-        ArrayMap<String, ArrayList<ExerciseSet>> exerciseExerciseSetArrayMap = new ArrayMap<>();
-
-        if(eCursor.moveToFirst()) {
-            do {
-                int exerciseId = Integer.parseInt(eCursor.getString(0));
-                String exerciseName = eCursor.getString(1);
-                ArrayList<ExerciseSet> exerciseSetList = new ArrayList<>();
-                String[] exerciseSets = (eCursor.getString(2).replaceAll("\\[|\\]", "")).split(",");
-
-                for (int i = 0; i < exerciseSets.length; i++) {
-                    String[] set = exerciseSets[i].replaceAll("^\\s+", "").split("\\s+");
-                    ExerciseSet exerciseSet = new ExerciseSet(
-                            Integer.parseInt(set[0]),
-                            Double.parseDouble(set[1]),
-                            Integer.parseInt(set[2]));
-                    exerciseSetList.add(exerciseSet);
-                }
-
-                Exercise exercise = new Exercise.Builder(exerciseName)
-                        .exerciseId(exerciseId)
-                        .exerciseSets(exerciseSetList)
-                        .build();
-
-                //exerciseList.add(exercise);
-                exerciseExerciseSetArrayMap.put(exercise.getExerciseName(), exerciseSetList);
-
-            } while(eCursor.moveToNext());
-        }
-
-        eCursor.close();
+        ArrayList<WorkoutPlan> workoutPlans = new ArrayList<>();
+        ArrayList<Exercise> exerciseList;
 
         String query = "SELECT * FROM " + DBContract.WorkoutPlanTable.TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
 
-        ArrayList<WorkoutPlan> workoutPlans = new ArrayList<>();
-        ArrayList<Exercise> workoutPlanExercises = new ArrayList<>();
-
         if(cursor.moveToFirst()) {
             do {
-                int workoutPlanId = Integer.parseInt(cursor.getString(0));
-                List<String> exercises = Arrays.asList(cursor.getString(2).split("\\s*,\\s*"));
+                int workoutPlanId = cursor.getInt(0);
 
-                for(String e : exercises) {
-                    Exercise exercise = new Exercise.Builder(e)
-                            .exerciseSets(exerciseExerciseSetArrayMap.get(e))
+                query = "SELECT * " +
+                        " FROM " + DBContract.WorkoutExerciseTable.TABLE_NAME +
+                        " WHERE " + DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID + " =  \"" + workoutPlanId + "\"";
+
+                Cursor wCursor = db.rawQuery(query, null);
+
+                if(wCursor.moveToFirst()) {
+                    exerciseList = new ArrayList<>();
+                    do {
+                        int exerciseId = wCursor.getInt(2);
+
+                        Exercise exercise = readExerciseWithId(db, exerciseId);
+                        try {
+                            exerciseList.add(exercise);
+                        } catch(NullPointerException e) {
+                            Log.e("DBHandler", "getExercisesForWorkoutPlan: ", e);
+                        }
+
+                    } while(wCursor.moveToNext());
+
+                    WorkoutPlan workoutPlan = new WorkoutPlan.Builder(cursor.getString(1))
+                            .workoutPlanId(workoutPlanId)
+                            .exercises(exerciseList)
                             .build();
-                    workoutPlanExercises.add(exercise);
+                    workoutPlans.add(workoutPlan);
                 }
-
-                WorkoutPlan workoutPlan = new WorkoutPlan.Builder(cursor.getString(1))
-                                                .workoutPlanId(workoutPlanId)
-                                                .exercises(workoutPlanExercises)
-                                                .build();
-                workoutPlans.add(workoutPlan);
-            } while(cursor.moveToNext());
+                wCursor.close();
+            } while (cursor.moveToNext());
         }
 
         cursor.close();
@@ -135,92 +143,43 @@ public class DBHandler extends SQLiteOpenHelper {
         return workoutPlans;
     }
 
-    public long addWorkoutPlan(WorkoutPlan workoutPlan) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        ContentValues eValues = new ContentValues();
-
-        values.put(DBContract.WorkoutPlanTable.COLUMN_NAME, workoutPlan.getWorkoutPlanName());
-
-        ArrayList<Exercise> exerciseList = workoutPlan.getWorkoutPlanExercises();
-        String exercises = "";
-        for(Exercise e : exerciseList) {
-            exercises += e.getExerciseName() + ",";
-            eValues.put(DBContract.ExerciseTable.COLUMN_NAME, e.getExerciseName());
-            eValues.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, e.getExerciseSets().toString());
-            db.insert(DBContract.ExerciseTable.TABLE_NAME, null, eValues);
-            eValues.clear();
-        }
-        values.put(DBContract.WorkoutPlanTable.COLUMN_EXERCISES, exercises);
-        long id = db.insert(DBContract.WorkoutPlanTable.TABLE_NAME, null, values);
-        db.close();
-        return id;
-    }
-
-    public WorkoutPlan createWorkoutPlan() {
-        WorkoutPlan newWorkout = new WorkoutPlan.Builder("New Workout")
-                .exercise(createExercise())
-                .build();
-        //TODO: Updated exercises to contain workoutId's, need to make sure that all functions update the workoutId in exercise
-        long id = addWorkoutPlan(newWorkout);
-
-        newWorkout.setId(id);
-
-        return newWorkout;
-    }
-
     public void updateWorkoutPlan(WorkoutPlan workoutPlan, ArrayList<Exercise> exerciseList) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        ContentValues eValues = new ContentValues();
 
-        values.put(DBContract.WorkoutPlanTable.COLUMN_EXERCISES, TextUtils.join(", ", exerciseList));
+        String WhereClauseWorkoutExerciseTable = DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID + " = ?";
+
+        String query = "SELECT * FROM " + DBContract.WorkoutExerciseTable.TABLE_NAME +
+                        " WHERE " + DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID + " =  \"" + workoutPlan.getId() + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                db.delete(DBContract.WorkoutExerciseTable.TABLE_NAME,
+                        WhereClauseWorkoutExerciseTable,
+                        new String[] { String.valueOf(workoutPlan.getId()) });
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+
         values.put(DBContract.WorkoutPlanTable.COLUMN_NAME, workoutPlan.getWorkoutPlanName());
 
         String whereClauseWorkoutTable = DBContract.WorkoutPlanTable.COLUMN_ID + " =  ?";
         String whereClauseExerciseTable = DBContract.ExerciseTable.COLUMN_ID + " =  ?";
 
-        for(Exercise e : exerciseList) {
-            eValues.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, e.getExerciseSets().toString());
-            db.update(DBContract.ExerciseTable.TABLE_NAME, eValues, whereClauseExerciseTable, new String[] { String.valueOf(e.getId()) });
-            eValues.clear();
-        }
-
         db.update(DBContract.WorkoutPlanTable.TABLE_NAME, values, whereClauseWorkoutTable, new String[] { String.valueOf(workoutPlan.getId()) });
-        db.close();
-    }
 
-    public WorkoutPlan findWorkoutPlan(long workoutPlanId) {
-        String query = "SELECT * FROM " + DBContract.WorkoutPlanTable.TABLE_NAME +
-                        " WHERE " + DBContract.WorkoutPlanTable.COLUMN_ID + " =  \"" + workoutPlanId + "\"";
+        for(Exercise e : exerciseList) {
+            values.clear();
+            values.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, e.getExerciseSets().toString());
+            db.update(DBContract.ExerciseTable.TABLE_NAME, values, whereClauseExerciseTable, new String[] { String.valueOf(e.getId()) });
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        WorkoutPlan workoutPlan;
-
-        if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
-
-            ArrayList<Exercise> exerciseList = new ArrayList<>();
-
-            List<String> exercises = Arrays.asList(cursor.getString(2).split("\\s*,\\s*"));
-            for(String e : exercises) {
-                Exercise exercise = new Exercise.Builder(e).build();
-                exerciseList.add(exercise);
-            }
-
-            workoutPlan = new WorkoutPlan.Builder(cursor.getString(1))
-                    .workoutPlanId(workoutPlanId)
-                    .exercises(exerciseList)
-                    .build();
-
-            cursor.close();
-        } else {
-            workoutPlan = null;
+            values.clear();
+            values.put(DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID, workoutPlan.getId());
+            values.put(DBContract.WorkoutExerciseTable.COLUMN_EXERCISE_ID, e.getId());
+            db.insert(DBContract.WorkoutExerciseTable.TABLE_NAME, null, values);
         }
-
         db.close();
-        return workoutPlan;
     }
 
     public boolean deleteWorkoutPlan(String workoutPlanName) {
@@ -247,122 +206,140 @@ public class DBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public ArrayList<Exercise> getExercisesForWorkoutPlan(WorkoutPlan workoutPlan) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    /****************************************EXERCISE**********************************************/
 
-        ArrayList<Exercise> exerciseList = new ArrayList<>();
-
-        for(Exercise e : workoutPlan.getWorkoutPlanExercises()) {
-            String eQuery = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
-                    " WHERE " + DBContract.ExerciseTable.COLUMN_NAME + " =  \"" + e.getExerciseName() + "\"";
-            Cursor eCursor = db.rawQuery(eQuery, null);
-
-            if(eCursor.moveToFirst()) {
-                String[] exerciseSets = (eCursor.getString(2).replaceAll("\\[|\\]", "")).split(",");
-                ArrayList<ExerciseSet> exerciseSetList = new ArrayList<>();
-                for (String es : exerciseSets) {
-                    String[] set = es.replaceAll("^\\s+", "").split("\\s+");
-                    ExerciseSet exerciseSet = new ExerciseSet(
-                            Integer.parseInt(set[0]),
-                            Double.parseDouble(set[1]),
-                            Integer.parseInt(set[2]));
-                    exerciseSetList.add(exerciseSet);
-                }
-
-                Exercise exercise = new Exercise.Builder(eCursor.getString(1))
-                        .exerciseId(e.getId())
-                        .exerciseSets(exerciseSetList)
-                        .build();
-
-                exerciseList.add(exercise);
-            }
-        }
-
-        return exerciseList;
-    }
-
-    public long addExercise(Exercise exercise) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(DBContract.ExerciseTable.COLUMN_NAME, exercise.getExerciseName());
-
-        String exerciseSets = "";
-        for(ExerciseSet es : exercise.getExerciseSets()) {
-            exerciseSets += es.toString() + ",";
-        }
-
-        values.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, exerciseSets);
-        long id = db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
-        db.close();
-        return id;
-    }
-
-    public Exercise createExercise() {
+    public Exercise createExerciseForWorkoutPlan(long workoutPlanId) {
         ExerciseSet exerciseSet1 = new ExerciseSet(1, 0, 0);
         ExerciseSet exerciseSet2 = new ExerciseSet(2, 0, 0);
         ExerciseSet exerciseSet3 = new ExerciseSet(3, 0, 0);
-        Exercise newExercise = new Exercise.Builder("Tap to edit")
+        Exercise newExercise = new Exercise.Builder("New Exercise")
                 .exerciseSet(exerciseSet1)
                 .exerciseSet(exerciseSet2)
                 .exerciseSet(exerciseSet3)
                 .build();
 
-        long id = addExercise(newExercise);
+        String exerciseSets = "";
+        for(ExerciseSet es : newExercise.getExerciseSets()) {
+            exerciseSets += es.toString() + ",";
+        }
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DBContract.ExerciseTable.COLUMN_NAME, newExercise.getExerciseName());
+        values.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, exerciseSets);
+        long id = db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
         newExercise.setId(id);
 
+        values.clear();
+
+        values.put(DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID, workoutPlanId);
+        values.put(DBContract.WorkoutExerciseTable.COLUMN_EXERCISE_ID, id);
+        db.insert(DBContract.WorkoutExerciseTable.TABLE_NAME, null, values);
+
+        db.close();
         return newExercise;
     }
 
-    public void addExerciseSetToExercise(Exercise exercise, ExerciseSet exerciseSet) {
+    public ArrayList<Exercise> getExercisesForWorkoutPlan(WorkoutPlan workoutPlan) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String eQuery = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
-                " WHERE " + DBContract.ExerciseTable.COLUMN_NAME + " =  \"" + exercise.getExerciseName() + "\"";
-        Cursor eCursor = db.rawQuery(eQuery, null);
+        ArrayList<Exercise> exerciseList = new ArrayList<>();
 
-        String exerciseSets = "";
+        String query = "SELECT * FROM " + DBContract.WorkoutExerciseTable.TABLE_NAME +
+                        " WHERE " + DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID + " =  \"" + workoutPlan.getId() + "\"";
+        Cursor cursor = db.rawQuery(query, null);
 
-        if(eCursor.moveToFirst()) {
-            exerciseSets = eCursor.getString(2) + exerciseSet.toString() + ",";
+        if(cursor.moveToFirst()) {
+            do {
+                int exerciseId = cursor.getInt(2);
+
+                Exercise exercise = readExerciseWithId(db, exerciseId);
+                try {
+                    exerciseList.add(exercise);
+                } catch(NullPointerException e) {
+                    Log.e("DBHandler", "getExercisesForWorkoutPlan: ", e);
+                }
+
+            } while(cursor.moveToNext());
         }
+        cursor.close();
+        return exerciseList;
+    }
 
-        ContentValues values = new ContentValues();
-        values.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, exerciseSets);
-        String whereClauseExerciseTable = DBContract.ExerciseTable.COLUMN_NAME + " =  ?";
+    private Exercise readExerciseWithId(SQLiteDatabase db, int exerciseId) {
+        String query;
+        query = "SELECT * " +
+                " FROM " + DBContract.ExerciseTable.TABLE_NAME +
+                " WHERE " + DBContract.ExerciseTable.COLUMN_ID + " =  \"" + exerciseId + "\"";
 
-        db.update(DBContract.ExerciseTable.TABLE_NAME, values, whereClauseExerciseTable, new String[] { String.valueOf(exercise.getExerciseName()) });
+
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) {
+            String exerciseName = cursor.getString(1);
+            String exerciseSets = cursor.getString(2);
+
+            Exercise exercise = new Exercise.Builder(exerciseName)
+                    .exerciseId(exerciseId)
+                    .exerciseSets(convertToExerciseSetList(exerciseSets))
+                    .build();
+            cursor.close();
+            return exercise;
+
+        }
+        cursor.close();
+        return null;
     }
 
     public void updateExercise(Exercise exercise, ArrayList<ExerciseSet> exerciseSetList) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String wQuery = "SELECT * FROM " + DBContract.WorkoutPlanTable.TABLE_NAME +
-                " WHERE " + DBContract.WorkoutPlanTable.COLUMN_ID + " =  \"" + exercise.getWorkoutPlanId() + "\"";
-        Cursor wCursor = db.rawQuery(wQuery, null);
-
-        String exercises = "";
-
-        if(wCursor.moveToFirst()) {
-            exercises = wCursor.getString(2) + exercises + ",";
-        }
-
         ContentValues values = new ContentValues();
-        ContentValues wValues = new ContentValues();
 
-        values.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, TextUtils.join(", ", exerciseSetList));
+        values.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, TextUtils.join(",", exerciseSetList));
         values.put(DBContract.ExerciseTable.COLUMN_NAME, exercise.getExerciseName());
 
-        wValues.put(DBContract.WorkoutPlanTable.COLUMN_EXERCISES, exercises);
-
-        String whereClauseWorkoutTable = DBContract.WorkoutPlanTable.COLUMN_ID + " = ?";
         String whereClauseExerciseTable = DBContract.ExerciseTable.COLUMN_ID + " =  ?";
 
         db.update(DBContract.ExerciseTable.TABLE_NAME, values, whereClauseExerciseTable, new String[] { String.valueOf(exercise.getId()) });
-        db.update(DBContract.WorkoutPlanTable.TABLE_NAME, wValues, whereClauseWorkoutTable, new String[] { String.valueOf(exercise.getWorkoutPlanId()) });
 
         db.close();
+    }
+
+    /***************************************EXERCISESET********************************************/
+
+    public void createExerciseSetForExercise(Exercise exercise, ExerciseSet exerciseSet) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
+                " WHERE " + DBContract.ExerciseTable.COLUMN_ID + " =  \"" + exercise.getId() + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        String exerciseSets = "";
+        if(cursor.moveToFirst()) {
+            exerciseSets = cursor.getString(2) + exerciseSet.toString() + ",";
+        }
+        cursor.close();
+
+        ContentValues values = new ContentValues();
+        values.put(DBContract.ExerciseTable.COLUMN_EXERCISES_SETS, exerciseSets);
+        String whereClauseExerciseTable = DBContract.ExerciseTable.COLUMN_ID + " =  ?";
+
+        db.update(DBContract.ExerciseTable.TABLE_NAME, values, whereClauseExerciseTable, new String[] { String.valueOf(exercise.getId()) });
+    }
+
+    private ArrayList<ExerciseSet> convertToExerciseSetList(String exerciseSets) {
+        String[] exerciseSetArray = exerciseSets.replaceAll("\\[|\\]", "").split(",");
+
+        ArrayList<ExerciseSet> exerciseSetList = new ArrayList<>();
+
+        for (String es : exerciseSetArray) {
+            String[] set = es.replaceAll("^\\s+", "").split("\\s+");
+            ExerciseSet exerciseSet = new ExerciseSet(
+                    Integer.parseInt(set[0]),
+                    Double.parseDouble(set[1]),
+                    Integer.parseInt(set[2]));
+            exerciseSetList.add(exerciseSet);
+        }
+        return exerciseSetList;
     }
 
 }

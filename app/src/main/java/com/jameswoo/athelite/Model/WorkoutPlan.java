@@ -36,6 +36,14 @@ public class WorkoutPlan {
         _id = id;
     }
 
+    public void addExercise(Exercise exercise) {
+        _exercises.add(exercise);
+    }
+
+    public void setExercises(ArrayList<Exercise> exercises) {
+        _exercises = exercises;
+    }
+
     public static class Builder {
         private long bId;
         private String bWorkoutPlanName;

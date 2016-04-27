@@ -5,19 +5,13 @@ import java.util.ArrayList;
 public class Exercise {
 
     private long _id;
-    private long _workoutPlanId;
     private String _exerciseName;
     private ArrayList<ExerciseSet> _exerciseSets = new ArrayList<>();
 
     private Exercise(Builder builder) {
         _id = builder.bId;
-        _workoutPlanId = builder.bWorkoutPlanId;
         _exerciseName = builder.bExerciseName;
         _exerciseSets = builder.bExerciseSets;
-    }
-
-    public long getWorkoutPlanId() {
-        return _workoutPlanId;
     }
 
     public String getExerciseName() {

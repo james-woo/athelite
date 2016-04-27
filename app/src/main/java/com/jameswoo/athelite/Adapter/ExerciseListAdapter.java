@@ -3,13 +3,10 @@ package com.jameswoo.athelite.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jameswoo.athelite.Activity.ViewExercise;
@@ -48,13 +45,18 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         final Exercise exercise = _exerciseList.get(position);
 
         StringBuilder exerciseSets = new StringBuilder();
+        double setWidth = 20 * 0.3 * -1;
+        double weightWidth = 20 * 0.3;
         for(ExerciseSet es : exerciseSetList) {
-            exerciseSets.append(
-                    String.format(
-                            "Set %-20s %s lb %20s reps\n",
-                            es.getSetNumber(), es.getSetWeight(), es.getSetReps()
-                    )
-            );
+
+            exerciseSets.append("Set ")
+                        .append(es.getSetNumber())
+                        .append(String.format("%" + setWidth + "s", " "))
+                        .append(es.getSetWeight())
+                        .append(" lb")
+                        .append(String.format("%" + weightWidth + "s", " "))
+                        .append(es.getSetReps())
+                        .append(" reps\n");
         }
 
         workoutPlanExerciseName.setText(_exerciseList.get(position).getExerciseName());

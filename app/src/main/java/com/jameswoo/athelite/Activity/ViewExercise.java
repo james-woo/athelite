@@ -91,7 +91,7 @@ public class ViewExercise extends AppCompatActivity {
     private void addExerciseSet() {
         ExerciseSet newSet = new ExerciseSet(_workoutExerciseSetList.size() + 1, 0, 0);
         _workoutExerciseSetList.add(newSet);
-        _db.addExerciseSetToExercise(_exercise, newSet);
+        _db.createExerciseSetForExercise(_exercise, newSet);
         _adapter.notifyDataSetChanged();
     }
 
