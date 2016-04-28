@@ -89,16 +89,20 @@ public class ViewExercise extends AppCompatActivity {
     }
 
     private void addExerciseSet() {
-        ExerciseSet newSet = new ExerciseSet(_workoutExerciseSetList.size() + 1, 0, 0);
+        ExerciseSet newSet = _db.createExerciseSetForExercise(_exercise.getId(),
+                new ExerciseSet(getNextSetNumber(), 0, "lb", 0));
         _workoutExerciseSetList.add(newSet);
-        _db.createExerciseSetForExercise(_exercise, newSet);
         _adapter.notifyDataSetChanged();
+    }
+
+    private int getNextSetNumber() {
+        return _workoutExerciseSetList.size() + 1;
     }
 
     public void updateExercise() {
         _exercise.setExerciseName(_exerciseName.getText().toString());
 
-        _db.updateExercise(_exercise, _workoutExerciseSetList);
+        _db.updateExercise(_exercise);
     }
 
     @Override

@@ -30,4 +30,14 @@ public final class DBContract {
         public static final String COLUMN_WORKOUT_ID = "workoutId";
         public static final String COLUMN_EXERCISE_ID = "exerciseId";
     }
+
+    public static abstract class ExerciseSetTable implements BaseColumns {
+        public static final String TABLE_NAME = "exerciseSets";
+        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_SET_NUMBER = "setNumber";
+        public static final String COLUMN_WEIGHT = "setWeight";
+        public static final String COLUMN_WEIGHT_TYPE = "lb";
+        public static final String COLUMN_REPS = "setReps";
+        public static final String COLUMN_WORKOUT_EXERCISE_ID = "workoutExerciseId";
+    }
 }

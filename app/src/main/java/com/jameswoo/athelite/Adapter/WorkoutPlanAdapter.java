@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +35,14 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         public TextView vWorkoutPlanName;
         public TextView vWorkoutPlanExerciseNames;
         public CardView vWorkoutCardView;
+        public Toolbar vWorkoutCardMenu;
 
         public ViewHolder(View v) {
             super(v);
             vWorkoutPlanName = (TextView) v.findViewById(R.id.workout_plan_name);
             vWorkoutPlanExerciseNames = (TextView) v.findViewById(R.id.workout_plan_exercise_names);
             vWorkoutCardView = (CardView) v.findViewById(R.id.card_view);
+            vWorkoutCardMenu = (Toolbar) v.findViewById(R.id.card_workout_toolbar);
         }
     }
 
@@ -66,6 +69,8 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+        holder.vWorkoutCardMenu.inflateMenu(R.menu.menu_main);
+
         String workoutPlanName = _workOutPlanList.get(position).getWorkoutPlanName();
         final WorkoutPlan workoutPlan = _workOutPlanList.get(position);
         ArrayList<Exercise> workoutPlanExercises = _workOutPlanList.get(position).getWorkoutPlanExercises();

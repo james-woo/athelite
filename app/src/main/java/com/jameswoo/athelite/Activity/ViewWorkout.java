@@ -98,7 +98,7 @@ public class ViewWorkout extends AppCompatActivity {
     public void updateWorkoutPlan() {
         _workoutPlan.setWorkoutPlanName(_workoutName.getText().toString());
         _workoutExerciseList = _db.getExercisesForWorkoutPlan(_workoutPlan);
-        _db.updateWorkoutPlan(_workoutPlan, _workoutExerciseList);
+        _db.updateWorkoutPlan(_workoutPlan);
     }
 
     @Override

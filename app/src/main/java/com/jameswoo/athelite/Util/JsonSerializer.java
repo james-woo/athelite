@@ -35,8 +35,10 @@ public class JsonSerializer {
                 for(ExerciseSet es : exerciseSetList) {
                     JSONObject setJson = new JSONObject();
                     setJson.put("setNumber", String.valueOf(es.getSetNumber()));
-                    setJson.put("setReps", String.valueOf(es.getSetReps()));
                     setJson.put("setWeight", String.valueOf(es.getSetWeight()));
+                    setJson.put("setWeightType", String.valueOf(es.getWeightType()));
+                    setJson.put("setReps", String.valueOf(es.getSetReps()));
+
                     setJsonArray.put(setJson);
                 }
                 exerciseJson.put("exerciseSets", setJsonArray);
@@ -66,8 +68,9 @@ public class JsonSerializer {
             for (ExerciseSet es : exerciseSetList) {
                 JSONObject setJson = new JSONObject();
                 setJson.put("setNumber", String.valueOf(es.getSetNumber()));
-                setJson.put("setReps", String.valueOf(es.getSetReps()));
                 setJson.put("setWeight", String.valueOf(es.getSetWeight()));
+                setJson.put("setWeightType", String.valueOf(es.getWeightType()));
+                setJson.put("setReps", String.valueOf(es.getSetReps()));
                 setJsonArray.put(setJson);
             }
             exerciseJson.put("exerciseSets", setJsonArray);
@@ -133,7 +136,10 @@ public class JsonSerializer {
             JSONArray setArray = exercise.getJSONArray("exerciseSets");
             for(int i = 0; i < setArray.length(); i++) {
                 JSONObject setJson = setArray.getJSONObject(i);
-                ExerciseSet set = new ExerciseSet(setJson.getInt("setNumber"), setJson.getDouble("setWeight"), setJson.getInt("setReps"));
+                ExerciseSet set = new ExerciseSet(  setJson.getInt("setNumber"),
+                                                    setJson.getDouble("setWeight"),
+                                                    setJson.getString("setWeightType"),
+                                                    setJson.getInt("setReps")   );
                 exerciseSetsList.add(set);
             }
             return exerciseSetsList;
