@@ -2,6 +2,7 @@ package com.jameswoo.athelite.Activity;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,7 +30,6 @@ public class ViewExercise extends AppCompatActivity {
     private String _workoutPlanExerciseJson;
     private Exercise _exercise;
     private EditText _exerciseName;
-    private ArrayList<ExerciseSet> _workoutExerciseSetList;
     private ExerciseSetListAdapter _adapter;
     private DBHandler _db;
 
@@ -55,14 +55,13 @@ public class ViewExercise extends AppCompatActivity {
     void initInstances() {
         // Create the adapter to convert the array to views
         _db = new DBHandler(this);
-        _workoutExerciseSetList = _exercise.getExerciseSets();
-        _adapter = new ExerciseSetListAdapter(this, _workoutExerciseSetList);
+        _adapter = new ExerciseSetListAdapter(this, _exercise.getExerciseSets());
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.set_list_view);
         listView.setAdapter(_adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Added new set", Snackbar.LENGTH_LONG)
@@ -70,12 +69,23 @@ public class ViewExercise extends AppCompatActivity {
                 addExerciseSet();
             }
         });
+
+        FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.fab_remove);
+        fabRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Removed last set", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                _db.deleteExerciseSet(_adapter.getExerciseSets().get(_adapter.getExerciseSets().size() - 1));
+                _adapter.removeLastExerciseSet();
+                _adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     void initExercise() {
         Intent intent = getIntent();
         _workoutPlanExerciseJson = intent.getStringExtra(ExerciseListAdapter.WORKOUT_EXERCISE);
-
         _exercise = JsonSerializer.getExerciseFromJson(_workoutPlanExerciseJson);
 
         _exerciseName = (EditText) findViewById(R.id.edit_exercise_name);
@@ -84,24 +94,21 @@ public class ViewExercise extends AppCompatActivity {
         } else {
             _exerciseName.setText(R.string.new_exercise);
         }
-
-        System.out.println(_exercise.getId());
     }
 
     private void addExerciseSet() {
-        ExerciseSet newSet = _db.createExerciseSetForExercise(_exercise.getId(),
-                new ExerciseSet(getNextSetNumber(), 0, "lb", 0));
-        _workoutExerciseSetList.add(newSet);
+        ExerciseSet newSet = _db.createExerciseSetForExercise(_exercise, getNextSetNumber());
+        _adapter.addExerciseSet(newSet);
         _adapter.notifyDataSetChanged();
     }
 
     private int getNextSetNumber() {
-        return _workoutExerciseSetList.size() + 1;
+        return _adapter.getExerciseSets().size() + 1;
     }
 
     public void updateExercise() {
         _exercise.setExerciseName(_exerciseName.getText().toString());
-
+        _exercise.setExerciseSets(_adapter.getExerciseSets());
         _db.updateExercise(_exercise);
     }
 

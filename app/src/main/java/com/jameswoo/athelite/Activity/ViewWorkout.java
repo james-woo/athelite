@@ -32,7 +32,6 @@ public class ViewWorkout extends AppCompatActivity {
     private String _workoutPlanJson;
     private WorkoutPlan _workoutPlan;
     private EditText _workoutName;
-    private ArrayList<Exercise> _workoutExerciseList;
     private ExerciseListAdapter _adapter;
     private DBHandler _db;
 
@@ -55,11 +54,23 @@ public class ViewWorkout extends AppCompatActivity {
         }
     }
 
+    void initWorkoutPlan() {
+        Intent intent = getIntent();
+        _workoutPlanJson = intent.getStringExtra(WorkoutPlanAdapter.WORKOUT_PLAN);
+        _workoutPlan = JsonSerializer.getWorkoutPlanFromJson(_workoutPlanJson);
+
+        _workoutName = (EditText) findViewById(R.id.edit_workout_name);
+        if(_workoutPlan.getWorkoutPlanName() != null) {
+            _workoutName.setText(_workoutPlan.getWorkoutPlanName());
+        } else {
+            _workoutName.setText(R.string.new_workout);
+        }
+    }
+
     void initInstances() {
         // Create the adapter to convert the array to views
         _db = new DBHandler(this);
-        _workoutExerciseList = _workoutPlan.getWorkoutPlanExercises();
-        _adapter = new ExerciseListAdapter(this, _workoutExerciseList);
+        _adapter = new ExerciseListAdapter(this, _workoutPlan.getWorkoutPlanExercises());
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.exercise_list_view);
         listView.setAdapter(_adapter);
@@ -75,37 +86,24 @@ public class ViewWorkout extends AppCompatActivity {
         });
     }
 
-    void initWorkoutPlan() {
-        Intent intent = getIntent();
-        _workoutPlanJson = intent.getStringExtra(WorkoutPlanAdapter.WORKOUT_PLAN);
-        _workoutPlan = JsonSerializer.getWorkoutPlanFromJson(_workoutPlanJson);
-
-        _workoutName = (EditText) findViewById(R.id.edit_workout_name);
-        if(_workoutPlan.getWorkoutPlanName() != null) {
-            _workoutName.setText(_workoutPlan.getWorkoutPlanName());
-        } else {
-            _workoutName.setText(R.string.new_workout);
-        }
-    }
-
     private void addExercise() {
-        Exercise newExercise = _db.createExerciseForWorkoutPlan(_workoutPlan.getId());
-
-        _workoutExerciseList.add(newExercise);
+        Exercise newExercise = _db.createExerciseForWorkoutPlan(_workoutPlan);
+        _adapter.addExercise(newExercise);
+        //_adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
         _adapter.notifyDataSetChanged();
     }
 
     public void updateWorkoutPlan() {
         _workoutPlan.setWorkoutPlanName(_workoutName.getText().toString());
-        _workoutExerciseList = _db.getExercisesForWorkoutPlan(_workoutPlan);
+        _workoutPlan.setExercises(_adapter.getExerciseList());
         _db.updateWorkoutPlan(_workoutPlan);
     }
 
     @Override
-    public void onRestart() {
-        super.onRestart();
-        ArrayList<Exercise> e = _db.getExercisesForWorkoutPlan(_workoutPlan);
-        _adapter.updateExerciseList(e);
+    public void onResume() {
+        super.onResume();
+        _workoutPlan.setExercises(_db.getExercisesForWorkoutPlan(_workoutPlan));
+        _adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
         _adapter.notifyDataSetChanged();
     }
 

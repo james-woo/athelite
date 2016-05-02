@@ -3,13 +3,18 @@ package com.jameswoo.athelite.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jameswoo.athelite.Activity.ViewExercise;
+import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.ExerciseSet;
 import com.jameswoo.athelite.R;
@@ -21,6 +26,8 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
     private Context _context;
     private ArrayList<Exercise> _exerciseList;
+    private Toolbar _exerciseToolbar;
+    private DBHandler _db;
 
     public final static String WORKOUT_EXERCISE = "com.jameswoo.athelite.WORKOUT_EXERCISE";
 
@@ -28,25 +35,44 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         super(context, 0, exercises);
         this._context = context;
         this._exerciseList = exercises;
+        this._db = new DBHandler(_context);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_view_workout_exercise, parent, false);
+            _exerciseToolbar = (Toolbar) convertView.findViewById(R.id.card_exercise_toolbar);
+            _exerciseToolbar.inflateMenu(R.menu.menu_exercise_card);
         }
 
-        TextView workoutPlanExerciseName = (TextView) convertView.findViewById(R.id.workout_plan_exercise_name);
+        ((Toolbar)convertView.findViewById(R.id.card_exercise_toolbar)).setTitle(_exerciseList.get(position).getExerciseName());
+        _exerciseToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                _db.deleteExercise(_exerciseList.get(position));
+                _exerciseList.remove(position);
+                notifyDataSetChanged();
+                return true;
+            }
+        });
+        _exerciseToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startViewExercise(position);
+            }
+        });
+
         TextView workoutPlanExerciseSets = (TextView) convertView.findViewById(R.id.workout_plan_exercise_sets);
         CardView eCardView = (CardView) convertView.findViewById(R.id.exercise_card_view);
 
         ArrayList<ExerciseSet> exerciseSetList = _exerciseList.get(position).getExerciseSets();
-        final Exercise exercise = _exerciseList.get(position);
 
         StringBuilder exerciseSets = new StringBuilder();
-        double setWidth = 20 * 0.3 * -1;
-        double weightWidth = 20 * 0.3;
+        int widthPixels = eCardView.getResources().getDisplayMetrics().widthPixels;
+        double setWidth = widthPixels * 0.015 * -1;
+        double weightWidth = widthPixels * 0.015;
         for(ExerciseSet es : exerciseSetList) {
 
             exerciseSets.append("Set ")
@@ -59,15 +85,12 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                         .append(" reps\n");
         }
 
-        workoutPlanExerciseName.setText(_exerciseList.get(position).getExerciseName());
         workoutPlanExerciseSets.setText(exerciseSets);
 
         eCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(_context, ViewExercise.class);
-                intent.putExtra(WORKOUT_EXERCISE, JsonSerializer.workoutPlanExerciseToJson(exercise));
-                _context.startActivity(intent);
+                startViewExercise(position);
             }
         });
 
@@ -75,6 +98,21 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
     }
 
     public void updateExerciseList(ArrayList<Exercise> exercises) {
-        _exerciseList = exercises;
+        _exerciseList.clear();
+        _exerciseList.addAll(exercises);
+    }
+
+    private void startViewExercise(int position) {
+        Intent intent = new Intent(_context, ViewExercise.class);
+        intent.putExtra(WORKOUT_EXERCISE, JsonSerializer.workoutPlanExerciseToJson(_exerciseList.get(position)));
+        _context.startActivity(intent);
+    }
+
+    public void addExercise(Exercise exercise) {
+        _exerciseList.add(exercise);
+    }
+
+    public ArrayList<Exercise> getExerciseList() {
+        return _exerciseList;
     }
 }

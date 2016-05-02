@@ -34,6 +34,7 @@ public class JsonSerializer {
                 exerciseSetList = exercise.getExerciseSets();
                 for(ExerciseSet es : exerciseSetList) {
                     JSONObject setJson = new JSONObject();
+                    setJson.put("setId", String.valueOf(es.getId()));
                     setJson.put("setNumber", String.valueOf(es.getSetNumber()));
                     setJson.put("setWeight", String.valueOf(es.getSetWeight()));
                     setJson.put("setWeightType", String.valueOf(es.getWeightType()));
@@ -67,6 +68,7 @@ public class JsonSerializer {
             exerciseSetList = exercise.getExerciseSets();
             for (ExerciseSet es : exerciseSetList) {
                 JSONObject setJson = new JSONObject();
+                setJson.put("setId", String.valueOf(es.getId()));
                 setJson.put("setNumber", String.valueOf(es.getSetNumber()));
                 setJson.put("setWeight", String.valueOf(es.getSetWeight()));
                 setJson.put("setWeightType", String.valueOf(es.getWeightType()));
@@ -136,7 +138,8 @@ public class JsonSerializer {
             JSONArray setArray = exercise.getJSONArray("exerciseSets");
             for(int i = 0; i < setArray.length(); i++) {
                 JSONObject setJson = setArray.getJSONObject(i);
-                ExerciseSet set = new ExerciseSet(  setJson.getInt("setNumber"),
+                ExerciseSet set = new ExerciseSet(  setJson.getInt("setId"),
+                                                    setJson.getInt("setNumber"),
                                                     setJson.getDouble("setWeight"),
                                                     setJson.getString("setWeightType"),
                                                     setJson.getInt("setReps")   );

@@ -7,12 +7,14 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.jameswoo.athelite.Activity.ViewWorkout;
+import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
@@ -24,55 +26,59 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
     private ArrayList<WorkoutPlan> _workOutPlanList;
     private Context _context;
+    private DBHandler _db;
 
     public final static String WORKOUT_PLAN = "com.jameswoo.athelite.WORKOUT_PLAN";
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder{
-        // each data item is just a string in this case
-        public TextView vWorkoutPlanName;
         public TextView vWorkoutPlanExerciseNames;
         public CardView vWorkoutCardView;
         public Toolbar vWorkoutCardMenu;
 
         public ViewHolder(View v) {
             super(v);
-            vWorkoutPlanName = (TextView) v.findViewById(R.id.workout_plan_name);
             vWorkoutPlanExerciseNames = (TextView) v.findViewById(R.id.workout_plan_exercise_names);
             vWorkoutCardView = (CardView) v.findViewById(R.id.card_view);
             vWorkoutCardMenu = (Toolbar) v.findViewById(R.id.card_workout_toolbar);
+            vWorkoutCardMenu.inflateMenu(R.menu.menu_workout_card);
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public WorkoutPlanAdapter(Context context, ArrayList<WorkoutPlan> workouts) {
         _context = context;
         _workOutPlanList = workouts;
+        _db = new DBHandler(_context);
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
-    public WorkoutPlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                            int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_workout, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+    public WorkoutPlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_workout, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.vWorkoutCardMenu.inflateMenu(R.menu.menu_main);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.vWorkoutCardMenu.setTitle(_workOutPlanList.get(position).getWorkoutPlanName());
+        if (holder.vWorkoutCardMenu != null) {
+            holder.vWorkoutCardMenu.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    _db.deleteWorkoutPlan(_workOutPlanList.get(position));
+                    _workOutPlanList.remove(position);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+        }
 
-        String workoutPlanName = _workOutPlanList.get(position).getWorkoutPlanName();
-        final WorkoutPlan workoutPlan = _workOutPlanList.get(position);
+        holder.vWorkoutCardMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startViewWorkout(position);
+            }
+        });
+
         ArrayList<Exercise> workoutPlanExercises = _workOutPlanList.get(position).getWorkoutPlanExercises();
         String exerciseNames = "";
 
@@ -80,15 +86,12 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
             for(Exercise e : workoutPlanExercises) {
                 exerciseNames = exerciseNames + e.getExerciseName() + "\n";
             }
-        holder.vWorkoutPlanName.setText(workoutPlanName);
         holder.vWorkoutPlanExerciseNames.setText(exerciseNames);
 
         holder.vWorkoutCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(_context, ViewWorkout.class);
-                intent.putExtra(WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(workoutPlan));
-                _context.startActivity(intent);
+                startViewWorkout(position);
             }
         });
     }
@@ -104,6 +107,13 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
     }
 
     public void updateWorkoutPlans(ArrayList<WorkoutPlan> workoutplans) {
-        _workOutPlanList = workoutplans;
+        _workOutPlanList.clear();
+        _workOutPlanList.addAll(workoutplans);
+    }
+
+    private void startViewWorkout(int position) {
+        Intent intent = new Intent(_context, ViewWorkout.class);
+        intent.putExtra(WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(_workOutPlanList.get(position)));
+        _context.startActivity(intent);
     }
 }

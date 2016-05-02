@@ -1,17 +1,23 @@
 package com.jameswoo.athelite.Model;
 
 public class ExerciseSet {
+    private long _id;
     private int _setNumber;
     private double _setWeight;
     private String _weightType = "lb";
     private int _setReps;
 
 
-    public ExerciseSet(int setNumber, double setWeight, String weightType, int setReps) {
+    public ExerciseSet(long id, int setNumber, double setWeight, String weightType, int setReps) {
+        _id = id;
         _setNumber = setNumber;
         _setWeight = setWeight;
         _weightType = weightType;
         _setReps = setReps;
+    }
+
+    public long getId() {
+        return _id;
     }
 
     public int getSetNumber() {
@@ -30,6 +36,9 @@ public class ExerciseSet {
         return _setReps;
     }
 
+    public void setId(long id) {
+        _id = id;
+    }
 
     public void setSetNumber(int setNumber) {
         _setNumber = setNumber;

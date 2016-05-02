@@ -16,20 +16,22 @@
             android:orientation="vertical" android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/workout_plan_exercise_name"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/card_exercise_toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:textSize="18sp"
-                android:textColor="#424242" >
-            </TextView>
+                android:background="@android:color/white"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/workout_plan_exercise_sets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
+                android:layout_margin="15dp"
                 android:textSize="18sp"
                 android:textColor="#424242" />
 

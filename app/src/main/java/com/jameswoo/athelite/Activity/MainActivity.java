@@ -80,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch(_currentPage) {
                     case "Workout":
-                        Snackbar.make(view, "Adding Workout", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, "Added new Workout", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         _workoutPlanTabFragment.createNewWorkout();
                         break;
                     case "Calendar":
-                        Snackbar.make(view, "Adding To Calendar", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, "Added To Calendar", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         break;
                 }
