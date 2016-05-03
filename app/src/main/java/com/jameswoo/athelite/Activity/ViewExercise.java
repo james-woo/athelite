@@ -89,6 +89,7 @@ public class ViewExercise extends AppCompatActivity {
         _exercise = JsonSerializer.getExerciseFromJson(_workoutPlanExerciseJson);
 
         _exerciseName = (EditText) findViewById(R.id.edit_exercise_name);
+        _exerciseName.setSelectAllOnFocus(true);
         if(_exercise.getExerciseName() != null) {
             _exerciseName.setText(_exercise.getExerciseName());
         } else {

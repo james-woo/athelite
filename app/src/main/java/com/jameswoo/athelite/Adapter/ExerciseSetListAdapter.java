@@ -48,7 +48,7 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
 
         setWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus && !(weight.getText().toString()).equals("")){
+                if (!(weight.getText().toString()).equals("")){
                     if(Double.compare(_exerciseSetList.get(position).getSetWeight(),
                             Double.parseDouble(weight.getText().toString())) != 0) {
                         _exerciseSetList.get(position).setSetWeight(Double.parseDouble(weight.getText().toString()));
@@ -59,7 +59,7 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
 
         setReps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus && !(reps.getText().toString()).equals("")){
+                if (!(reps.getText().toString()).equals("")){
                     if(Double.compare(_exerciseSetList.get(position).getSetWeight(),
                             Double.parseDouble(reps.getText().toString())) != 0) {
                         _exerciseSetList.get(position).setSetReps(Integer.parseInt(reps.getText().toString()));
