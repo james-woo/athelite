@@ -1,5 +1,6 @@
 package com.jameswoo.athelite.Activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -40,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton _fab;
     private String _currentPage;
 
-    private WorkoutPlanTabFragment _workoutPlanTabFragment;
     private HomeTabFragment _homeTabFragment;
+    private WorkoutPlanTabFragment _workoutPlanTabFragment;
+    private CalendarTabFragment _calendarTabFragment;
 
     private DBHandler _db;
 
@@ -85,8 +87,9 @@ public class MainActivity extends AppCompatActivity {
                         _workoutPlanTabFragment.createNewWorkout();
                         break;
                     case "Calendar":
-                        Snackbar.make(view, "Added To Calendar", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
+                        Intent intent = new Intent(getBaseContext(), ViewDay.class);
+                        intent.putExtra("DATETIME", _calendarTabFragment.getDateTimeInMilliseconds());
+                        startActivity(intent);
                         break;
                 }
             }
@@ -134,12 +137,14 @@ public class MainActivity extends AppCompatActivity {
                         if(getActionBar() != null)
                             getActionBar().setTitle("Workout");
                         _currentPage = "Workout";
+                        _fab.setImageResource(android.R.drawable.ic_input_add);
                         _fab.show();
                         break;
                     case 2:
                         if(getActionBar() != null)
                             getActionBar().setTitle("Calendar");
                         _currentPage = "Calendar";
+                        _fab.setImageResource(android.R.drawable.ic_menu_edit);
                         _fab.show();
                         break;
                     default:
@@ -199,7 +204,8 @@ public class MainActivity extends AppCompatActivity {
                     _workoutPlanTabFragment = WorkoutPlanTabFragment.newInstance(1);
                     return _workoutPlanTabFragment;
                 case 2:
-                    return CalendarTabFragment.newInstance(2);
+                    _calendarTabFragment = CalendarTabFragment.newInstance(2);
+                    return _calendarTabFragment;
                 default:
                     return null;
             }

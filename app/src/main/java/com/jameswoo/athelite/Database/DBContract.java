@@ -40,4 +40,11 @@ public final class DBContract {
         public static final String COLUMN_REPS = "setReps";
         public static final String COLUMN_WORKOUT_EXERCISE_ID = "workoutExerciseId";
     }
+
+    public static abstract class CalendarTable implements BaseColumns {
+        public static final String TABLE_NAME = "calendar";
+        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_WORKOUT_ID = "workoutId";
+    }
 }

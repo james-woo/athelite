@@ -1,13 +1,18 @@
 package com.jameswoo.athelite.Tabs;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.jameswoo.athelite.R;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class CalendarTabFragment extends Fragment {
     /**
@@ -15,8 +20,11 @@ public class CalendarTabFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private CalendarView _calendar;
+    private Calendar _dateTime = Calendar.getInstance();
 
     public CalendarTabFragment() {
+
     }
 
     /**
@@ -35,8 +43,20 @@ public class CalendarTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText("Calendar page");
+
+        _calendar = (CalendarView) rootView.findViewById(R.id.calendarView);
+        _dateTime.setTimeInMillis(_calendar.getDate());
+        _calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                _dateTime.set(year, month, dayOfMonth);
+            }
+        });
+
         return rootView;
+    }
+
+    public long getDateTimeInMilliseconds() {
+        return _dateTime.getTimeInMillis();
     }
 }

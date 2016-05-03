@@ -25,7 +25,7 @@ import java.util.List;
 public class DBHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     // Database Name
     private static final String DATABASE_NAME = "athelite";
@@ -55,6 +55,12 @@ public class DBHandler extends SQLiteOpenHelper {
                     DBContract.ExerciseSetTable.COLUMN_REPS + " INTEGER," +
                     DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " INTEGER" + ")";
 
+    private static final String CREATE_CALENDAR_TABLE =
+            "CREATE TABLE " + DBContract.CalendarTable.TABLE_NAME + "(" +
+                    DBContract.CalendarTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
+                    DBContract.CalendarTable.COLUMN_DATE + " INTEGER," +
+                    DBContract.CalendarTable.COLUMN_WORKOUT_ID + " TEXT" + ")";
+
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -65,6 +71,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_EXERCISE_TABLE);
         db.execSQL(CREATE_WORKOUT_EXERCISE_TABLE);
         db.execSQL(CREATE_EXERCISESET_TABLE);
+        db.execSQL(CREATE_CALENDAR_TABLE);
     }
 
     @Override
@@ -73,6 +80,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseSetTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.CalendarTable.TABLE_NAME);
         onCreate(db);
     }
 
@@ -82,6 +90,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseSetTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.CalendarTable.TABLE_NAME);
         onCreate(db);
     }
 
@@ -435,4 +444,8 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         return workoutExerciseId;
     }
+
+    /*****************************************CALENDAR*********************************************/
+
+
 }
