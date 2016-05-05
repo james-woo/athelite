@@ -14,12 +14,7 @@ public final class DBContract {
         public static final String TABLE_NAME = "workoutPlans";
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_NAME = "name";
-    }
-
-    public static abstract class WorkoutTable implements BaseColumns {
-        public static final String TABLE_NAME = "workouts";
-        public static final String COLUMN_ID = "id";
-        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_TEMPLATE = "template";
     }
 
     public static abstract class ExerciseTable implements BaseColumns {
@@ -31,7 +26,6 @@ public final class DBContract {
     public static abstract class WorkoutExerciseTable implements BaseColumns {
         public static final String TABLE_NAME = "workoutPlanExercises";
         public static final String COLUMN_ID = "id";
-        //public static final String COLUMN_WORKOUT_PLAN_ID = "workoutPlanId";
         public static final String COLUMN_WORKOUT_ID = "workoutId";
         public static final String COLUMN_EXERCISE_ID = "exerciseId";
     }
