@@ -5,22 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v4.util.ArrayMap;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.ExerciseSet;
 import com.jameswoo.athelite.Model.WorkoutPlan;
-import com.jameswoo.athelite.Util.JsonSerializer;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class DBHandler extends SQLiteOpenHelper {
 
