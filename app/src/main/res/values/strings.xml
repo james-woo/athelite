@@ -19,4 +19,5 @@
     <string name="title_activity_view_day">ViewDay</string>
 
     <string name="back_to_calendar_page">Calendar</string>
+    <string name="add_a_workout">Add A Workout</string>
 </resources>

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setupTabIcons();
 
         _db = new DBHandler(this);
-        //_db.deleteDatabase();
+        _db.deleteDatabase();
     }
 
     @Override

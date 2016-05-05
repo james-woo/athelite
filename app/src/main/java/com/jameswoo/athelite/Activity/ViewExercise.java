@@ -98,7 +98,7 @@ public class ViewExercise extends AppCompatActivity {
     }
 
     private void addExerciseSet() {
-        ExerciseSet newSet = _db.createExerciseSetForExercise(_exercise, getNextSetNumber());
+        ExerciseSet newSet = _db.createExerciseSetForExercise(_db.getWritableDatabase(), _exercise, getNextSetNumber());
         _adapter.addExerciseSet(newSet);
         _adapter.notifyDataSetChanged();
     }

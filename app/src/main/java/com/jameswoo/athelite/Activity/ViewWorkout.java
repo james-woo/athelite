@@ -88,7 +88,7 @@ public class ViewWorkout extends AppCompatActivity {
     }
 
     private void addExercise() {
-        Exercise newExercise = _db.createExerciseForWorkoutPlan(_workoutPlan);
+        Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan);
         _adapter.addExercise(newExercise);
         //_adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
         _adapter.notifyDataSetChanged();

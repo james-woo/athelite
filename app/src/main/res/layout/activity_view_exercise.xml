@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:id="@+id/edit_exercise_name"
                 android:selectAllOnFocus="true"/>
         </android.support.design.widget.TextInputLayout>
