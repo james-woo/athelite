@@ -15,12 +15,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.jameswoo.athelite.Database.DBHandler;
+import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Tabs.CalendarTabFragment;
 import com.jameswoo.athelite.Tabs.HomeTabFragment;
 import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,7 +68,16 @@ public class MainActivity extends AppCompatActivity {
         setupTabIcons();
 
         _db = new DBHandler(this);
-        _db.deleteDatabase();
+
+        setupHomePage();
+    }
+
+    void setupHomePage() {
+        WorkoutPlan todayWorkout = _db.getWorkoutForDay(CalendarDay.today().getDate());
+        if(todayWorkout != null) {
+            TextView todayWorkoutTextView = (TextView) findViewById(R.id.today_workout_title);
+            todayWorkoutTextView.setText(todayWorkout.getWorkoutPlanName());
+        }
     }
 
     @Override
@@ -175,8 +187,6 @@ public class MainActivity extends AppCompatActivity {
         switch(id) {
             case R.id.action_settings:
                 return true;
-            case R.id.action_delete_db:
-                _db.deleteDatabase();
         }
 
         return super.onOptionsItemSelected(item);

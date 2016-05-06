@@ -1,16 +1,20 @@
 package com.jameswoo.athelite.Tabs;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
-import android.widget.TextView;
 
+import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.R;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,8 +24,9 @@ public class CalendarTabFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private CalendarView _calendar;
+    private MaterialCalendarView _calendar;
     private Calendar _dateTime = Calendar.getInstance();
+    private DBHandler _db;
 
     public CalendarTabFragment() {
 
@@ -44,16 +49,34 @@ public class CalendarTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        _calendar = (CalendarView) rootView.findViewById(R.id.calendarView);
-        _dateTime.setTimeInMillis(_calendar.getDate());
-        _calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        _db = new DBHandler(getContext());
+
+        _calendar = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
+
+        _calendar.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
+        _calendar.setSelectionColor(R.color.colorPrimary);
+        setSelectedDates(CalendarDay.today());
+
+        _calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                _dateTime.set(year, month, dayOfMonth);
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                _dateTime.setTime(date.getDate());
+                _calendar.clearSelection();
+                setSelectedDates(date);
             }
+
         });
 
         return rootView;
+    }
+
+    private void setSelectedDates(CalendarDay selectedDate) {
+        ArrayList<Date> workoutDays = _db.getWorkoutDays();
+        for (Date day : workoutDays)
+        {
+            _calendar.setDateSelected(day, true);
+        }
+        _calendar.setDateSelected(selectedDate, true);
     }
 
     public long getDateTimeInMilliseconds() {

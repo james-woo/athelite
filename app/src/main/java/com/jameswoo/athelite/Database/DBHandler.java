@@ -11,6 +11,7 @@ import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.ExerciseSet;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 
+import java.util.Date;
 import java.util.ArrayList;
 
 
@@ -69,16 +70,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutPlanTable.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseTable.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseSetTable.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DBContract.CalendarTable.TABLE_NAME);
-        onCreate(db);
-    }
-
-    public void deleteDatabase() {
-        SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutPlanTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
@@ -225,6 +216,43 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     /****************************************WORKOUTS**********************************************/
+    public WorkoutPlan getWorkoutForDay(Date day) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * " +
+                " FROM " + DBContract.CalendarTable.TABLE_NAME +
+                " WHERE " + DBContract.CalendarTable.COLUMN_DATE + " =  \"" + day.getTime() + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()) {
+            long workoutId = cursor.getLong(2);
+            return readWorkout(workoutId);
+        }
+
+        return null;
+    }
+
+    public ArrayList<Date> getWorkoutDays() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * " +
+                " FROM " + DBContract.CalendarTable.TABLE_NAME;
+
+        ArrayList<Date> workoutDays = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                workoutDays.add(new Date(cursor.getLong(1)));
+            } while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return workoutDays;
+    }
 
     public WorkoutPlan CreateWorkoutFromPlan(SQLiteDatabase db, WorkoutPlan workoutPlan) {
         ContentValues values = new ContentValues();

@@ -8,11 +8,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Tabs.CalendarTabFragment">
 
-    <CalendarView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/calendarView"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:mcv_showOtherDates="all"
+        app:mcv_selectionColor="#00F"/>
 
 </RelativeLayout>
