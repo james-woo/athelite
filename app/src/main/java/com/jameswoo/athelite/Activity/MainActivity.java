@@ -68,22 +68,14 @@ public class MainActivity extends AppCompatActivity {
         setupTabIcons();
 
         _db = new DBHandler(this);
-
-        setupHomePage();
-    }
-
-    void setupHomePage() {
-        WorkoutPlan todayWorkout = _db.getWorkoutForDay(CalendarDay.today().getDate());
-        if(todayWorkout != null) {
-            TextView todayWorkoutTextView = (TextView) findViewById(R.id.today_workout_title);
-            todayWorkoutTextView.setText(todayWorkout.getWorkoutPlanName());
-        }
+        _db.deleteDB();
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
         _workoutPlanTabFragment.updateWorkoutPlanAdapter();
+        _homeTabFragment.updateHomePage();
     }
 
     public void setFAB() {
@@ -233,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "HOME";
                 case 1:
-                    return "WORKOUTS";
+                    return "TEMPLATES";
                 case 2:
                     return "CALENDAR";
             }

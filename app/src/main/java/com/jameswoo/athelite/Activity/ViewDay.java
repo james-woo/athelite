@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
     private WorkoutPlan _workoutDay;
     private ArrayList<Exercise> _workoutDayExercises = new ArrayList<>();
     private ExerciseListAdapter _adapter;
+    private EditText _workoutName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         setFabPickWorkout();
 
         _selectedWorkoutTextView = (TextView) findViewById(R.id.selected_workout_plan);
+        _workoutName = (EditText) findViewById(R.id.view_day_edit_workout_name);
         updateDay();
     }
 
@@ -111,9 +114,11 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             DateFormat df = DateFormat.getDateInstance();
             _calendarTitle.setText(new StringBuilder()
                     .append(df.format(new Date(_calendar.getTimeInMillis())))
-                    .append(" - ")
-                    .append(_workoutDay.getWorkoutPlanName()).toString()
             );
+            _workoutName.setText(_workoutDay.getWorkoutPlanName());
+            _workoutName.setFocusable(true);
+            _workoutName.setFocusableInTouchMode(true);
+            _workoutName.setSelectAllOnFocus(true);
             _workoutDayExercises = _workoutDay.getWorkoutPlanExercises();
             _adapter.updateExerciseList(_workoutDayExercises);
             _adapter.notifyDataSetChanged();
@@ -122,6 +127,8 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             setFabPickWorkout();
             DateFormat df = DateFormat.getDateInstance();
             _calendarTitle.setText(df.format(new Date(_calendar.getTimeInMillis())));
+            _workoutName.setText("No workout selected");
+            _workoutName.setFocusable(false);
             _selectedWorkoutTextView.setVisibility(View.VISIBLE);
             _selectedWorkoutTextView.setText(R.string.add_a_workout);
         }
@@ -147,9 +154,18 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         updateDay();
     }
 
+    public void updateWorkoutPlan() {
+        if(_workoutDay != null) {
+            _workoutDay.setWorkoutPlanName(_workoutName.getText().toString());
+            _workoutDay.setExercises(_adapter.getExerciseList());
+            _db.updateWorkoutPlan(_workoutDay);
+        }
+    }
+
     @Override
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
+        updateWorkoutPlan();
 
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();

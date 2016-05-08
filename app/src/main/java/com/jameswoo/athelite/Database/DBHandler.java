@@ -78,6 +78,16 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void deleteDB() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutPlanTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseSetTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.CalendarTable.TABLE_NAME);
+        onCreate(db);
+    }
+
     private class bool {
         public static final int FALSE = 0;
         public static final int TRUE = 1;
@@ -221,13 +231,63 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String query = "SELECT * " +
                 " FROM " + DBContract.CalendarTable.TABLE_NAME +
-                " WHERE " + DBContract.CalendarTable.COLUMN_DATE + " =  \"" + day.getTime() + "\"";
+                " WHERE " + DBContract.CalendarTable.COLUMN_DATE +
+                " BETWEEN " + "\"" + (day.getTime() - 86400000) + "\"" +
+                " AND "+ "\"" + (day.getTime() + 86400000) + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()) {
             long workoutId = cursor.getLong(2);
             return readWorkout(workoutId);
         }
+
+        return null;
+    }
+
+    public WorkoutPlan getNextWorkoutAfterDay(Date day) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(
+                DBContract.CalendarTable.TABLE_NAME,
+                null,
+                DBContract.CalendarTable.COLUMN_DATE + " > " + day.getTime(),
+                null, // No selection args
+                null, // No grouping
+                null, // No having
+                DBContract.CalendarTable.COLUMN_DATE + " ASC",
+                null); // No limit
+
+        if(cursor.moveToFirst()) {
+            long workoutId = cursor.getLong(2);
+            return readWorkout(workoutId);
+        }
+
+        cursor.close();
+        db.close();
+
+        return null;
+    }
+
+    public WorkoutPlan getPreviousWorkoutBeforeDay(Date day) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(
+                DBContract.CalendarTable.TABLE_NAME,
+                null,
+                DBContract.CalendarTable.COLUMN_DATE + " < " + day.getTime(),
+                null, // No selection args
+                null, // No grouping
+                null, // No having
+                DBContract.CalendarTable.COLUMN_DATE + " DESC",
+                null); // No limit
+
+        if(cursor.moveToFirst()) {
+            long workoutId = cursor.getLong(2);
+            return readWorkout(workoutId);
+        }
+
+        cursor.close();
+        db.close();
 
         return null;
     }

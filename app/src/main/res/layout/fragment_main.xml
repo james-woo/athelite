@@ -22,10 +22,9 @@
             android:id="@+id/next_workout_card_view"
             android:layout_gravity="center"
             android:layout_width="match_parent"
+            android:layout_margin="1dp"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp">
+            card_view:cardCornerRadius="4dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,10 +57,9 @@
             android:id="@+id/today_workout_card_view"
             android:layout_gravity="center"
             android:layout_width="match_parent"
+            android:layout_margin="1dp"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp">
+            card_view:cardCornerRadius="4dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,10 +92,9 @@
             android:id="@+id/previous_workout_card_view"
             android:layout_gravity="center"
             android:layout_width="match_parent"
+            android:layout_margin="1dp"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp">
+            card_view:cardCornerRadius="4dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

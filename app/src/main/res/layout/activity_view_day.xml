@@ -27,13 +27,21 @@
             android:textColor="@android:color/white"
             android:id="@+id/calendar_title" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:inputType="textCapWords"
+            android:id="@+id/view_day_edit_workout_name"
+            android:selectAllOnFocus="true" />
+
     </android.support.design.widget.AppBarLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp">
+        android:layout_marginTop="120dp">
         <TextView
             android:textSize="32sp"
             android:layout_width="match_parent"

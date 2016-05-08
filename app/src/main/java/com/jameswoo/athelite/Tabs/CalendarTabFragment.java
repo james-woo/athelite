@@ -19,10 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CalendarTabFragment extends Fragment {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
+
     private static final String ARG_SECTION_NUMBER = "section_number";
     private MaterialCalendarView _calendar;
     private Calendar _dateTime = Calendar.getInstance();
@@ -32,10 +29,6 @@ public class CalendarTabFragment extends Fragment {
 
     }
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static CalendarTabFragment newInstance(int sectionNumber) {
         CalendarTabFragment fragment = new CalendarTabFragment();
         Bundle args = new Bundle();
@@ -56,6 +49,7 @@ public class CalendarTabFragment extends Fragment {
         _calendar.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
         _calendar.setSelectionColor(R.color.colorPrimary);
         setSelectedDates(CalendarDay.today());
+        _dateTime.setTime(CalendarDay.today().getDate());
 
         _calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
