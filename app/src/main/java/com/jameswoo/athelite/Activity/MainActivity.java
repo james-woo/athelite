@@ -1,6 +1,7 @@
 package com.jameswoo.athelite.Activity;
 
 import android.content.Intent;
+import android.database.SQLException;
 import android.media.audiofx.BassBoost;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jameswoo.athelite.Database.DBExerciseList;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
@@ -25,6 +27,8 @@ import com.jameswoo.athelite.Tabs.CalendarTabFragment;
 import com.jameswoo.athelite.Tabs.HomeTabFragment;
 import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,7 +73,28 @@ public class MainActivity extends AppCompatActivity {
         setupTabIcons();
 
         _db = new DBHandler(this);
-        _db.deleteDB();
+        DBExerciseList dbe = new DBExerciseList(this);
+        try {
+
+            dbe.createDataBase();
+
+        } catch (IOException ioe) {
+
+            throw new Error("Unable to create database");
+
+        }
+
+        try {
+
+            dbe.openDataBase();
+
+        }catch(SQLException sqle){
+
+            throw sqle;
+
+        }
+        //_db.setCreateExerciseListTable();
+        //_db.deleteDB();
     }
 
     @Override
