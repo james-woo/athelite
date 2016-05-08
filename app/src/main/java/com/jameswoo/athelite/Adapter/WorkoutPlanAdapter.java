@@ -114,6 +114,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
     private void startViewWorkout(int position) {
         Intent intent = new Intent(_context, ViewWorkout.class);
+        intent.putExtra("VIEW_WORKOUT_PARENT", "Templates");
         intent.putExtra(WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(_workOutPlanList.get(position)));
         _context.startActivity(intent);
     }

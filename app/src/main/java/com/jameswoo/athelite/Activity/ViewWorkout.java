@@ -2,26 +2,20 @@ package com.jameswoo.athelite.Activity;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Adapter.WorkoutPlanAdapter;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
-import com.jameswoo.athelite.Model.ExerciseSet;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
@@ -49,7 +43,7 @@ public class ViewWorkout extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.back_to_workout_page);
+            getSupportActionBar().setTitle(getIntent().getStringExtra("VIEW_WORKOUT_PARENT"));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -69,10 +63,8 @@ public class ViewWorkout extends AppCompatActivity {
     }
 
     void initInstances() {
-        // Create the adapter to convert the array to views
         _db = new DBHandler(this);
         _adapter = new ExerciseListAdapter(this, _workoutPlan.getWorkoutPlanExercises());
-        // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.exercise_list_view);
         listView.setAdapter(_adapter);
 
@@ -90,7 +82,6 @@ public class ViewWorkout extends AppCompatActivity {
     private void addExercise() {
         Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan);
         _adapter.addExercise(newExercise);
-        //_adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
         _adapter.notifyDataSetChanged();
     }
 

@@ -1,6 +1,7 @@
 package com.jameswoo.athelite.Activity;
 
 import android.content.Intent;
+import android.media.audiofx.BassBoost;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "Calendar":
                         Intent intent = new Intent(getBaseContext(), ViewDay.class);
+                        intent.putExtra("VIEW_DAY_PARENT", "Calendar");
                         intent.putExtra("DATETIME", _calendarTabFragment.getDateTimeInMilliseconds());
                         startActivity(intent);
                         break;
@@ -178,7 +180,13 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch(id) {
             case R.id.action_settings:
-                return true;
+                Intent settingsIntent = new Intent(getBaseContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+            case R.id.action_help:
+                Intent helpIntent = new Intent(getBaseContext(), HelpActivity.class);
+                startActivity(helpIntent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

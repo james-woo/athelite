@@ -2,6 +2,7 @@ package com.jameswoo.athelite.Dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -31,7 +32,8 @@ public class PickWorkout extends DialogFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dialog_fragment_pick_workout, container, false);
-        getDialog().setTitle("Select A Workout");
+        getDialog().setTitle("Select A Template");
+
         _pickWorkoutList = (ListView)rootView.findViewById(R.id.pick_workout_list);
         _db = new DBHandler(getActivity());
         _dateTime = getArguments().getLong("PickWorkout.dateTime");

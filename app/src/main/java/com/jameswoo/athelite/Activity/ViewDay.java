@@ -1,6 +1,5 @@
 package com.jameswoo.athelite.Activity;
 
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,7 +21,6 @@ import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 
-import org.w3c.dom.Text;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -55,7 +53,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         Toolbar toolbar = (Toolbar) findViewById(R.id.calendar_toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.back_to_calendar_page);
+            getSupportActionBar().setTitle(getIntent().getStringExtra("VIEW_DAY_PARENT"));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -92,7 +90,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 Bundle args = new Bundle();
                 args.putLong("PickWorkout.dateTime", _calendar.getTimeInMillis());
                 dialogFragment.setArguments(args);
-                dialogFragment.show(fm, "Select A Workout");
+                dialogFragment.show(fm, "Select A Template");
             }
         });
     }

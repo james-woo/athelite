@@ -51,6 +51,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jameswoo.athelite.Activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".Activity.HelpActivity"
+            android:label="@string/title_activity_help"
+            android:parentActivityName=".Activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jameswoo.athelite.Activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activity.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".Activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jameswoo.athelite.Activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

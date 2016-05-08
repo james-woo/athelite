@@ -31,7 +31,9 @@
                 android:focusableInTouchMode="true"
                 android:inputType="textCapWords"
                 android:id="@+id/edit_workout_name"
-                android:selectAllOnFocus="true" />
+                android:selectAllOnFocus="true"
+                android:textSize="18sp"
+                android:layout_marginStart="12dp" />
         </android.support.design.widget.TextInputLayout>
 
     </android.support.design.widget.AppBarLayout>

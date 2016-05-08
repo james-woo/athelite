@@ -241,6 +241,9 @@ public class DBHandler extends SQLiteOpenHelper {
             return readWorkout(workoutId);
         }
 
+        cursor.close();
+        db.close();
+
         return null;
     }
 
@@ -427,6 +430,7 @@ public class DBHandler extends SQLiteOpenHelper {
             } while(cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return exerciseList;
     }
 
@@ -486,7 +490,6 @@ public class DBHandler extends SQLiteOpenHelper {
             } while(cursor.moveToNext());
         }
         cursor.close();
-
         db.close();
     }
 

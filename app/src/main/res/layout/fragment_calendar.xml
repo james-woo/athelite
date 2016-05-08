@@ -16,6 +16,6 @@
         android:layout_centerHorizontal="true"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:mcv_showOtherDates="all"
-        app:mcv_selectionColor="#00F"/>
+        app:mcv_selectionColor="@color/colorPrimary"/>
 
 </RelativeLayout>

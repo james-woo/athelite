@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jameswoo.athelite.Activity.ViewDay;
 import com.jameswoo.athelite.Activity.ViewWorkout;
 import com.jameswoo.athelite.Adapter.WorkoutPlanAdapter;
 import com.jameswoo.athelite.Database.DBHandler;
@@ -16,6 +17,10 @@ import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeTabFragment extends Fragment {
     /**
@@ -36,6 +41,10 @@ public class HomeTabFragment extends Fragment {
     private WorkoutPlan _todayWorkout;
     private WorkoutPlan _nextWorkout;
     private WorkoutPlan _prevWorkout;
+
+    private Calendar _dateTime = Calendar.getInstance();;
+
+    private final long DAY_IN_MILLISECONDS = 86400000;
 
 
     public HomeTabFragment() {
@@ -63,15 +72,17 @@ public class HomeTabFragment extends Fragment {
         _nextWorkoutCard = (CardView) rootView.findViewById(R.id.next_workout_card_view);
         _prevWorkoutCard = (CardView) rootView.findViewById(R.id.previous_workout_card_view);
 
+        _dateTime.setTime(CalendarDay.today().getDate());
+
         updateHomePage();
 
         _todayWorkoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(_todayWorkout != null) {
-                    Intent intent = new Intent(getContext(), ViewWorkout.class);
-                    intent.putExtra(WorkoutPlanAdapter.WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(_todayWorkout));
-                    getContext().startActivity(intent);
+                    startViewWorkoutActivity(_todayWorkout);
+                } else {
+                    startViewDayActivity(_dateTime.getTimeInMillis());
                 }
             }
         });
@@ -80,9 +91,9 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_nextWorkout != null) {
-                    Intent intent = new Intent(getContext(), ViewWorkout.class);
-                    intent.putExtra(WorkoutPlanAdapter.WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(_nextWorkout));
-                    getContext().startActivity(intent);
+                    startViewWorkoutActivity(_nextWorkout);
+                } else {
+                    startViewDayActivity(_dateTime.getTimeInMillis() + DAY_IN_MILLISECONDS);
                 }
             }
         });
@@ -91,9 +102,9 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_prevWorkout != null) {
-                    Intent intent = new Intent(getContext(), ViewWorkout.class);
-                    intent.putExtra(WorkoutPlanAdapter.WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(_prevWorkout));
-                    getContext().startActivity(intent);
+                    startViewWorkoutActivity(_prevWorkout);
+                } else {
+                    startViewDayActivity(_dateTime.getTimeInMillis() - DAY_IN_MILLISECONDS);
                 }
             }
         });
@@ -104,26 +115,48 @@ public class HomeTabFragment extends Fragment {
     public void updateHomePage() {
         _todayWorkout = _db.getWorkoutForDay(CalendarDay.today().getDate());
         if(_todayWorkout != null) {
-            _todayWorkoutCard.setVisibility(View.VISIBLE);
-            _todayWorkoutTextView.setText(_todayWorkout.getWorkoutPlanName());
+            _todayWorkoutTextView.setText(setTextViewText(_todayWorkout.getWorkoutPlanName(), -1));
         } else {
-            _todayWorkoutCard.setVisibility(View.INVISIBLE);
+            _todayWorkoutTextView.setText(setTextViewText("Add a workout to",  new Date().getTime()));
         }
 
         _nextWorkout = _db.getNextWorkoutAfterDay(CalendarDay.today().getDate());
         if(_nextWorkout != null) {
-            _nextWorkoutCard.setVisibility(View.VISIBLE);
-            _nextWorkoutTextView.setText(_nextWorkout.getWorkoutPlanName());
+            _nextWorkoutTextView.setText(setTextViewText(_nextWorkout.getWorkoutPlanName(), -1));
         } else {
-            _nextWorkoutCard.setVisibility(View.INVISIBLE);
+            _nextWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime() + DAY_IN_MILLISECONDS));
         }
 
         _prevWorkout = _db.getPreviousWorkoutBeforeDay(CalendarDay.today().getDate());
         if(_prevWorkout != null) {
-            _prevWorkoutCard.setVisibility(View.VISIBLE);
-            _prevWorkoutTextView.setText(_prevWorkout.getWorkoutPlanName());
+            _prevWorkoutTextView.setText(setTextViewText(_prevWorkout.getWorkoutPlanName(), -1));
         } else {
-            _prevWorkoutCard.setVisibility(View.INVISIBLE);
+            _prevWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime() - DAY_IN_MILLISECONDS));
         }
+    }
+
+    private String setTextViewText(String text, long date) {
+        DateFormat df = DateFormat.getDateInstance();
+        if(date > 0)
+            return String.format("%s %s",
+                    text,
+                    df.format(date)
+            );
+        else
+            return text;
+    }
+
+    private void startViewDayActivity(long time) {
+        Intent intent = new Intent(getContext(), ViewDay.class);
+        intent.putExtra("VIEW_DAY_PARENT", "Home");
+        intent.putExtra("DATETIME", time);
+        startActivity(intent);
+    }
+
+    private void startViewWorkoutActivity(WorkoutPlan workoutPlan) {
+        Intent intent = new Intent(getContext(), ViewWorkout.class);
+        intent.putExtra("VIEW_WORKOUT_PARENT", "Home");
+        intent.putExtra(WorkoutPlanAdapter.WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(workoutPlan));
+        getContext().startActivity(intent);
     }
 }

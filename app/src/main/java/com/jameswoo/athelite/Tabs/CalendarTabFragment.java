@@ -47,7 +47,6 @@ public class CalendarTabFragment extends Fragment {
         _calendar = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
 
         _calendar.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
-        _calendar.setSelectionColor(R.color.colorPrimary);
         setSelectedDates(CalendarDay.today());
         _dateTime.setTime(CalendarDay.today().getDate());
 
