@@ -10,12 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Adapter.ExerciseSetListAdapter;
 import com.jameswoo.athelite.Adapter.WorkoutPlanAdapter;
+import com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteTextChangedListener;
+import com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteView;
+import com.jameswoo.athelite.Database.DBExerciseList;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.ExerciseSet;
@@ -27,11 +31,12 @@ import java.util.ArrayList;
 
 public class ViewExercise extends AppCompatActivity {
 
-    private String _workoutPlanExerciseJson;
     private Exercise _exercise;
-    private EditText _exerciseName;
+    private ExerciseAutoCompleteView _exerciseName;
     private ExerciseSetListAdapter _adapter;
     private DBHandler _db;
+    private DBExerciseList _dbe;
+    private ArrayAdapter _exerciseNameAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,45 +60,64 @@ public class ViewExercise extends AppCompatActivity {
     void initInstances() {
         // Create the adapter to convert the array to views
         _db = new DBHandler(this);
+        _dbe = new DBExerciseList(this);
         _adapter = new ExerciseSetListAdapter(this, _exercise.getExerciseSets());
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.set_list_view);
-        listView.setAdapter(_adapter);
+        if(listView != null)
+            listView.setAdapter(_adapter);
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Added new set", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                addExerciseSet();
-            }
-        });
+        if(fabAdd != null)
+            fabAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Added new set", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    addExerciseSet();
+                }
+            });
 
         FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.fab_remove);
-        fabRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Removed last set", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                _db.deleteExerciseSet(_adapter.getExerciseSets().get(_adapter.getExerciseSets().size() - 1));
-                _adapter.removeLastExerciseSet();
-                _adapter.notifyDataSetChanged();
-            }
-        });
+        if(fabRemove != null)
+            fabRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Removed last set", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    _db.deleteExerciseSet(_adapter.getExerciseSets().get(_adapter.getExerciseSets().size() - 1));
+                    _adapter.removeLastExerciseSet();
+                    _adapter.notifyDataSetChanged();
+                }
+            });
     }
 
     void initExercise() {
         Intent intent = getIntent();
-        _workoutPlanExerciseJson = intent.getStringExtra(ExerciseListAdapter.WORKOUT_EXERCISE);
-        _exercise = JsonSerializer.getExerciseFromJson(_workoutPlanExerciseJson);
-
-        _exerciseName = (EditText) findViewById(R.id.edit_exercise_name);
-        _exerciseName.setSelectAllOnFocus(true);
-        if(_exercise.getExerciseName() != null) {
-            _exerciseName.setText(_exercise.getExerciseName());
-        } else {
-            _exerciseName.setText(R.string.new_exercise);
+        String workoutPlanExerciseJson = intent.getStringExtra(ExerciseListAdapter.WORKOUT_EXERCISE);
+        _exercise = JsonSerializer.getExerciseFromJson(workoutPlanExerciseJson);
+        try {
+            _exerciseName = (ExerciseAutoCompleteView) findViewById(R.id.edit_exercise_name);
+            if(_exerciseName != null)
+                _exerciseName.setSelectAllOnFocus(true);
+            if(_exercise.getExerciseName() != null) {
+                _exerciseName.setText(_exercise.getExerciseName());
+            } else {
+                _exerciseName.setText(R.string.new_exercise);
+            }
+            _exerciseName.addTextChangedListener(new ExerciseAutoCompleteTextChangedListener(this) {
+                @Override
+                public void onTextChanged(CharSequence userInput, int start, int before, int count) {
+                    ArrayList<String> items = _dbe.findExercises(userInput.toString());
+                    _exerciseNameAdapter.notifyDataSetChanged();
+                    _exerciseNameAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.exercise_list_dropdown, items);
+                    _exerciseName.setAdapter(_exerciseNameAdapter);
+                }
+            });
+            _exerciseNameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, new String[]{"Please search..."});
+            _exerciseName.setAdapter(_exerciseNameAdapter);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 

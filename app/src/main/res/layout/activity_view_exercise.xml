@@ -25,15 +25,16 @@
             android:layout_height="wrap_content"
             android:descendantFocusability="beforeDescendants"
             android:focusableInTouchMode="true">
-            <EditText
+            <com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
                 android:inputType="textCapWords"
                 android:id="@+id/edit_exercise_name"
                 android:selectAllOnFocus="true"
-                android:textSize="18sp"
-                android:layout_marginStart="12dp" />
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:completionThreshold="1"/>
         </android.support.design.widget.TextInputLayout>
 
     </android.support.design.widget.AppBarLayout>

@@ -1,12 +1,14 @@
 package com.jameswoo.athelite.Database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.R;
 
 import java.io.BufferedReader;
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DBExerciseList  extends SQLiteOpenHelper {
@@ -152,7 +156,65 @@ public class DBExerciseList  extends SQLiteOpenHelper {
 
     }
 
-    // Add your public helper methods to access and get content from the database.
-    // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
-    // to you to create adapters for your views.
+    public boolean checkIfExerciseExists(Exercise exercise) {
+        boolean recordExists = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * " +
+                    " FROM " + DBContract.ExerciseListTable.TABLE_NAME +
+                    " WHERE " + DBContract.ExerciseListTable.COLUMN_NAME +
+                    " =  \"" + exercise.getExerciseName() + "\"";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor != null) {
+            if(cursor.getCount() > 0) {
+                recordExists = true;
+            }
+        }
+
+        cursor.close();
+        db.close();
+
+        return recordExists;
+    }
+
+    public ArrayList<String> findExercises(String searchTerm) {
+        ArrayList<String> exercises = new ArrayList<>();
+        String query = "SELECT * " +
+                        " FROM " + DBContract.ExerciseListTable.TABLE_NAME +
+                        " WHERE " + DBContract.ExerciseListTable.COLUMN_NAME +
+                        " LIKE \"%" + searchTerm + "%\"" +
+                        " ORDER BY " + DBContract.ExerciseListTable.COLUMN_ID + " DESC" +
+                        " LIMIT 0,5";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                String exerciseName = cursor.getString(0);
+                exercises.add(exerciseName);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return exercises;
+    }
+
+    public ArrayList<String> readAllExercises() {
+        SQLiteDatabase db = this.getWritableDatabase();ArrayList<String> exercises = new ArrayList<>();
+        String query = "SELECT * " +
+                " FROM " + DBContract.ExerciseListTable.TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                exercises.add(cursor.getString(0));
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return exercises;
+    }
 }

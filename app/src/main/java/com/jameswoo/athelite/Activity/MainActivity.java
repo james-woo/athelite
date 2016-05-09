@@ -75,25 +75,17 @@ public class MainActivity extends AppCompatActivity {
         _db = new DBHandler(this);
         DBExerciseList dbe = new DBExerciseList(this);
         try {
-
             dbe.createDataBase();
-
         } catch (IOException ioe) {
-
             throw new Error("Unable to create database");
-
         }
 
         try {
-
             dbe.openDataBase();
-
         }catch(SQLException sqle){
-
             throw sqle;
-
         }
-        //_db.setCreateExerciseListTable();
+
         //_db.deleteDB();
     }
 

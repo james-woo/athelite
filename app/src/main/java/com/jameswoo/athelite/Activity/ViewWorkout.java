@@ -9,11 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Adapter.WorkoutPlanAdapter;
+import com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteTextChangedListener;
+import com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteView;
+import com.jameswoo.athelite.Database.DBExerciseList;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
@@ -55,7 +59,7 @@ public class ViewWorkout extends AppCompatActivity {
 
         _workoutName = (EditText) findViewById(R.id.edit_workout_name);
         _workoutName.setSelectAllOnFocus(true);
-        if(_workoutPlan.getWorkoutPlanName() != null) {
+        if (_workoutPlan.getWorkoutPlanName() != null) {
             _workoutName.setText(_workoutPlan.getWorkoutPlanName());
         } else {
             _workoutName.setText(R.string.new_workout);

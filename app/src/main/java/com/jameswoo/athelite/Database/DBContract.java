@@ -25,7 +25,7 @@ public final class DBContract {
 
     public static abstract class ExerciseListTable implements BaseColumns {
         public static final String TABLE_NAME = "exerciseList";
-        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_ID = "rowid";
         public static final String COLUMN_NAME = "name";
     }
 
