@@ -1,36 +1,27 @@
 package com.jameswoo.athelite.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.R;
 
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
-
 
 public class DBExerciseList  extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.jameswoo.athelite/databases/";
-    //private static String DB_PATH = Context.getFilesDir().getPath();
-
     private static String DB_NAME = "athelite_exercises";
-
     private SQLiteDatabase myDataBase;
-
     private final Context myContext;
 
     /**
@@ -49,22 +40,14 @@ public class DBExerciseList  extends SQLiteOpenHelper {
      * */
     public void createDataBase() throws IOException{
 
-        //boolean dbExist = checkDataBase();
-        boolean dbExist = false;
+        boolean dbExist = checkDataBase();
 
         if(!dbExist){
-            //By calling this method and empty database will be created into the default system path
-            //of your application so we are gonna be able to overwrite that database with our database.
             this.getReadableDatabase();
-
             try {
-
                 copyDataBase();
-
             } catch (IOException e) {
-
                 throw new Error("Error copying database: " + e);
-
             }
         }
 
@@ -81,19 +64,12 @@ public class DBExerciseList  extends SQLiteOpenHelper {
         try{
             String myPath = DB_PATH + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
-
         }catch(SQLiteException e){
-
             //database does't exist yet.
-
         }
-
         if(checkDB != null){
-
             checkDB.close();
-
         }
-
         return checkDB != null;
     }
 
@@ -129,21 +105,16 @@ public class DBExerciseList  extends SQLiteOpenHelper {
     }
 
     public void openDataBase() throws SQLException{
-
-        //Open the database
         String myPath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-
     }
 
     @Override
     public synchronized void close() {
-
         if(myDataBase != null)
             myDataBase.close();
 
         super.close();
-
     }
 
     @Override
@@ -156,21 +127,19 @@ public class DBExerciseList  extends SQLiteOpenHelper {
 
     }
 
-    public boolean checkIfExerciseExists(Exercise exercise) {
+    public boolean checkIfExerciseExists(String exerciseName) {
         boolean recordExists = false;
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * " +
                     " FROM " + DBContract.ExerciseListTable.TABLE_NAME +
                     " WHERE " + DBContract.ExerciseListTable.COLUMN_NAME +
-                    " =  \"" + exercise.getExerciseName() + "\"";
+                    " =  \"" + exerciseName + "\"";
 
         Cursor cursor = db.rawQuery(query, null);
 
-        if(cursor != null) {
-            if(cursor.getCount() > 0) {
-                recordExists = true;
-            }
+        if(cursor.moveToFirst()) {
+            recordExists = true;
         }
 
         cursor.close();
@@ -216,5 +185,22 @@ public class DBExerciseList  extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return exercises;
+    }
+
+    public boolean createExercise (String exerciseName) {
+        boolean createSuccessful = false;
+
+        if(!checkIfExerciseExists(exerciseName)){
+
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DBContract.ExerciseListTable.COLUMN_NAME, exerciseName);
+            createSuccessful = db.insert(DBContract.ExerciseListTable.TABLE_NAME, null, values) > 0;
+
+            db.close();
+        }
+
+        return createSuccessful;
     }
 }

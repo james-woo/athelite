@@ -1,7 +1,5 @@
 package com.jameswoo.athelite.Model;
 
-import android.text.TextUtils;
-
 import java.util.ArrayList;
 
 public class WorkoutPlan {

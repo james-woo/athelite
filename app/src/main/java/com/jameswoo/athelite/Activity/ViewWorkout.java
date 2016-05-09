@@ -9,22 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Adapter.WorkoutPlanAdapter;
-import com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteTextChangedListener;
-import com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteView;
-import com.jameswoo.athelite.Database.DBExerciseList;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
-
-import java.util.ArrayList;
 
 public class ViewWorkout extends AppCompatActivity {
     private String _workoutPlanJson;
@@ -58,7 +52,8 @@ public class ViewWorkout extends AppCompatActivity {
         _workoutPlan = JsonSerializer.getWorkoutPlanFromJson(_workoutPlanJson);
 
         _workoutName = (EditText) findViewById(R.id.edit_workout_name);
-        _workoutName.setSelectAllOnFocus(true);
+        if(_workoutName != null)
+            _workoutName.setSelectAllOnFocus(true);
         if (_workoutPlan.getWorkoutPlanName() != null) {
             _workoutName.setText(_workoutPlan.getWorkoutPlanName());
         } else {
@@ -70,17 +65,19 @@ public class ViewWorkout extends AppCompatActivity {
         _db = new DBHandler(this);
         _adapter = new ExerciseListAdapter(this, _workoutPlan.getWorkoutPlanExercises());
         ListView listView = (ListView) findViewById(R.id.exercise_list_view);
-        listView.setAdapter(_adapter);
+        if(listView != null)
+            listView.setAdapter(_adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Added new exercise", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                addExercise();
-            }
-        });
+        if(fab != null)
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Added new exercise", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    addExercise();
+                }
+            });
     }
 
     private void addExercise() {

@@ -2,7 +2,6 @@ package com.jameswoo.athelite.Activity;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,19 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Adapter.ExerciseSetListAdapter;
-import com.jameswoo.athelite.Adapter.WorkoutPlanAdapter;
 import com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteTextChangedListener;
 import com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteView;
 import com.jameswoo.athelite.Database.DBExerciseList;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.ExerciseSet;
-import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
@@ -58,11 +54,9 @@ public class ViewExercise extends AppCompatActivity {
     }
 
     void initInstances() {
-        // Create the adapter to convert the array to views
         _db = new DBHandler(this);
         _dbe = new DBExerciseList(this);
         _adapter = new ExerciseSetListAdapter(this, _exercise.getExerciseSets());
-        // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.set_list_view);
         if(listView != null)
             listView.setAdapter(_adapter);
@@ -135,6 +129,7 @@ public class ViewExercise extends AppCompatActivity {
         _exercise.setExerciseName(_exerciseName.getText().toString());
         _exercise.setExerciseSets(_adapter.getExerciseSets());
         _db.updateExercise(_exercise);
+        _dbe.createExercise(_exerciseName.getText().toString());
     }
 
     @Override

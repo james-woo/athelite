@@ -22,7 +22,6 @@ import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 
-
 import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -61,24 +60,24 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
 
     private void initInstances() {
         Intent intent = getIntent();
-        _calendar.setTimeInMillis(intent.getLongExtra("DATETIME", 0));
-        _calendarTitle = (TextView)findViewById(R.id.calendar_title);
         DateFormat df = DateFormat.getDateInstance();
-        _calendarTitle.setText(df.format(new Date(_calendar.getTimeInMillis())));
-
         _db = new DBHandler(this);
-        _workoutDay = _db.readWorkoutForDateTime(_calendar.getTimeInMillis());
-
         _adapter = new ExerciseListAdapter(this, _workoutDayExercises);
-        ListView listView = (ListView) findViewById(R.id.workoutday_exercise_list_view);
-        listView.setAdapter(_adapter);
+        _workoutDay = _db.readWorkoutForDateTime(_calendar.getTimeInMillis());
+        _calendar.setTimeInMillis(intent.getLongExtra("DATETIME", 0));
 
         _fab = (FloatingActionButton) findViewById(R.id.fab_pick_workout);
+        _calendarTitle = (TextView)findViewById(R.id.calendar_title);
+        _calendarTitle.setText(df.format(new Date(_calendar.getTimeInMillis())));
+        _selectedWorkoutTextView = (TextView) findViewById(R.id.selected_workout_plan);
+        _workoutName = (EditText) findViewById(R.id.view_day_edit_workout_name);
+
+        ListView listView = (ListView) findViewById(R.id.workoutday_exercise_list_view);
+        if(listView != null)
+            listView.setAdapter(_adapter);
 
         setFabPickWorkout();
 
-        _selectedWorkoutTextView = (TextView) findViewById(R.id.selected_workout_plan);
-        _workoutName = (EditText) findViewById(R.id.view_day_edit_workout_name);
         updateDay();
     }
 
@@ -131,7 +130,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             setFabPickWorkout();
             DateFormat df = DateFormat.getDateInstance();
             _calendarTitle.setText(df.format(new Date(_calendar.getTimeInMillis())));
-            _workoutName.setText("No workout selected");
+            _workoutName.setText(R.string.no_workout_selected);
             _workoutName.setFocusable(false);
             _selectedWorkoutTextView.setVisibility(View.VISIBLE);
             _selectedWorkoutTextView.setText(R.string.add_a_workout);

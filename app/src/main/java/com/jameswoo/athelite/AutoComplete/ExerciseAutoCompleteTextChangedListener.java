@@ -3,7 +3,6 @@ package com.jameswoo.athelite.AutoComplete;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 
 public class ExerciseAutoCompleteTextChangedListener implements TextWatcher {
 

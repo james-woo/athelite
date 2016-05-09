@@ -20,6 +20,7 @@
 
     <string name="back_to_calendar_page">Calendar</string>
     <string name="add_a_workout">Add A Workout</string>
+    <string name="no_workout_selected">No workout selected</string>
 
     <string name="main_next_workout">Next Workout</string>
     <string name="main_today_workout">Today\'s Workout</string>
