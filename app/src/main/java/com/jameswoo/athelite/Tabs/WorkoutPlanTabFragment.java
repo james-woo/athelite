@@ -69,7 +69,9 @@ public class WorkoutPlanTabFragment extends Fragment {
     }
 
     public void createNewWorkout() {
-        _workoutPlanAdapter.addWorkoutPlan(_db.createWorkoutPlan());
+        WorkoutPlan workoutPlan = _db.createWorkoutPlan();
+        _workoutPlanAdapter.addWorkoutPlan(workoutPlan);
         _workoutPlanAdapter.notifyDataSetChanged();
     }
+
 }

@@ -21,7 +21,6 @@ import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
 public class ViewWorkout extends AppCompatActivity {
-    private String _workoutPlanJson;
     private WorkoutPlan _workoutPlan;
     private EditText _workoutName;
     private ExerciseListAdapter _adapter;
@@ -48,8 +47,8 @@ public class ViewWorkout extends AppCompatActivity {
 
     void initWorkoutPlan() {
         Intent intent = getIntent();
-        _workoutPlanJson = intent.getStringExtra(WorkoutPlanAdapter.WORKOUT_PLAN);
-        _workoutPlan = JsonSerializer.getWorkoutPlanFromJson(_workoutPlanJson);
+        String workoutPlanJson = intent.getStringExtra(WorkoutPlanAdapter.WORKOUT_PLAN);
+        _workoutPlan = JsonSerializer.getWorkoutPlanFromJson(workoutPlanJson);
 
         _workoutName = (EditText) findViewById(R.id.edit_workout_name);
         if(_workoutName != null)
