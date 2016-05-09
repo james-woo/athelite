@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Database.DBHandler;
+import com.jameswoo.athelite.Dialog.EmptyTemplatesDialog;
 import com.jameswoo.athelite.Dialog.PickWorkout;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
@@ -86,11 +87,16 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getFragmentManager();
-                PickWorkout dialogFragment = new PickWorkout ();
-                Bundle args = new Bundle();
-                args.putLong("PickWorkout.dateTime", _calendar.getTimeInMillis());
-                dialogFragment.setArguments(args);
-                dialogFragment.show(fm, "Select A Template");
+                if(_db.getWorkoutPlans().isEmpty()) {
+                    EmptyTemplatesDialog emptyFragment = new EmptyTemplatesDialog();
+                    emptyFragment.show(fm, "Add A Template");
+                } else {
+                    PickWorkout dialogFragment = new PickWorkout();
+                    Bundle args = new Bundle();
+                    args.putLong("PickWorkout.dateTime", _calendar.getTimeInMillis());
+                    dialogFragment.setArguments(args);
+                    dialogFragment.show(fm, "Select A Template");
+                }
             }
         });
     }
