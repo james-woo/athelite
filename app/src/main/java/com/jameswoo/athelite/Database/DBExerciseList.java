@@ -63,7 +63,7 @@ public class DBExerciseList  extends SQLiteOpenHelper {
 
         try{
             String myPath = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
         }catch(SQLiteException e){
             //database does't exist yet.
         }
@@ -82,7 +82,6 @@ public class DBExerciseList  extends SQLiteOpenHelper {
 
         //Open your local db as the input stream
         InputStream myInput = myContext.getResources().openRawResource(R.raw.athelite_exercises);
-        System.out.println("I was able to get here");
 
         // Path to the just created empty db
         String outFileName = DB_PATH + DB_NAME;

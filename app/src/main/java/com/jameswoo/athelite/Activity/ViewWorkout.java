@@ -51,18 +51,17 @@ public class ViewWorkout extends AppCompatActivity {
         _workoutPlan = JsonSerializer.getWorkoutPlanFromJson(workoutPlanJson);
 
         _workoutName = (EditText) findViewById(R.id.edit_workout_name);
-        if(_workoutName != null)
+        if(_workoutName != null) {
             _workoutName.setSelectAllOnFocus(true);
-        if (_workoutPlan.getWorkoutPlanName() != null) {
             _workoutName.setText(_workoutPlan.getWorkoutPlanName());
         } else {
-            _workoutName.setText(R.string.new_workout);
+                _workoutName.setText(R.string.new_workout);
         }
     }
 
     void initInstances() {
         _db = new DBHandler(this);
-        _adapter = new ExerciseListAdapter(this, _workoutPlan.getWorkoutPlanExercises());
+        _adapter = new ExerciseListAdapter(this, _workoutPlan.getWorkoutPlanExercises(), _workoutPlan);
         ListView listView = (ListView) findViewById(R.id.exercise_list_view);
         if(listView != null)
             listView.setAdapter(_adapter);
@@ -86,6 +85,9 @@ public class ViewWorkout extends AppCompatActivity {
     }
 
     public void updateWorkoutPlan() {
+        if(_workoutName.getText().toString().equals("")) {
+            _workoutName.setText(R.string.new_workout);
+        }
         _workoutPlan.setWorkoutPlanName(_workoutName.getText().toString());
         _workoutPlan.setExercises(_adapter.getExerciseList());
         _db.updateWorkoutPlan(_workoutPlan);

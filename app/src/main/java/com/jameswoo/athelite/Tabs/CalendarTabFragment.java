@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.R;
@@ -13,6 +14,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +25,7 @@ public class CalendarTabFragment extends Fragment {
     private MaterialCalendarView _calendar;
     private Calendar _dateTime = Calendar.getInstance();
     private DBHandler _db;
+    private TextView _currentlySelectedDate;
 
     public CalendarTabFragment() {
 
@@ -46,7 +49,7 @@ public class CalendarTabFragment extends Fragment {
         _calendar = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
 
         _calendar.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
-        setSelectedDates(CalendarDay.today());
+
         _dateTime.setTime(CalendarDay.today().getDate());
 
         _calendar.setOnDateChangedListener(new OnDateSelectedListener() {
@@ -59,6 +62,9 @@ public class CalendarTabFragment extends Fragment {
 
         });
 
+        _currentlySelectedDate = (TextView) rootView.findViewById(R.id.currently_selected_date);
+        setSelectedDates(CalendarDay.today());
+        updateSelectedDate();
         return rootView;
     }
 
@@ -69,6 +75,12 @@ public class CalendarTabFragment extends Fragment {
             _calendar.setDateSelected(day, true);
         }
         _calendar.setDateSelected(selectedDate, true);
+        updateSelectedDate();
+    }
+
+    private void updateSelectedDate() {
+        DateFormat df = DateFormat.getDateInstance();
+        _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
     }
 
     public long getDateTimeInMilliseconds() {

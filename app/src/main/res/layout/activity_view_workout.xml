@@ -32,7 +32,7 @@
                 android:inputType="textCapWords"
                 android:id="@+id/edit_workout_name"
                 android:selectAllOnFocus="true"
-                android:textSize="18sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_marginStart="12dp" />
         </android.support.design.widget.TextInputLayout>
 

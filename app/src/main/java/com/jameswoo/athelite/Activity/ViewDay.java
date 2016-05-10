@@ -62,7 +62,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         Intent intent = getIntent();
         DateFormat df = DateFormat.getDateInstance();
         _db = new DBHandler(this);
-        _adapter = new ExerciseListAdapter(this, _workoutDayExercises);
+        _adapter = new ExerciseListAdapter(this, _workoutDayExercises, _workoutDay);
         _workoutDay = _db.readWorkoutForDateTime(_calendar.getTimeInMillis());
         _calendar.setTimeInMillis(intent.getLongExtra("DATETIME", 0));
 

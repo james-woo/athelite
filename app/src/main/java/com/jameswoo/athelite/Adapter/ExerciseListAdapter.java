@@ -17,6 +17,7 @@ import com.jameswoo.athelite.Activity.ViewExercise;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.ExerciseSet;
+import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
@@ -28,14 +29,16 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
     private ArrayList<Exercise> _exerciseList;
     private Toolbar _exerciseToolbar;
     private DBHandler _db;
+    private WorkoutPlan _workoutPlan;
 
     public final static String WORKOUT_EXERCISE = "com.jameswoo.athelite.WORKOUT_EXERCISE";
 
-    public ExerciseListAdapter(Context context, ArrayList<Exercise> exercises) {
+    public ExerciseListAdapter(Context context, ArrayList<Exercise> exercises, WorkoutPlan workoutPlan) {
         super(context, 0, exercises);
         this._context = context;
         this._exerciseList = exercises;
         this._db = new DBHandler(_context);
+        this._workoutPlan = workoutPlan;
     }
 
     @Override
@@ -53,6 +56,9 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 _db.deleteExercise(_exerciseList.get(position));
                 _exerciseList.remove(position);
+                if(_exerciseList.isEmpty()) {
+                    _exerciseList.add(_db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan));
+                }
                 notifyDataSetChanged();
                 return true;
             }

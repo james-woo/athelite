@@ -82,9 +82,8 @@ public class MainActivity extends AppCompatActivity {
             throw sqle;
         }
 
-        //_db.deleteDB();
+        _db.deleteDB();
         //TODO: Bug: Deleting an exercise when only one exercise breaks everything
-        //TODO: Bug: Adding workouts doesn't work anymore
     }
 
     @Override

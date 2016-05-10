@@ -90,4 +90,5 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="alert_dialog_ok">Ok</string>
     <string name="alert_dialog_cancel">Cancel</string>
+    <string name="empty_list">Empty List</string>
 </resources>

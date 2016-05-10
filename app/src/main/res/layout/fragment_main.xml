@@ -35,14 +35,13 @@
                     android:id="@+id/next_workout_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30sp"
-                    android:textColor="#424242"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/main_next_workout"/>
                 <TextView
                     android:id="@+id/next_workout_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#424242" />
                 <TextView
                     android:id="@+id/next_workout_exercises"
@@ -70,14 +69,13 @@
                     android:id="@+id/today_workout_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30sp"
-                    android:textColor="#424242"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/main_today_workout"/>
                 <TextView
                     android:id="@+id/today_workout_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#424242" />
                 <TextView
                     android:id="@+id/today_workout_card_content"
@@ -105,14 +103,13 @@
                     android:id="@+id/previous_workout_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30sp"
-                    android:textColor="#424242"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/main_previous_workout"/>
                 <TextView
                     android:id="@+id/previous_workout_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#424242" />
                 <TextView
                     android:id="@+id/previous_workout_card_content"

@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.jameswoo.athelite.Activity.MainActivity;
 import com.jameswoo.athelite.Activity.ViewWorkout;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
+import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
 import java.util.ArrayList;
@@ -67,6 +69,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     _db.deleteWorkoutPlan(_workOutPlanList.get(position));
                     _workOutPlanList.remove(position);
+                    
                     notifyDataSetChanged();
                     return true;
                 }
@@ -105,11 +108,13 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
     public void addWorkoutPlan(WorkoutPlan workoutPlan) {
         _workOutPlanList.add(workoutPlan);
+        notifyDataSetChanged();
     }
 
     public void updateWorkoutPlans(ArrayList<WorkoutPlan> workoutplans) {
         _workOutPlanList.clear();
         _workOutPlanList.addAll(workoutplans);
+        notifyDataSetChanged();
     }
 
     private void startViewWorkout(int position) {
