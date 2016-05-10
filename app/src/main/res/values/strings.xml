@@ -20,7 +20,7 @@
 
     <string name="back_to_calendar_page">Calendar</string>
     <string name="add_a_workout">Add A Workout</string>
-    <string name="no_workout_selected">No workout selected</string>
+    <string name="no_workout_selected">No Workout Selected</string>
 
     <string name="main_next_workout">Next Workout</string>
     <string name="main_today_workout">Today\'s Workout</string>
@@ -28,7 +28,13 @@
     <string name="title_activity_help">HelpActivity</string>
 
     <string name="help_text">Help</string>
-    <string name="help_text_content">Help content</string>
+    <string name="help_text_content">Athelite is a fully customizable workout logger designed for any athlete.
+        \n\nSimply create a template in the "Templates" section by tapping the plus button.
+        Templates can be added directly to the main page, or through the calendar.
+        \n\nFrom there, you can customize your template by adding custom or built in exercises.
+        To create an exercise, simply change the name and the new exercise will be automatically saved.
+        \n\nFinally, you can customize your exercises by adding the appropriate number of sets, reps,
+        and weight.</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

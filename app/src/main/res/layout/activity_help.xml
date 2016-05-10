@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/help_text"
         android:text="@string/help_text"
-        android:textSize="32sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginTop="64dp"
         android:layout_marginStart="16dp"/>
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/help_text_content"
         android:text="@string/help_text_content"
-        android:textSize="32sp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginTop="100dp"
         android:layout_marginStart="16dp"/>
 
