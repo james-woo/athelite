@@ -29,6 +29,7 @@ public class WorkoutPlanTabFragment extends Fragment {
     private ArrayList<WorkoutPlan> _workoutPlans;
     private ImageView _emptyList;
 
+    private static WorkoutPlanTabFragment _wFragment = new WorkoutPlanTabFragment();
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -39,12 +40,16 @@ public class WorkoutPlanTabFragment extends Fragment {
 
     }
 
+    public static WorkoutPlanTabFragment getInstance() {
+        return _wFragment;
+    }
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
     public static WorkoutPlanTabFragment newInstance(int sectionNumber) {
-        WorkoutPlanTabFragment fragment = new WorkoutPlanTabFragment();
+        WorkoutPlanTabFragment fragment = _wFragment;
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);

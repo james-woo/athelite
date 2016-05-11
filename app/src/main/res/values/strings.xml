@@ -16,6 +16,8 @@
 
     <string name="action_delete_workout">Delete Workout</string>
     <string name="action_delete_exercise">Delete Exercise</string>
+    <string name="action_move_up">Move Up</string>
+    <string name="action_move_down">Move Down</string>
     <string name="title_activity_view_day">ViewDay</string>
 
     <string name="back_to_calendar_page">Calendar</string>

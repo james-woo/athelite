@@ -22,6 +22,7 @@ import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
@@ -54,12 +55,36 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         _exerciseToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                _db.deleteExercise(_exerciseList.get(position));
-                _exerciseList.remove(position);
-                if(_exerciseList.isEmpty()) {
-                    _exerciseList.add(_db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan));
+                switch(menuItem.getItemId()) {
+                    case R.id.action_move_exercise_up:
+                        if(_exerciseList.size() < 1 || position < 1) break;
+                        long id_up = _exerciseList.get(position).getId();
+                        _exerciseList.get(position).setId(id_up - 1);
+                        _exerciseList.get(position - 1).setId(id_up);
+                        _db.updateExercise(_exerciseList.get(position));
+                        _db.updateExercise(_exerciseList.get(position - 1));
+                        Collections.swap(_exerciseList, position, position - 1);
+                        notifyDataSetChanged();
+                        break;
+                    case R.id.action_move_exercise_down:
+                        if(_exerciseList.size() < 1 || position >= _exerciseList.size() - 1) break;
+                        long id_down = _exerciseList.get(position).getId();
+                        _exerciseList.get(position).setId(id_down + 1);
+                        _exerciseList.get(position + 1).setId(id_down);
+                        _db.updateExercise(_exerciseList.get(position));
+                        _db.updateExercise(_exerciseList.get(position + 1));
+                        Collections.swap(_exerciseList, position, position + 1);
+                        notifyDataSetChanged();
+                        break;
+                    case R.id.action_delete_exercise:
+                        _db.deleteExercise(_exerciseList.get(position));
+                        _exerciseList.remove(position);
+                        if(_exerciseList.isEmpty()) {
+                            _exerciseList.add(_db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan));
+                        }
+                        notifyDataSetChanged();
+                        break;
                 }
-                notifyDataSetChanged();
                 return true;
             }
         });

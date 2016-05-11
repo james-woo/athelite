@@ -24,6 +24,7 @@ import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.ViewHolder> {
 
@@ -67,10 +68,34 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
             holder.vWorkoutCardMenu.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    _db.deleteWorkoutPlan(_workOutPlanList.get(position));
-                    _workOutPlanList.remove(position);
-                    
-                    notifyDataSetChanged();
+                    switch(menuItem.getItemId()) {
+                        case R.id.action_move_workout_up:
+                            if(_workOutPlanList.size() < 1 || position < 1) break;
+                            long id_up = _workOutPlanList.get(position).getId();
+                            _workOutPlanList.get(position).setId(id_up - 1);
+                            _workOutPlanList.get(position - 1).setId(id_up);
+                            _db.updateWorkoutPlan(_workOutPlanList.get(position));
+                            _db.updateWorkoutPlan(_workOutPlanList.get(position - 1));
+                            Collections.swap(_workOutPlanList, position, position - 1);
+                            notifyItemRangeChanged(0, getItemCount());
+                            break;
+                        case R.id.action_move_workout_down:
+                            if(_workOutPlanList.size() < 1 || position >= _workOutPlanList.size() - 1) break;
+                            long id_down = _workOutPlanList.get(position).getId();
+                            _workOutPlanList.get(position).setId(id_down + 1);
+                            _workOutPlanList.get(position + 1).setId(id_down);
+                            _db.updateWorkoutPlan(_workOutPlanList.get(position));
+                            _db.updateWorkoutPlan(_workOutPlanList.get(position + 1));
+                            Collections.swap(_workOutPlanList, position, position + 1);
+                            notifyItemRangeChanged(0, getItemCount());
+                            break;
+                        case R.id.action_delete_workout:
+                            _db.deleteWorkoutPlan(_workOutPlanList.get(position));
+                            _workOutPlanList.remove(position);
+                            WorkoutPlanTabFragment.getInstance().checkEmptyList();
+                            notifyDataSetChanged();
+                            break;
+                    }
                     return true;
                 }
             });
