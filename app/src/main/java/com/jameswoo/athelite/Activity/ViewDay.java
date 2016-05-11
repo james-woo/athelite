@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import com.jameswoo.athelite.Dialog.PickWorkout;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
+import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -186,7 +188,19 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             case android.R.id.home:
                 onBackPressed();
                 break;
+            case R.id.action_delete_workout:
+                _db.deleteWorkoutDay(_workoutDay);
+                _workoutDay = null;
+                onBackPressed();
+                break;
         }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_view_workout, menu);
         return true;
     }
 

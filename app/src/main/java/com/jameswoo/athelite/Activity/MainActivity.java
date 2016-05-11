@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             throw new Error(sqle.getMessage());
         }
 
-        //_db.deleteDB();
+        _db.deleteDB();
     }
 
     @Override

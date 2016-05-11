@@ -87,8 +87,14 @@ public class WorkoutPlanTabFragment extends Fragment {
         checkEmptyList();
     }
 
+    public void deleteWorkout(WorkoutPlan workoutPlan) {
+        _workoutPlanAdapter.removeWorkoutPlan(workoutPlan);
+        _workoutPlanAdapter.notifyDataSetChanged();
+        checkEmptyList();
+    }
+
     public void checkEmptyList() {
-        if(_workoutPlans.isEmpty()) {
+        if(_workoutPlanAdapter.getItemCount() < 1) {
             _emptyList.setVisibility(View.VISIBLE);
         } else {
             _emptyList.setVisibility(View.INVISIBLE);

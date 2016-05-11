@@ -334,6 +334,27 @@ public class DBHandler extends SQLiteOpenHelper {
         return workoutPlan;
     }
 
+    public WorkoutPlan copyWorkoutPlan(SQLiteDatabase db, WorkoutPlan workoutPlan) {
+        ContentValues values = new ContentValues();
+
+        values.put(DBContract.WorkoutPlanTable.COLUMN_NAME, workoutPlan.getWorkoutPlanName());
+        values.put(DBContract.WorkoutPlanTable.COLUMN_TEMPLATE, bool.FALSE);
+
+        long id = db.insert(DBContract.WorkoutPlanTable.TABLE_NAME, null, values);
+
+        for(Exercise e : workoutPlan.getWorkoutPlanExercises()) {
+            values.clear();
+            values.put(DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID, id);
+            values.put(DBContract.WorkoutExerciseTable.COLUMN_EXERCISE_ID, e.getId());
+            db.insert(DBContract.WorkoutExerciseTable.TABLE_NAME, null, values);
+        }
+
+        return new WorkoutPlan.Builder(workoutPlan.getWorkoutPlanName())
+                .workoutPlanId(id)
+                .exercises(workoutPlan.getWorkoutPlanExercises())
+                .build();
+    }
+
 
     public WorkoutPlan readWorkout(long workoutId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -610,7 +631,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void createWorkoutPlanForDateTime(WorkoutPlan workoutPlan, long dateTime) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        WorkoutPlan copiedWorkoutPlan = CreateWorkoutFromPlan(db, workoutPlan);
+        WorkoutPlan copiedWorkoutPlan = copyWorkoutPlan(db, workoutPlan);
 
         ContentValues values = new ContentValues();
         values.put(DBContract.CalendarTable.COLUMN_DATE, dateTime);
@@ -633,5 +654,30 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return readWorkout(workoutId);
+    }
+
+    public boolean deleteWorkoutDay(WorkoutPlan workoutPlan) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        boolean result = false;
+
+        long workoutPlanId = workoutPlan.getId();
+
+        String query = "SELECT * FROM " + DBContract.CalendarTable.TABLE_NAME +
+                " WHERE " + DBContract.CalendarTable.COLUMN_WORKOUT_ID +
+                " =  \"" + workoutPlanId + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()) {
+
+            db.delete(DBContract.CalendarTable.TABLE_NAME,
+                    DBContract.CalendarTable.COLUMN_ID + " = ?",
+                    new String[] { String.valueOf(workoutPlanId) });
+
+            cursor.close();
+            result = true;
+        }
+
+        db.close();
+        return result;
     }
 }

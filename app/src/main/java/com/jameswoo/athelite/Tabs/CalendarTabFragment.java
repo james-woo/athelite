@@ -27,6 +27,12 @@ public class CalendarTabFragment extends Fragment {
     private DBHandler _db;
     private TextView _currentlySelectedDate;
 
+    private static CalendarTabFragment _cFragment = new CalendarTabFragment();
+
+    public static CalendarTabFragment getInstance() {
+        return _cFragment;
+    }
+
     public CalendarTabFragment() {
 
     }
@@ -47,11 +53,9 @@ public class CalendarTabFragment extends Fragment {
         _db = new DBHandler(getContext());
 
         _calendar = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
-
         _calendar.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
 
         _dateTime.setTime(CalendarDay.today().getDate());
-
         _calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {

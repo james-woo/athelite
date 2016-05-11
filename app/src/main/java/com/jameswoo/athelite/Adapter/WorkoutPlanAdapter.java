@@ -136,6 +136,11 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         notifyDataSetChanged();
     }
 
+    public void removeWorkoutPlan(WorkoutPlan workoutPlan) {
+        _workOutPlanList.remove(workoutPlan);
+        notifyDataSetChanged();
+    }
+
     public void updateWorkoutPlans(ArrayList<WorkoutPlan> workoutplans) {
         _workOutPlanList.clear();
         _workOutPlanList.addAll(workoutplans);

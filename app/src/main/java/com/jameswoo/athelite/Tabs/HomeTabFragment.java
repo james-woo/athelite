@@ -145,7 +145,7 @@ public class HomeTabFragment extends Fragment {
         else
             return text;
     }
-
+    //TODO: Bug - workouts appearing even when deleted from calendar
     private void startViewDayActivity(long time) {
         Intent intent = new Intent(getContext(), ViewDay.class);
         intent.putExtra("VIEW_DAY_PARENT", "Home");
