@@ -234,8 +234,8 @@ public class DBHandler extends SQLiteOpenHelper {
         String query = "SELECT * " +
                 " FROM " + DBContract.CalendarTable.TABLE_NAME +
                 " WHERE " + DBContract.CalendarTable.COLUMN_DATE +
-                " BETWEEN " + "\"" + (day.getTime() - 86400000) + "\"" +
-                " AND "+ "\"" + (day.getTime() + 86400000) + "\"";
+                " BETWEEN " + "\"" + (day.getTime() - 86400000 + 1) + "\"" +
+                " AND "+ "\"" + (day.getTime() + 86400000 - 1) + "\"";
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()) {
