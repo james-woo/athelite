@@ -22,6 +22,7 @@
 
     <string name="back_to_calendar_page">Calendar</string>
     <string name="add_a_workout">Add A Workout</string>
+    <string name="add_a_workout_help">Tap The Plus</string>
     <string name="no_workout_selected">No Workout Selected</string>
 
     <string name="main_next_workout">Next Workout</string>

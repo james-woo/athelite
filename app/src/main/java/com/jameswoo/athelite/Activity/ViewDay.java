@@ -32,7 +32,8 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
 
     private Calendar _calendar = new GregorianCalendar();
     private FloatingActionButton _fab;
-    private TextView _selectedWorkoutTextView;
+    private TextView _addAWorkoutTextView;
+    private TextView _addAWorkoutTextViewHelp;
     private TextView _calendarTitle;
     private DBHandler _db;
     private WorkoutPlan _workoutDay;
@@ -69,7 +70,8 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         _fab = (FloatingActionButton) findViewById(R.id.fab_pick_workout);
         _calendarTitle = (TextView)findViewById(R.id.calendar_title);
         _calendarTitle.setText(df.format(new Date(_calendar.getTimeInMillis())));
-        _selectedWorkoutTextView = (TextView) findViewById(R.id.selected_workout_plan);
+        _addAWorkoutTextView = (TextView) findViewById(R.id.add_a_workout);
+        _addAWorkoutTextViewHelp = (TextView) findViewById(R.id.add_workout_help);
         _workoutName = (EditText) findViewById(R.id.view_day_edit_workout_name);
 
         ListView listView = (ListView) findViewById(R.id.workoutday_exercise_list_view);
@@ -125,15 +127,16 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             _workoutDayExercises = _workoutDay.getWorkoutPlanExercises();
             _adapter.updateExerciseList(_workoutDayExercises);
             _adapter.notifyDataSetChanged();
-            _selectedWorkoutTextView.setVisibility(View.INVISIBLE);
+            _addAWorkoutTextView.setVisibility(View.INVISIBLE);
+            _addAWorkoutTextViewHelp.setVisibility(View.INVISIBLE);
         } else {
             setFabPickWorkout();
             DateFormat df = DateFormat.getDateInstance();
             _calendarTitle.setText(df.format(new Date(_calendar.getTimeInMillis())));
             _workoutName.setText(R.string.no_workout_selected);
             _workoutName.setFocusable(false);
-            _selectedWorkoutTextView.setVisibility(View.VISIBLE);
-            _selectedWorkoutTextView.setText(R.string.add_a_workout);
+            _addAWorkoutTextView.setVisibility(View.VISIBLE);
+            _addAWorkoutTextViewHelp.setVisibility(View.VISIBLE);
         }
     }
 

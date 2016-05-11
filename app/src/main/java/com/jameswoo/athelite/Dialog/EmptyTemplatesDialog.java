@@ -27,11 +27,12 @@ public class EmptyTemplatesDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new AlertDialog.Builder(getActivity(), R.style.AppTheme)
+        return new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom)
                 .setTitle("No templates found, add a template?")
                 .setPositiveButton(R.string.alert_dialog_ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
+
                                 _db.createWorkoutPlan();
                             }
                         }

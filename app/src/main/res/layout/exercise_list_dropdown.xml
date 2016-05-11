@@ -25,4 +25,7 @@
     android:ellipsize="marquee"
     android:background="@android:color/white"
     android:textColor="@android:color/black"
-    />
+    android:textSize="18sp"
+    android:layout_marginLeft="20dp"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp" />

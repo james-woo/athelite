@@ -48,9 +48,19 @@
             android:textSize="32sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/selected_workout_plan"
+            android:id="@+id/add_a_workout"
             android:gravity="center"
+            android:text="@string/add_a_workout"
             android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_workout_help"
+            android:text="@string/add_a_workout_help"
+            android:gravity="center"
+            android:layout_below="@+id/add_a_workout"
             android:layout_alignParentStart="true" />
 
         <ListView

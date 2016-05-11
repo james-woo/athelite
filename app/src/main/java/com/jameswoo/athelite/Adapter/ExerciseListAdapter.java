@@ -3,14 +3,12 @@ package com.jameswoo.athelite.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jameswoo.athelite.Activity.ViewExercise;
@@ -21,8 +19,10 @@ import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
@@ -95,28 +95,38 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
             }
         });
 
-        TextView workoutPlanExerciseSets = (TextView) convertView.findViewById(R.id.workout_plan_exercise_sets);
+        TextView exerciseSetNumberTV = (TextView) convertView.findViewById(R.id.exercise_set_number);
+        TextView exerciseSetWeightTV = (TextView) convertView.findViewById(R.id.exercise_set_weight);
+        TextView exerciseSetRepsTV = (TextView) convertView.findViewById(R.id.exercise_set_reps);
         CardView eCardView = (CardView) convertView.findViewById(R.id.exercise_card_view);
 
         ArrayList<ExerciseSet> exerciseSetList = _exerciseList.get(position).getExerciseSets();
 
-        StringBuilder exerciseSets = new StringBuilder();
-        int widthPixels = eCardView.getResources().getDisplayMetrics().widthPixels;
-        double setWidth = widthPixels * 0.015 * -1;
-        double weightWidth = widthPixels * 0.015;
+        String exerciseSetNumber = "";
+        String exerciseSetWeight = "";
+        String exerciseSetReps = "";
+        //int widthPixels = eCardView.getResources().getDisplayMetrics().widthPixels;
+        //double setWidth = widthPixels * 0.015 * -1;
+        //double weightWidth = widthPixels * 0.01;
         for(ExerciseSet es : exerciseSetList) {
+            DecimalFormat weightDF = new DecimalFormat("#####.##");
+            DecimalFormat repDF = new DecimalFormat("###,### reps");
+            DecimalFormat setDF = new DecimalFormat("Set ###");
 
-            exerciseSets.append("Set ")
-                        .append(es.getSetNumber())
-                        .append(String.format("%" + setWidth + "s", " "))
-                        .append(es.getSetWeight())
-                        .append(" lb")
-                        .append(String.format("%" + weightWidth + "s", " "))
-                        .append(es.getSetReps())
-                        .append(" reps\n");
+            exerciseSetNumber += String.format(Locale.US, "%s",
+                    String.valueOf(setDF.format(es.getSetNumber()))  + "\n");
+
+            exerciseSetWeight += String.format(Locale.US, "%s",
+                    String.valueOf(weightDF.format(es.getSetWeight())) + " " + es.getWeightType()  + "\n");
+
+            exerciseSetReps += String.format(Locale.US, "%s",
+                    String.valueOf(repDF.format(es.getSetReps())) + "\n");
+
         }
 
-        workoutPlanExerciseSets.setText(exerciseSets);
+        exerciseSetNumberTV.setText(exerciseSetNumber);
+        exerciseSetWeightTV.setText(exerciseSetWeight);
+        exerciseSetRepsTV.setText(exerciseSetReps);
 
         eCardView.setOnClickListener(new View.OnClickListener() {
             @Override
