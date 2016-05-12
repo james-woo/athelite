@@ -78,6 +78,13 @@ public class CalendarTabFragment extends Fragment {
         }
     }
 
+    public void unsetSelectedDate(Date selectedDate) {
+        if (_calendar != null) {
+            _calendar.setDateSelected(selectedDate, false);
+            setSelectedDates(CalendarDay.today());
+        }
+    }
+
     private void setSelectedDates(CalendarDay selectedDate) {
         updateCalendar();
         _calendar.setDateSelected(selectedDate, true);

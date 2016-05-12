@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class DBHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 15;
 
     // Database Name
     private static final String DATABASE_NAME = "athelite";
@@ -309,6 +309,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
+                System.out.println(new Date(cursor.getLong(1)));
                 workoutDays.add(new Date(cursor.getLong(1)));
             } while(cursor.moveToNext());
         }
@@ -661,7 +662,7 @@ public class DBHandler extends SQLiteOpenHelper {
         boolean result = false;
 
         long workoutPlanId = workoutPlan.getId();
-
+        System.out.println(workoutPlanId);
         String query = "SELECT * FROM " + DBContract.CalendarTable.TABLE_NAME +
                 " WHERE " + DBContract.CalendarTable.COLUMN_WORKOUT_ID +
                 " =  \"" + workoutPlanId + "\"";
@@ -670,7 +671,15 @@ public class DBHandler extends SQLiteOpenHelper {
         if(cursor.moveToFirst()) {
 
             db.delete(DBContract.CalendarTable.TABLE_NAME,
-                    DBContract.CalendarTable.COLUMN_ID + " = ?",
+                    DBContract.CalendarTable.COLUMN_WORKOUT_ID + " = ?",
+                    new String[] { String.valueOf(workoutPlanId) });
+
+            db.delete(DBContract.WorkoutExerciseTable.TABLE_NAME,
+                    DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID+ " = ?",
+                    new String[] { String.valueOf(workoutPlanId) });
+
+            db.delete(DBContract.WorkoutPlanTable.TABLE_NAME,
+                    DBContract.WorkoutPlanTable.COLUMN_ID+ " = ?",
                     new String[] { String.valueOf(workoutPlanId) });
 
             cursor.close();

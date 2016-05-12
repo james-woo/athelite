@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,9 @@ import com.jameswoo.athelite.Dialog.PickWorkout;
 import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
+import com.jameswoo.athelite.Tabs.CalendarTabFragment;
 import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -66,7 +69,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         DateFormat df = DateFormat.getDateInstance();
         _db = new DBHandler(this);
         _adapter = new ExerciseListAdapter(this, _workoutDayExercises, _workoutDay);
-        _workoutDay = _db.readWorkoutForDateTime(_calendar.getTimeInMillis());
+        _workoutDay = _db.getWorkoutForDay(_calendar.getTime());
         _calendar.setTimeInMillis(intent.getLongExtra("DATETIME", 0));
 
         _fab = (FloatingActionButton) findViewById(R.id.fab_pick_workout);
@@ -143,17 +146,21 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
     }
 
     private void addExercise() {
-        Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutDay);
-        _adapter.addExercise(newExercise);
-        _adapter.notifyDataSetChanged();
+        if(_workoutDay != null) {
+            Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutDay);
+            _adapter.addExercise(newExercise);
+            _adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
-        _workoutDay.setExercises(_db.getExercisesForWorkoutPlan(_workoutDay));
-        _adapter.updateExerciseList(_workoutDay.getWorkoutPlanExercises());
-        _adapter.notifyDataSetChanged();
+        if(_workoutDay != null) {
+            _workoutDay.setExercises(_db.getExercisesForWorkoutPlan(_workoutDay));
+            _adapter.updateExerciseList(_workoutDay.getWorkoutPlanExercises());
+            _adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -190,6 +197,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 break;
             case R.id.action_delete_workout:
                 _db.deleteWorkoutDay(_workoutDay);
+                CalendarTabFragment.getInstance().unsetSelectedDate(_calendar.getTime());
                 _workoutDay = null;
                 onBackPressed();
                 break;

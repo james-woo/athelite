@@ -62,7 +62,6 @@ public class PickWorkout extends DialogFragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _db.createWorkoutPlanForDateTime(_workoutPlans.get(position), _dateTime);
-                CalendarTabFragment.getInstance().updateCalendar();
                 HomeTabFragment.getInstance().updateHomePage();
                 dismiss();
             }

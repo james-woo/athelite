@@ -75,8 +75,10 @@ public class WorkoutPlanTabFragment extends Fragment {
     public void updateWorkoutPlanAdapter() {
         _workoutPlans.clear();
         _workoutPlans = _db.getWorkoutPlans();
-        _workoutPlanAdapter.updateWorkoutPlans(_workoutPlans);
-        _workoutPlanAdapter.notifyDataSetChanged();
+        if(!_workoutPlans.isEmpty() && _workoutPlans != null) {
+            _workoutPlanAdapter.updateWorkoutPlans(_workoutPlans);
+            _workoutPlanAdapter.notifyDataSetChanged();
+        }
         checkEmptyList();
     }
 

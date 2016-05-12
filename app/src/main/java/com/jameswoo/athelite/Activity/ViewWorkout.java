@@ -100,9 +100,11 @@ public class ViewWorkout extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        _workoutPlan.setExercises(_db.getExercisesForWorkoutPlan(_workoutPlan));
-        _adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
-        _adapter.notifyDataSetChanged();
+        if(_workoutPlan != null) {
+            _workoutPlan.setExercises(_db.getExercisesForWorkoutPlan(_workoutPlan));
+            _adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
+            _adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

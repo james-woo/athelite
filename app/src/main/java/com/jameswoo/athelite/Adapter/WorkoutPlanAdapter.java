@@ -111,8 +111,9 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         ArrayList<Exercise> workoutPlanExercises = _workOutPlanList.get(position).getWorkoutPlanExercises();
         String exerciseNames = "";
 
-        if(workoutPlanExercises != null)
+        if(!workoutPlanExercises.isEmpty() && workoutPlanExercises != null)
             for(Exercise e : workoutPlanExercises) {
+                if(e == null) break;
                 exerciseNames = exerciseNames + e.getExerciseName() + "\n";
             }
         holder.vWorkoutPlanExerciseNames.setText(exerciseNames);
