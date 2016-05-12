@@ -14,6 +14,8 @@ import android.widget.ListView;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
+import com.jameswoo.athelite.Tabs.CalendarTabFragment;
+import com.jameswoo.athelite.Tabs.HomeTabFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,8 @@ public class PickWorkout extends DialogFragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _db.createWorkoutPlanForDateTime(_workoutPlans.get(position), _dateTime);
+                CalendarTabFragment.getInstance().updateCalendar();
+                HomeTabFragment.getInstance().updateHomePage();
                 dismiss();
             }
         });

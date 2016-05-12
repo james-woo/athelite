@@ -46,12 +46,18 @@ public class HomeTabFragment extends Fragment {
 
     private final long DAY_IN_MILLISECONDS = 86400000;
 
+    private static HomeTabFragment _hFragment = new HomeTabFragment();
+
+    public static HomeTabFragment getInstance() {
+        return _hFragment;
+    }
 
     public HomeTabFragment() {
+
     }
 
     public static HomeTabFragment newInstance(int sectionNumber) {
-        HomeTabFragment fragment = new HomeTabFragment();
+        HomeTabFragment fragment = getInstance();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -62,6 +68,7 @@ public class HomeTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
         _db = new DBHandler(getContext());
 
         _todayWorkoutTextView = (TextView) rootView.findViewById(R.id.today_workout_title);

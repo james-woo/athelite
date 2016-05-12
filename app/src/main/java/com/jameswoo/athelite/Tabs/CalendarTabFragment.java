@@ -38,7 +38,7 @@ public class CalendarTabFragment extends Fragment {
     }
 
     public static CalendarTabFragment newInstance(int sectionNumber) {
-        CalendarTabFragment fragment = new CalendarTabFragment();
+        CalendarTabFragment fragment = getInstance();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -49,9 +49,7 @@ public class CalendarTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
-
         _db = new DBHandler(getContext());
-
         _calendar = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
         _calendar.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
 
@@ -72,12 +70,16 @@ public class CalendarTabFragment extends Fragment {
         return rootView;
     }
 
-    private void setSelectedDates(CalendarDay selectedDate) {
+    public void updateCalendar() {
         ArrayList<Date> workoutDays = _db.getWorkoutDays();
         for (Date day : workoutDays)
         {
             _calendar.setDateSelected(day, true);
         }
+    }
+
+    private void setSelectedDates(CalendarDay selectedDate) {
+        updateCalendar();
         _calendar.setDateSelected(selectedDate, true);
         updateSelectedDate();
     }
