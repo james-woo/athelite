@@ -42,6 +42,84 @@
 
     <!-- Strings related to Settings -->
 
+    <!-- Strings related to Settings -->
+    <string name="settings_title_my_account">My Account</string>
+    <string name="settings_title_username_name">Name</string>
+    <string name="settings_summary_username_name">Name</string>
+    <string name="settings_key_username_name">name</string>
+    <string name="settings_dialogue_username_name">Enter your name</string>
+    <string name="settings_title_username">Username</string>
+    <string name="settings_summary_username">username</string>
+    <string name="settings_key_username">username</string>
+    <string name="settings_title_email">Email</string>
+    <string name="settings_summary_email">email@example.com</string>
+    <string name="settings_key_email">email</string>
+
+    <string name="settings_title_workout">Workout</string>
+    <string name="settings_title_timer">Timer Rest Time</string>
+    <string name="settings_summary_timer">3:00</string>
+    <string name="settings_key_timer">rest_time</string>
+    <string name="settings_title_timer_alarm">Alarm</string>
+    <string name="settings_summary_timer_alarm">Set what happens when timer finishes</string>
+    <string name="settings_key_timer_alarm">timer_alarm</string>
+    <string name="settings_title_units">Units</string>
+    <string name="settings_summary_units">Select the metrics desired</string>
+    <string name="settings_key_units">units</string>
+    <string name="settings_title_target_sets">Target Sets</string>
+    <string name="settings_summary_target_sets">3</string>
+    <string name="settings_key_target_sets">target_sets</string>
+    <string name="settings_title_target_reps">Target Reps</string>
+    <string name="settings_summary_target_reps">3</string>
+    <string name="settings_key_target_reps">target_sets</string>
+
+    <string name="settings_title_additional">Additional</string>
+    <string name="settings_title_notifications">Receive Notifications</string>
+    <string name="settings_summary_notifications">Want to receive Notifications?</string>
+    <string name="settings_key_notifications">receive_notifications</string>
+    <string name="settings_default_value_notifications">true</string>
+
+    <string name="settings_title_feedback">Feedback</string>
+    <string name="settings_summary_feedback">email</string>
+    <string name="settings_key_feedback">feedback</string>
+
+    <string name="title_activity_profile">Profile</string>
+    <string-array name="unitsArray">
+        <item>lb</item>
+        <item>kg</item>
+    </string-array>
+    <string-array name="unitsListValues">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="soundArray">
+        <item>Sound</item>
+        <item>Vibrate</item>
+        <item>Sound &amp; Vibrate</item>
+    </string-array>
+    <string-array name="soundListValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="goalsArray">
+        <item>Starting Out</item>
+        <item>Maintain</item>
+        <item>Cut</item>
+        <item>Bulk</item>
+    </string-array>
+    <string-array name="goalsListValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string name="alert_dialog_ok">Ok</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="empty_list">Empty List</string>
+
+    <!-- Strings related to Settings -->
+
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
@@ -97,7 +175,4 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="alert_dialog_ok">Ok</string>
-    <string name="alert_dialog_cancel">Cancel</string>
-    <string name="empty_list">Empty List</string>
 </resources>

@@ -5,16 +5,16 @@
     <header
         android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
-        android:title="@string/pref_header_general" />
+        android:title="@string/settings_title_workout" />
 
     <header
         android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$NotificationPreferenceFragment"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/pref_header_notifications" />
+        android:icon="@drawable/athelite_profile"
+        android:title="@string/settings_title_my_account" />
 
     <header
         android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$DataSyncPreferenceFragment"
         android:icon="@drawable/ic_sync_black_24dp"
-        android:title="@string/pref_header_data_sync" />
+        android:title="@string/settings_title_additional" />
 
 </preference-headers>

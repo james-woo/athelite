@@ -19,7 +19,6 @@ import android.view.View;
 
 import com.jameswoo.athelite.Database.DBExerciseList;
 import com.jameswoo.athelite.Database.DBHandler;
-import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Tabs.CalendarTabFragment;
 import com.jameswoo.athelite.Tabs.HomeTabFragment;

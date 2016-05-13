@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
+            /*String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -84,9 +84,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
-            }
+            }*/
             return true;
         }
+
     };
 
     /**
@@ -192,8 +193,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
+            //bindPreferenceSummaryToValue(findPreference("example_text"));
         }
 
         @Override
@@ -223,7 +223,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            //bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         }
 
         @Override
@@ -253,7 +253,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+            //bindPreferenceSummaryToValue(findPreference("sync_frequency"));
         }
 
         @Override
