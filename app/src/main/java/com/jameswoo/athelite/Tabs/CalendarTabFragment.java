@@ -72,23 +72,29 @@ public class CalendarTabFragment extends Fragment {
 
     public void updateCalendar() {
         ArrayList<Date> workoutDays = _db.getWorkoutDays();
-        for (Date day : workoutDays)
-        {
+        for (Date day : workoutDays) {
             _calendar.setDateSelected(day, true);
         }
     }
 
-    public void unsetSelectedDate(Date selectedDate) {
+    public void unSetSelectedDate(Date selectedDate) {
         if (_calendar != null) {
             _calendar.setDateSelected(selectedDate, false);
-            setSelectedDates(CalendarDay.today());
+        }
+    }
+
+    public void setSelectedDate(Date selectedDate) {
+        if (_calendar != null) {
+            _calendar.setDateSelected(selectedDate, true);
         }
     }
 
     private void setSelectedDates(CalendarDay selectedDate) {
-        updateCalendar();
-        _calendar.setDateSelected(selectedDate, true);
-        updateSelectedDate();
+        if (_calendar != null) {
+            updateCalendar();
+            _calendar.setDateSelected(selectedDate, true);
+            updateSelectedDate();
+        }
     }
 
     private void updateSelectedDate() {

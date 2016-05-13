@@ -68,9 +68,7 @@ public class HomeTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
         _db = new DBHandler(getContext());
-
         _todayWorkoutTextView = (TextView) rootView.findViewById(R.id.today_workout_title);
         _nextWorkoutTextView = (TextView) rootView.findViewById(R.id.next_workout_title);
         _prevWorkoutTextView = (TextView) rootView.findViewById(R.id.previous_workout_title);
@@ -87,7 +85,7 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_todayWorkout != null) {
-                    startViewWorkoutActivity(_todayWorkout);
+                    startViewWorkoutActivity(_todayWorkout, _dateTime.getTimeInMillis());
                 } else {
                     startViewDayActivity(_dateTime.getTimeInMillis());
                 }
@@ -98,7 +96,7 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_nextWorkout != null) {
-                    startViewWorkoutActivity(_nextWorkout);
+                    startViewWorkoutActivity(_nextWorkout, _dateTime.getTimeInMillis() + DAY_IN_MILLISECONDS);
                 } else {
                     startViewDayActivity(_dateTime.getTimeInMillis() + DAY_IN_MILLISECONDS);
                 }
@@ -109,7 +107,7 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_prevWorkout != null) {
-                    startViewWorkoutActivity(_prevWorkout);
+                    startViewWorkoutActivity(_prevWorkout, _dateTime.getTimeInMillis() - DAY_IN_MILLISECONDS);
                 } else {
                     startViewDayActivity(_dateTime.getTimeInMillis() - DAY_IN_MILLISECONDS);
                 }
@@ -154,6 +152,13 @@ public class HomeTabFragment extends Fragment {
     }
     //TODO: Bug - workouts appearing even when deleted from calendar
     private void startViewDayActivity(long time) {
+        Intent intent = new Intent(getContext(), ViewDay.class);
+        intent.putExtra("VIEW_DAY_PARENT", "Home");
+        intent.putExtra("DATETIME", time);
+        startActivity(intent);
+    }
+
+    private void startViewWorkoutActivity(WorkoutPlan workoutPlan, long time) {
         Intent intent = new Intent(getContext(), ViewDay.class);
         intent.putExtra("VIEW_DAY_PARENT", "Home");
         intent.putExtra("DATETIME", time);

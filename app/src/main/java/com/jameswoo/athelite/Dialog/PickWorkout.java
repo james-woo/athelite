@@ -16,8 +16,11 @@ import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Tabs.CalendarTabFragment;
 import com.jameswoo.athelite.Tabs.HomeTabFragment;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PickWorkout extends DialogFragment{
@@ -63,6 +66,7 @@ public class PickWorkout extends DialogFragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _db.createWorkoutPlanForDateTime(_workoutPlans.get(position), _dateTime);
                 HomeTabFragment.getInstance().updateHomePage();
+                CalendarTabFragment.getInstance().setSelectedDate(new Date(_dateTime));
                 dismiss();
             }
         });

@@ -35,7 +35,7 @@ import java.util.GregorianCalendar;
 
 public class ViewDay extends AppCompatActivity implements DialogInterface.OnDismissListener{
 
-    private Calendar _calendar = new GregorianCalendar();
+    //private Calendar _calendar = new GregorianCalendar();
     private FloatingActionButton _fab;
     private TextView _addAWorkoutTextView;
     private TextView _addAWorkoutTextViewHelp;
@@ -45,6 +45,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
     private ArrayList<Exercise> _workoutDayExercises = new ArrayList<>();
     private ExerciseListAdapter _adapter;
     private EditText _workoutName;
+    private long _dateTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +70,12 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         DateFormat df = DateFormat.getDateInstance();
         _db = new DBHandler(this);
         _adapter = new ExerciseListAdapter(this, _workoutDayExercises, _workoutDay);
-        _workoutDay = _db.getWorkoutForDay(_calendar.getTime());
-        _calendar.setTimeInMillis(intent.getLongExtra("DATETIME", 0));
+        _dateTime = intent.getLongExtra("DATETIME", 0);
+        _workoutDay = _db.getWorkoutForDay(new Date(_dateTime));
 
         _fab = (FloatingActionButton) findViewById(R.id.fab_pick_workout);
         _calendarTitle = (TextView)findViewById(R.id.calendar_title);
-        _calendarTitle.setText(df.format(new Date(_calendar.getTimeInMillis())));
+        _calendarTitle.setText(df.format(new Date(_dateTime)));
         _addAWorkoutTextView = (TextView) findViewById(R.id.add_a_workout);
         _addAWorkoutTextViewHelp = (TextView) findViewById(R.id.add_workout_help);
         _workoutName = (EditText) findViewById(R.id.view_day_edit_workout_name);
@@ -99,7 +100,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 } else {
                     PickWorkout dialogFragment = new PickWorkout();
                     Bundle args = new Bundle();
-                    args.putLong("PickWorkout.dateTime", _calendar.getTimeInMillis());
+                    args.putLong("PickWorkout.dateTime", _dateTime);
                     dialogFragment.setArguments(args);
                     dialogFragment.show(fm, "Select A Template");
                 }
@@ -123,7 +124,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             setFabAddNewExercise();
             DateFormat df = DateFormat.getDateInstance();
             _calendarTitle.setText(new StringBuilder()
-                    .append(df.format(new Date(_calendar.getTimeInMillis())))
+                    .append(df.format(new Date(_dateTime)))
             );
             _workoutName.setText(_workoutDay.getWorkoutPlanName());
             _workoutName.setFocusable(true);
@@ -137,7 +138,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         } else {
             setFabPickWorkout();
             DateFormat df = DateFormat.getDateInstance();
-            _calendarTitle.setText(df.format(new Date(_calendar.getTimeInMillis())));
+            _calendarTitle.setText(df.format(new Date(_dateTime)));
             _workoutName.setText(R.string.no_workout_selected);
             _workoutName.setFocusable(false);
             _addAWorkoutTextView.setVisibility(View.VISIBLE);
@@ -165,7 +166,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
 
     @Override
     public void onDismiss(final DialogInterface dialog) {
-        _workoutDay = _db.readWorkoutForDateTime(_calendar.getTimeInMillis());
+        _workoutDay = _db.readWorkoutForDateTime(_dateTime);
         updateDay();
     }
 
@@ -197,7 +198,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 break;
             case R.id.action_delete_workout:
                 _db.deleteWorkoutDay(_workoutDay);
-                CalendarTabFragment.getInstance().unsetSelectedDate(_calendar.getTime());
+                CalendarTabFragment.getInstance().unSetSelectedDate(new Date(_dateTime));
                 _workoutDay = null;
                 onBackPressed();
                 break;
