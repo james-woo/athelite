@@ -70,7 +70,7 @@
     <string name="settings_key_target_sets">target_sets</string>
     <string name="settings_title_target_reps">Target Reps</string>
     <string name="settings_summary_target_reps">3</string>
-    <string name="settings_key_target_reps">target_sets</string>
+    <string name="settings_key_target_reps">target_reps</string>
 
     <string name="settings_title_additional">Additional</string>
     <string name="settings_title_notifications">Receive Notifications</string>
@@ -88,8 +88,8 @@
         <item>kg</item>
     </string-array>
     <string-array name="unitsListValues">
-        <item>1</item>
-        <item>2</item>
+        <item>lb</item>
+        <item>kg</item>
     </string-array>
     <string-array name="soundArray">
         <item>Sound</item>

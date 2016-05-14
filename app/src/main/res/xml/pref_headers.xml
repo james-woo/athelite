@@ -3,18 +3,18 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_info_black_24dp"
+        android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$WorkoutPreferenceFragment"
+        android:icon="@drawable/ic_workout_icon_24dp"
         android:title="@string/settings_title_workout" />
 
     <header
-        android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$NotificationPreferenceFragment"
-        android:icon="@drawable/athelite_profile"
+        android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$AccountPreferenceFragment"
+        android:icon="@drawable/ic_person_black_24dp"
         android:title="@string/settings_title_my_account" />
 
     <header
-        android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$DataSyncPreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
+        android:fragment="com.jameswoo.athelite.Activity.SettingsActivity$AdditionalPreferenceFragment"
+        android:icon="@drawable/ic_add_black_24dp"
         android:title="@string/settings_title_additional" />
 
 </preference-headers>

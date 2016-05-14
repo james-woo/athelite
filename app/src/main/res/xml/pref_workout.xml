@@ -1,8 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
     <EditTextPreference
         android:title="@string/settings_title_timer"
-        android:summary="@string/settings_summary_timer"
+        android:defaultValue="3"
         android:key="@string/settings_key_timer" />
 
     <ListPreference
@@ -12,6 +13,7 @@
         android:defaultValue="1"
         android:entries="@array/soundArray"
         android:entryValues="@array/soundListValues" />
+    -->
 
     <ListPreference
         android:title="@string/settings_title_units"
@@ -23,12 +25,12 @@
 
     <EditTextPreference
         android:title="@string/settings_title_target_sets"
-        android:summary="@string/settings_summary_target_sets"
+        android:defaultValue="3"
         android:key="@string/settings_key_target_sets" />
 
     <EditTextPreference
         android:title="@string/settings_title_target_reps"
-        android:summary="@string/settings_summary_target_reps"
+        android:defaultValue="5"
         android:key="@string/settings_key_target_reps" />
 
 </PreferenceScreen>

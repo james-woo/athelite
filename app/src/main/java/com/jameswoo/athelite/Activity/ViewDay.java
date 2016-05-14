@@ -96,6 +96,9 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 FragmentManager fm = getFragmentManager();
                 if(_db.getWorkoutPlans().isEmpty()) {
                     EmptyTemplatesDialog emptyFragment = new EmptyTemplatesDialog();
+                    Bundle args = new Bundle();
+                    args.putLong("PickWorkout.dateTime", _dateTime);
+                    emptyFragment.setArguments(args);
                     emptyFragment.show(fm, "Add A Template");
                 } else {
                     PickWorkout dialogFragment = new PickWorkout();
@@ -195,6 +198,10 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(getBaseContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
                 break;
             case R.id.action_delete_workout:
                 _db.deleteWorkoutDay(_workoutDay);

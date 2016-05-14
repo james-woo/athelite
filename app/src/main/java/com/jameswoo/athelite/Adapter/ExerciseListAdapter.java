@@ -2,6 +2,8 @@ package com.jameswoo.athelite.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
     private Toolbar _exerciseToolbar;
     private DBHandler _db;
     private WorkoutPlan _workoutPlan;
+    private SharedPreferences _sp;
 
     public final static String WORKOUT_EXERCISE = "com.jameswoo.athelite.WORKOUT_EXERCISE";
 
@@ -40,6 +43,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         this._exerciseList = exercises;
         this._db = new DBHandler(_context);
         this._workoutPlan = workoutPlan;
+        this._sp = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -108,6 +112,8 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         //int widthPixels = eCardView.getResources().getDisplayMetrics().widthPixels;
         //double setWidth = widthPixels * 0.015 * -1;
         //double weightWidth = widthPixels * 0.01;
+        //boolean isPounds = (_sp.getString("units", "lb").equals("lb"));
+
         for(ExerciseSet es : exerciseSetList) {
             DecimalFormat weightDF = new DecimalFormat("#####.##");
             DecimalFormat repDF = new DecimalFormat("###,### reps");
@@ -117,7 +123,8 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                     String.valueOf(setDF.format(es.getSetNumber()))  + "\n");
 
             exerciseSetWeight += String.format(Locale.US, "%s",
-                    String.valueOf(weightDF.format(es.getSetWeight())) + " " + es.getWeightType()  + "\n");
+                    String.valueOf(weightDF.format(es.getSetWeight()) + " " +
+                            _sp.getString("units", "lb")  + "\n"));
 
             exerciseSetReps += String.format(Locale.US, "%s",
                     String.valueOf(repDF.format(es.getSetReps())) + "\n");

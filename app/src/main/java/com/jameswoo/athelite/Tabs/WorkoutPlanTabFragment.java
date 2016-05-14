@@ -91,7 +91,7 @@ public class WorkoutPlanTabFragment extends Fragment {
 
     public void deleteWorkout(WorkoutPlan workoutPlan) {
         _workoutPlanAdapter.removeWorkoutPlan(workoutPlan);
-        _workoutPlanAdapter.notifyDataSetChanged();
+        _workoutPlanAdapter.notifyItemRangeRemoved(0, _workoutPlanAdapter.getItemCount());
         checkEmptyList();
     }
 

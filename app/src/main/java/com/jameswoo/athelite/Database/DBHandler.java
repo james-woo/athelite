@@ -2,9 +2,11 @@ package com.jameswoo.athelite.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.jameswoo.athelite.Model.Exercise;
@@ -411,6 +413,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Exercise createExerciseForWorkoutPlan(SQLiteDatabase db, WorkoutPlan workoutPlan) {
         long workoutPlanId = workoutPlan.getId();
+
         Exercise newExercise = new Exercise.Builder("New Exercise").build();
 
         ContentValues values = new ContentValues();

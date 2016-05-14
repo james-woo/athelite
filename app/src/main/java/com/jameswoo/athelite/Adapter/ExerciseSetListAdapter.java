@@ -1,7 +1,9 @@
 package com.jameswoo.athelite.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,16 +20,19 @@ import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.ExerciseSet;
 import com.jameswoo.athelite.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
     private ArrayList<ExerciseSet> _exerciseSetList;
     private Context _context;
+    private SharedPreferences _sp;
 
     public ExerciseSetListAdapter(Context context, ArrayList<ExerciseSet> exerciseSets) {
         super(context, 0, exerciseSets);
         this._exerciseSetList = exerciseSets;
         this._context = context;
+        this._sp = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -39,6 +44,7 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
 
         TextView setNumber = (TextView) convertView.findViewById(R.id.set_number);
         EditText setWeight = (EditText) convertView.findViewById(R.id.set_weight);
+        TextView setWeightType = (TextView) convertView.findViewById(R.id.set_weight_type);
         EditText setReps = (EditText) convertView.findViewById(R.id.set_reps);
 
         //final ExerciseSet exerciseSet = _exerciseSetList.get(position);
@@ -66,9 +72,12 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
                 }
             }
         });
-
+        DecimalFormat weightDF = new DecimalFormat("#####.##");
+        //boolean isPounds = (_sp.getString("units", "lb").equals("lb"));
         setNumber.setText(String.valueOf(_exerciseSetList.get(position).getSetNumber()));
-        setWeight.setText(String.valueOf(_exerciseSetList.get(position).getSetWeight()));
+        double sWeight = _exerciseSetList.get(position).getSetWeight();
+        setWeight.setText(String.valueOf(weightDF.format(sWeight)));
+        setWeightType.setText(_sp.getString("units", "lb"));
         setReps.setText(String.valueOf(_exerciseSetList.get(position).getSetReps()));
 
         return convertView;

@@ -153,8 +153,8 @@ public class DBExerciseList  extends SQLiteOpenHelper {
                         " FROM " + DBContract.ExerciseListTable.TABLE_NAME +
                         " WHERE " + DBContract.ExerciseListTable.COLUMN_NAME +
                         " LIKE \"%" + searchTerm + "%\"" +
-                        " ORDER BY " + DBContract.ExerciseListTable.COLUMN_ID + " DESC" +
-                        " LIMIT 0,5";
+                        " ORDER BY " + DBContract.ExerciseListTable.COLUMN_ID + " ASC" +
+                        " LIMIT 0,2000";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);

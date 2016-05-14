@@ -1,5 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
     <CheckBoxPreference
         android:title="@string/settings_title_notifications"
         android:summary="@string/settings_summary_notifications"
@@ -10,5 +11,6 @@
         android:title="@string/settings_title_feedback"
         android:summary="@string/settings_summary_feedback"
         android:key="@string/settings_key_feedback" />
+    -->
 
 </PreferenceScreen>

@@ -3,12 +3,14 @@
     <EditTextPreference
         android:title="@string/settings_title_username_name"
         android:summary="@string/settings_summary_username_name"
+        android:defaultValue="Addison Athelite"
         android:key="@string/settings_key_username_name"
         android:dialogTitle="@string/settings_dialogue_username_name" />
 
     <EditTextPreference
         android:title="@string/settings_title_email"
         android:summary="@string/settings_summary_email"
+        android:defaultValue="email@email.com"
         android:key="@string/settings_key_email" />
 
 </PreferenceScreen>

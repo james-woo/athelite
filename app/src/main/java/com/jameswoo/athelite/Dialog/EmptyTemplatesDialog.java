@@ -3,6 +3,7 @@ package com.jameswoo.athelite.Dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -32,8 +33,13 @@ public class EmptyTemplatesDialog extends DialogFragment {
                 .setPositiveButton(R.string.alert_dialog_ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-
+                                FragmentManager fm = getFragmentManager();
                                 _db.createWorkoutPlan();
+                                PickWorkout dialogFragment = new PickWorkout();
+                                Bundle args = new Bundle();
+                                args.putLong("PickWorkout.dateTime", getArguments().getLong("PickWorkout.dateTime"));
+                                dialogFragment.setArguments(args);
+                                dialogFragment.show(fm, "Select A Template");
                             }
                         }
                 )

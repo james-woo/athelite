@@ -125,6 +125,10 @@ public class ViewWorkout extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(getBaseContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
             case R.id.action_delete_workout:
                 _db.deleteWorkoutPlan(_workoutPlan);
                 WorkoutPlanTabFragment.getInstance().deleteWorkout(_workoutPlan);

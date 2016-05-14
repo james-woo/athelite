@@ -108,7 +108,7 @@ public class ViewExercise extends AppCompatActivity {
                     _exerciseName.setAdapter(_exerciseNameAdapter);
                 }
             });
-            _exerciseNameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, new String[]{"Please search..."});
+            _exerciseNameAdapter = new ArrayAdapter<>(this, R.layout.exercise_list_dropdown, new String[]{"Please search..."});
             _exerciseName.setAdapter(_exerciseNameAdapter);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -152,6 +152,10 @@ public class ViewExercise extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(getBaseContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
                 break;
         }
         return true;
