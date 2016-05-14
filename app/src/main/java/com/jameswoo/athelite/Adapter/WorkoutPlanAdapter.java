@@ -93,7 +93,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
                             _db.deleteWorkoutPlan(_workOutPlanList.get(position));
                             _workOutPlanList.remove(position);
                             WorkoutPlanTabFragment.getInstance().checkEmptyList();
-                            notifyDataSetChanged();
+                            notifyItemRangeRemoved(0, getItemCount());
                             break;
                     }
                     return true;

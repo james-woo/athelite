@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jameswoo.athelite.Database.DBHandler;
+import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -99,7 +100,12 @@ public class CalendarTabFragment extends Fragment {
 
     private void updateSelectedDate() {
         DateFormat df = DateFormat.getDateInstance();
-        _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
+        WorkoutPlan workoutPlan = _db.getWorkoutForDay(_dateTime.getTime());
+        if(workoutPlan != null) {
+            _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
+        } else {
+            _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
+        }
     }
 
     public long getDateTimeInMilliseconds() {

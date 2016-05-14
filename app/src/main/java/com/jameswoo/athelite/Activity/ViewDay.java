@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Database.DBHandler;
+import com.jameswoo.athelite.Dialog.DeleteConfirmation;
 import com.jameswoo.athelite.Dialog.EmptyTemplatesDialog;
 import com.jameswoo.athelite.Dialog.PickWorkout;
 import com.jameswoo.athelite.Model.Exercise;
@@ -25,6 +26,7 @@ import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Tabs.CalendarTabFragment;
 import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
+import com.jameswoo.athelite.Util.JsonSerializer;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.sql.Date;

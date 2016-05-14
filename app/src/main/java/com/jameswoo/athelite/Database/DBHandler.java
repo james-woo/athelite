@@ -242,7 +242,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             long workoutId = cursor.getLong(2);
-            return readWorkout(workoutId);
+            WorkoutPlan workout = readWorkout(workoutId);
+            workout.setDate(new Date(cursor.getLong(1)));
+            return workout;
         }
 
         cursor.close();
@@ -266,7 +268,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             long workoutId = cursor.getLong(2);
-            return readWorkout(workoutId);
+            WorkoutPlan nextWorkout = readWorkout(workoutId);
+            nextWorkout.setDate(new Date(cursor.getLong(1)));
+            return nextWorkout;
         }
 
         cursor.close();
@@ -290,7 +294,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             long workoutId = cursor.getLong(2);
-            return readWorkout(workoutId);
+            WorkoutPlan prevWorkout = readWorkout(workoutId);
+            prevWorkout.setDate(new Date(cursor.getLong(1)));
+            return prevWorkout;
         }
 
         cursor.close();
@@ -311,7 +317,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                System.out.println(new Date(cursor.getLong(1)));
                 workoutDays.add(new Date(cursor.getLong(1)));
             } while(cursor.moveToNext());
         }
@@ -636,6 +641,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         WorkoutPlan copiedWorkoutPlan = copyWorkoutPlan(db, workoutPlan);
+        copiedWorkoutPlan.setDate(new Date(dateTime));
 
         ContentValues values = new ContentValues();
         values.put(DBContract.CalendarTable.COLUMN_DATE, dateTime);
@@ -665,7 +671,6 @@ public class DBHandler extends SQLiteOpenHelper {
         boolean result = false;
 
         long workoutPlanId = workoutPlan.getId();
-        System.out.println(workoutPlanId);
         String query = "SELECT * FROM " + DBContract.CalendarTable.TABLE_NAME +
                 " WHERE " + DBContract.CalendarTable.COLUMN_WORKOUT_ID +
                 " =  \"" + workoutPlanId + "\"";

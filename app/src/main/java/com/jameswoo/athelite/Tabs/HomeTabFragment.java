@@ -21,6 +21,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class HomeTabFragment extends Fragment {
     /**
@@ -118,23 +119,27 @@ public class HomeTabFragment extends Fragment {
     }
 
     public void updateHomePage() {
+        DateFormat df = DateFormat.getDateInstance();
         _todayWorkout = _db.getWorkoutForDay(CalendarDay.today().getDate());
         if(_todayWorkout != null) {
-            _todayWorkoutTextView.setText(setTextViewText(_todayWorkout.getWorkoutPlanName(), -1));
+            _todayWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
+                    setTextViewText(_todayWorkout.getWorkoutPlanName(), -1), df.format(_todayWorkout.getDate().getTime())));
         } else {
             _todayWorkoutTextView.setText(setTextViewText("Add a workout to",  new Date().getTime()));
         }
 
         _nextWorkout = _db.getNextWorkoutAfterDay(CalendarDay.today().getDate());
         if(_nextWorkout != null) {
-            _nextWorkoutTextView.setText(setTextViewText(_nextWorkout.getWorkoutPlanName(), -1));
+            _nextWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
+                    setTextViewText(_nextWorkout.getWorkoutPlanName(), -1), df.format(_nextWorkout.getDate().getTime())));
         } else {
             _nextWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime() + DAY_IN_MILLISECONDS));
         }
 
         _prevWorkout = _db.getPreviousWorkoutBeforeDay(CalendarDay.today().getDate());
         if(_prevWorkout != null) {
-            _prevWorkoutTextView.setText(setTextViewText(_prevWorkout.getWorkoutPlanName(), -1));
+            _prevWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
+                    setTextViewText(_prevWorkout.getWorkoutPlanName(), -1), df.format(_prevWorkout.getDate().getTime())));
         } else {
             _prevWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime() - DAY_IN_MILLISECONDS));
         }

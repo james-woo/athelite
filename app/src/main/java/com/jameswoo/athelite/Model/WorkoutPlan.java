@@ -1,12 +1,14 @@
 package com.jameswoo.athelite.Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class WorkoutPlan {
 
     private long _id;
     private String _workoutPlanName;
     private ArrayList<Exercise> _exercises = new ArrayList<>();
+    private Date _date;
 
     private WorkoutPlan(Builder builder) {
         _id = builder.bId;
@@ -26,6 +28,8 @@ public class WorkoutPlan {
         return _exercises;
     }
 
+    public Date getDate() { return _date; }
+
     public void setWorkoutPlanName(String name) {
         _workoutPlanName = name;
     }
@@ -41,6 +45,8 @@ public class WorkoutPlan {
     public void setExercises(ArrayList<Exercise> exercises) {
         _exercises = exercises;
     }
+
+    public void setDate(Date date) { _date = date; }
 
     public static class Builder {
         private long bId;
