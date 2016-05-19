@@ -57,7 +57,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         }
 
         ((Toolbar)convertView.findViewById(R.id.card_exercise_toolbar)).setTitle(_exerciseList.get(position).getExerciseName());
-        _exerciseToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        ((Toolbar)convertView.findViewById(R.id.card_exercise_toolbar)).setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch(menuItem.getItemId()) {
@@ -96,12 +96,6 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                 return true;
             }
         });
-        _exerciseToolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startViewExercise(position);
-            }
-        });
 
         TextView exerciseSetNumberTV = (TextView) convertView.findViewById(R.id.exercise_set_number);
         TextView exerciseSetWeightTV = (TextView) convertView.findViewById(R.id.exercise_set_weight);
@@ -138,6 +132,13 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         exerciseSetNumberTV.setText(exerciseSetNumber);
         exerciseSetWeightTV.setText(exerciseSetWeight);
         exerciseSetRepsTV.setText(exerciseSetReps);
+
+        ((Toolbar)convertView.findViewById(R.id.card_exercise_toolbar)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startViewExercise(position);
+            }
+        });
 
         eCardView.setOnClickListener(new View.OnClickListener() {
             @Override

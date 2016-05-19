@@ -111,11 +111,13 @@ public class CalendarTabFragment extends Fragment {
 
     public void updateSelectedDate(Date selectedDate) {
         DateFormat df = DateFormat.getDateInstance();
-        WorkoutPlan workoutPlan = _db.getWorkoutForDay(selectedDate);
-        if(workoutPlan != null) {
-            _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
-        } else {
-            _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
+        if(_db != null) {
+            WorkoutPlan workoutPlan = _db.getWorkoutForDay(selectedDate);
+            if(workoutPlan != null) {
+                _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
+            } else {
+                _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
+            }
         }
     }
 

@@ -33,7 +33,8 @@
                 android:id="@+id/edit_workout_name"
                 android:selectAllOnFocus="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_marginStart="12dp" />
+                android:layout_marginStart="12dp"
+                android:windowSoftInputMode="stateHidden"/>
         </android.support.design.widget.TextInputLayout>
 
     </android.support.design.widget.AppBarLayout>

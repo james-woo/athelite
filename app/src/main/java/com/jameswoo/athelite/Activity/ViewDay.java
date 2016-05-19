@@ -25,8 +25,6 @@ import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Tabs.CalendarTabFragment;
-import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
-import com.jameswoo.athelite.Util.JsonSerializer;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.sql.Date;
@@ -212,7 +210,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             case R.id.action_delete_workout:
                 _db.deleteWorkoutDay(_workoutDay);
                 CalendarTabFragment.getInstance().unSetSelectedDate(new Date(_dateTime));
-                CalendarTabFragment.getInstance().setSelectedDate(new Date(_dateTime));
+                CalendarTabFragment.getInstance().setSelectedDate(CalendarDay.today().getDate());
                 _workoutDay = null;
                 onBackPressed();
                 break;
