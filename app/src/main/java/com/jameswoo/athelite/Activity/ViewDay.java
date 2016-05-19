@@ -34,6 +34,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class ViewDay extends AppCompatActivity implements DialogInterface.OnDismissListener{
 
@@ -48,6 +49,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
     private ExerciseListAdapter _adapter;
     private EditText _workoutName;
     private long _dateTime;
+    private ListView _listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +84,9 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         _addAWorkoutTextViewHelp = (TextView) findViewById(R.id.add_workout_help);
         _workoutName = (EditText) findViewById(R.id.view_day_edit_workout_name);
 
-        ListView listView = (ListView) findViewById(R.id.workoutday_exercise_list_view);
-        if(listView != null)
-            listView.setAdapter(_adapter);
+        _listView = (ListView) findViewById(R.id.workoutday_exercise_list_view);
+        if(_listView != null)
+            _listView.setAdapter(_adapter);
 
         setFabPickWorkout();
 
@@ -156,6 +158,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutDay);
             _adapter.addExercise(newExercise);
             _adapter.notifyDataSetChanged();
+            _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
         }
     }
 
@@ -180,6 +183,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             _workoutDay.setWorkoutPlanName(_workoutName.getText().toString());
             _workoutDay.setExercises(_adapter.getExerciseList());
             _db.updateWorkoutPlan(_workoutDay);
+            CalendarTabFragment.getInstance().updateSelectedDate(new Date(_dateTime));
         }
     }
 
@@ -208,6 +212,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             case R.id.action_delete_workout:
                 _db.deleteWorkoutDay(_workoutDay);
                 CalendarTabFragment.getInstance().unSetSelectedDate(new Date(_dateTime));
+                CalendarTabFragment.getInstance().setSelectedDate(new Date(_dateTime));
                 _workoutDay = null;
                 onBackPressed();
                 break;

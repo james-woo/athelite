@@ -9,7 +9,7 @@
             android:text="@string/set"
             android:id="@+id/set_text"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="0"
             android:gravity="start" />
 
@@ -20,9 +20,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#424242"
             android:layout_marginTop="0dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:gravity="start"
-            android:layout_weight="0.5" />
+            android:layout_weight="0" />
 
         <EditText
             android:id="@+id/set_weight"
@@ -30,20 +30,21 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#424242"
-            android:layout_marginStart="50dp"
-            android:inputType="numberDecimal"
+            android:layout_marginStart="30dp"
+            android:inputType="textNoSuggestions|numberDecimal"
             android:gravity="end"
-            android:layout_weight="0"
-            android:selectAllOnFocus="true"/>
+            android:layout_weight="0.20"
+            android:selectAllOnFocus="true"
+            android:minWidth="30dp"
+            android:maxWidth="50dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/set_weight_type"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0"
+            android:layout_marginEnd="10dp"
             android:gravity="start" />
 
         <EditText
@@ -52,12 +53,13 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#424242"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="50dp"
-            android:inputType="number"
+            android:layout_marginEnd="10dp"
+            android:inputType="number|textNoSuggestions"
             android:gravity="end"
-            android:layout_weight="0"
-            android:selectAllOnFocus="true"/>
+            android:layout_weight="0.20"
+            android:selectAllOnFocus="true"
+            android:minWidth="30dp"
+            android:maxWidth="50dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,6 +69,6 @@
             android:id="@+id/set_reps_text"
             android:layout_marginEnd="0dp"
             android:gravity="start"
-            android:layout_weight="0.5" />
+            android:layout_weight="0" />
 
 </LinearLayout>

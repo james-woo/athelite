@@ -97,7 +97,7 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_nextWorkout != null) {
-                    startViewWorkoutActivity(_nextWorkout, _dateTime.getTimeInMillis() + DAY_IN_MILLISECONDS);
+                    startViewWorkoutActivity(_nextWorkout, _nextWorkout.getDate().getTime());
                 } else {
                     startViewDayActivity(_dateTime.getTimeInMillis() + DAY_IN_MILLISECONDS);
                 }
@@ -108,7 +108,7 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_prevWorkout != null) {
-                    startViewWorkoutActivity(_prevWorkout, _dateTime.getTimeInMillis() - DAY_IN_MILLISECONDS);
+                    startViewWorkoutActivity(_prevWorkout, _prevWorkout.getDate().getTime());
                 } else {
                     startViewDayActivity(_dateTime.getTimeInMillis() - DAY_IN_MILLISECONDS);
                 }

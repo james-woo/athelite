@@ -88,6 +88,7 @@ public class CalendarTabFragment extends Fragment {
         if (_calendar != null) {
             _calendar.setDateSelected(selectedDate, true);
         }
+
     }
 
     private void setSelectedDates(CalendarDay selectedDate) {
@@ -107,6 +108,17 @@ public class CalendarTabFragment extends Fragment {
             _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
         }
     }
+
+    public void updateSelectedDate(Date selectedDate) {
+        DateFormat df = DateFormat.getDateInstance();
+        WorkoutPlan workoutPlan = _db.getWorkoutForDay(selectedDate);
+        if(workoutPlan != null) {
+            _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
+        } else {
+            _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
+        }
+    }
+
 
     public long getDateTimeInMilliseconds() {
         return _dateTime.getTimeInMillis();

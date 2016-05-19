@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jameswoo.athelite.Activity.ViewExercise;
 import com.jameswoo.athelite.Database.DBHandler;
@@ -83,9 +84,12 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                     case R.id.action_delete_exercise:
                         _db.deleteExercise(_exerciseList.get(position));
                         _exerciseList.remove(position);
+                        Toast.makeText(getContext(), "Exercise Deleted", Toast.LENGTH_SHORT).show();
                         if(_exerciseList.isEmpty()) {
+                            Toast.makeText(getContext(), "Exercise Deleted, Default Exercise Added", Toast.LENGTH_SHORT).show();
                             _exerciseList.add(_db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan));
                         }
+
                         notifyDataSetChanged();
                         break;
                 }

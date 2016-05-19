@@ -54,6 +54,8 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         _db = new DBHandler(_context);
     }
 
+
+
     @Override
     public WorkoutPlanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_workout, parent, false);
@@ -93,7 +95,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
                             _db.deleteWorkoutPlan(_workOutPlanList.get(position));
                             _workOutPlanList.remove(position);
                             WorkoutPlanTabFragment.getInstance().checkEmptyList();
-                            notifyItemRangeRemoved(0, getItemCount());
+                            notifyDataSetChanged();
                             break;
                     }
                     return true;

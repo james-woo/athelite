@@ -175,4 +175,7 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_setup">SetupActivity</string>
+    <string name="lets_set_up">Let\'s set things up</string>
+    <string name="units_setup">Units</string>
 </resources>

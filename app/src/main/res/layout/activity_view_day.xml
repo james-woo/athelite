@@ -35,7 +35,8 @@
             android:id="@+id/view_day_edit_workout_name"
             android:selectAllOnFocus="true"
             android:textSize="18sp"
-            android:layout_marginStart="12dp" />
+            android:layout_marginStart="12dp"
+            android:windowSoftInputMode="stateHidden"/>
 
     </android.support.design.widget.AppBarLayout>
 

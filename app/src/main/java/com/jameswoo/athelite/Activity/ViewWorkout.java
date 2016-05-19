@@ -27,6 +27,7 @@ public class ViewWorkout extends AppCompatActivity {
     private EditText _workoutName;
     private ExerciseListAdapter _adapter;
     private DBHandler _db;
+    private ListView _listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +65,9 @@ public class ViewWorkout extends AppCompatActivity {
     void initInstances() {
         _db = new DBHandler(this);
         _adapter = new ExerciseListAdapter(this, _workoutPlan.getWorkoutPlanExercises(), _workoutPlan);
-        ListView listView = (ListView) findViewById(R.id.exercise_list_view);
-        if(listView != null)
-            listView.setAdapter(_adapter);
+        _listView = (ListView) findViewById(R.id.exercise_list_view);
+        if(_listView != null)
+            _listView.setAdapter(_adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if(fab != null)
@@ -84,6 +85,7 @@ public class ViewWorkout extends AppCompatActivity {
         Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan);
         _adapter.addExercise(newExercise);
         _adapter.notifyDataSetChanged();
+        _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
     }
 
     public void updateWorkoutPlan() {

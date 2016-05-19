@@ -10,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Adapter.ExerciseSetListAdapter;
@@ -24,6 +26,7 @@ import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewExercise extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class ViewExercise extends AppCompatActivity {
     private DBHandler _db;
     private DBExerciseList _dbe;
     private ArrayAdapter _exerciseNameAdapter;
+    private ListView _listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +61,9 @@ public class ViewExercise extends AppCompatActivity {
         _db = new DBHandler(this);
         _dbe = new DBExerciseList(this);
         _adapter = new ExerciseSetListAdapter(this, _exercise.getExerciseSets());
-        ListView listView = (ListView) findViewById(R.id.set_list_view);
-        if(listView != null)
-            listView.setAdapter(_adapter);
+        _listView = (ListView) findViewById(R.id.set_list_view);
+        if(_listView != null)
+            _listView.setAdapter(_adapter);
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         if(fabAdd != null)
@@ -119,6 +123,17 @@ public class ViewExercise extends AppCompatActivity {
         ExerciseSet newSet = _db.createExerciseSetForExercise(_db.getWritableDatabase(), _exercise, getNextSetNumber());
         _adapter.addExerciseSet(newSet);
         _adapter.notifyDataSetChanged();
+        _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
+    }
+
+    private void updateSets() {
+        for(int i = 0; i < _listView.getCount(); i++) {
+            View item  = _listView.getChildAt(i);
+            EditText setWeight = (EditText) item.findViewById(R.id.set_weight);
+            EditText setReps = (EditText) item.findViewById(R.id.set_reps);
+            _adapter.getItem(i).setSetWeight(Double.valueOf(setWeight.getText().toString()));
+            _adapter.getItem(i).setSetReps(Integer.valueOf(setReps.getText().toString()));
+        }
     }
 
     private int getNextSetNumber() {
@@ -126,6 +141,7 @@ public class ViewExercise extends AppCompatActivity {
     }
 
     public void updateExercise() {
+        updateSets();
         if(_exerciseName.getText().toString().equals("")) {
             _exerciseName.setText(R.string.new_exercise);
         }

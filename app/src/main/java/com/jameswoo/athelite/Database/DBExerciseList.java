@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.jameswoo.athelite.R;
 
@@ -46,7 +47,9 @@ public class DBExerciseList  extends SQLiteOpenHelper {
             this.getReadableDatabase();
             try {
                 copyDataBase();
+                this.close();
             } catch (IOException e) {
+                this.close();
                 throw new Error("Error copying database: " + e);
             }
         }
@@ -199,7 +202,6 @@ public class DBExerciseList  extends SQLiteOpenHelper {
 
             db.close();
         }
-
         return createSuccessful;
     }
 }

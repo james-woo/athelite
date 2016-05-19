@@ -1,6 +1,8 @@
 package com.jameswoo.athelite.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.SQLException;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -57,14 +59,24 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.calendar
     };
 
+    private void showSetUp(){
+        Intent setUpIntent = new Intent(getBaseContext(), SetupActivity.class);
+        startActivity(setUpIntent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        HomeTabFragment.getInstance();
-        WorkoutPlanTabFragment.getInstance();
-        CalendarTabFragment.getInstance();
+        //SharedPreferences sp = getSharedPreferences("setup", Context.MODE_PRIVATE);
+        //boolean setUpSeen = sp.getBoolean("setupSeen", false); //will return false if there is no shared preference
+        //if(setUpSeen){
+        //    showSetUp();
+        //    SharedPreferences.Editor ed = sp.edit();
+        //    ed.putBoolean("setupSeen", true);
+        //    ed.commit();
+        //}
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             throw new Error(sqle.getMessage());
         }
 
-        _db.deleteDB();
+        //_db.deleteDB();
     }
 
     @Override

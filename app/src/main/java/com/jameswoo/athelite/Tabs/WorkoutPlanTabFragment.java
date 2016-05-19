@@ -87,6 +87,7 @@ public class WorkoutPlanTabFragment extends Fragment {
         _workoutPlanAdapter.addWorkoutPlan(_db.createWorkoutPlan());
         _workoutPlanAdapter.notifyDataSetChanged();
         checkEmptyList();
+        _workoutPlanRecyclerView.smoothScrollToPosition(_workoutPlanAdapter.getItemCount());
     }
 
     public void deleteWorkout(WorkoutPlan workoutPlan) {

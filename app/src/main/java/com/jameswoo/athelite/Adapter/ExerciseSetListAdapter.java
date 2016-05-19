@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,31 +48,8 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
         TextView setWeightType = (TextView) convertView.findViewById(R.id.set_weight_type);
         EditText setReps = (EditText) convertView.findViewById(R.id.set_reps);
 
-        //final ExerciseSet exerciseSet = _exerciseSetList.get(position);
-        final EditText weight = setWeight;
-        final EditText reps = setReps;
+        setNumber.setText(String.valueOf(_exerciseSetList.get(position).getSetNumber()));
 
-        setWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!(weight.getText().toString()).equals("")){
-                    if(Double.compare(_exerciseSetList.get(position).getSetWeight(),
-                            Double.parseDouble(weight.getText().toString())) != 0) {
-                        _exerciseSetList.get(position).setSetWeight(Double.parseDouble(weight.getText().toString()));
-                    }
-                }
-            }
-        });
-
-        setReps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!(reps.getText().toString()).equals("")){
-                    if(Double.compare(_exerciseSetList.get(position).getSetWeight(),
-                            Double.parseDouble(reps.getText().toString())) != 0) {
-                        _exerciseSetList.get(position).setSetReps(Integer.parseInt(reps.getText().toString()));
-                    }
-                }
-            }
-        });
         DecimalFormat weightDF = new DecimalFormat("#####.##");
         //boolean isPounds = (_sp.getString("units", "lb").equals("lb"));
         setNumber.setText(String.valueOf(_exerciseSetList.get(position).getSetNumber()));
