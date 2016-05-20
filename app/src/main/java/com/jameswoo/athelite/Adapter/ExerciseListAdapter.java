@@ -107,25 +107,22 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         String exerciseSetNumber = "";
         String exerciseSetWeight = "";
         String exerciseSetReps = "";
-        //int widthPixels = eCardView.getResources().getDisplayMetrics().widthPixels;
-        //double setWidth = widthPixels * 0.015 * -1;
-        //double weightWidth = widthPixels * 0.01;
-        //boolean isPounds = (_sp.getString("units", "lb").equals("lb"));
 
         for(ExerciseSet es : exerciseSetList) {
-            DecimalFormat weightDF = new DecimalFormat("#####.##");
-            DecimalFormat repDF = new DecimalFormat("###,### reps");
+            DecimalFormat weightDF = new DecimalFormat("######.##");
+            DecimalFormat repDF = new DecimalFormat("###### reps");
             DecimalFormat setDF = new DecimalFormat("Set ###");
 
-            exerciseSetNumber += String.format(Locale.US, "%s",
-                    String.valueOf(setDF.format(es.getSetNumber()))  + "\n");
+            String weight = String.valueOf(weightDF.format(es.getSetWeight()));
+            String weightType = es.getWeightType();
 
-            exerciseSetWeight += String.format(Locale.US, "%s",
-                    String.valueOf(weightDF.format(es.getSetWeight()) + " " +
-                            _sp.getString("units", "lb")  + "\n"));
+            exerciseSetNumber += String.format(Locale.US, "%s\n",
+                    String.valueOf(setDF.format(es.getSetNumber())));
 
-            exerciseSetReps += String.format(Locale.US, "%s",
-                    String.valueOf(repDF.format(es.getSetReps())) + "\n");
+            exerciseSetWeight += String.format(Locale.US, "%s %s\n", weight, weightType);
+
+            exerciseSetReps += String.format(Locale.US, "%s\n",
+                    String.valueOf(repDF.format(es.getSetReps())));
 
         }
 

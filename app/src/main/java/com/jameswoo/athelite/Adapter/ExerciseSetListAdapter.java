@@ -50,11 +50,12 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
 
         setNumber.setText(String.valueOf(_exerciseSetList.get(position).getSetNumber()));
 
-        DecimalFormat weightDF = new DecimalFormat("#####.##");
-        //boolean isPounds = (_sp.getString("units", "lb").equals("lb"));
-        setNumber.setText(String.valueOf(_exerciseSetList.get(position).getSetNumber()));
+        DecimalFormat weightDF = new DecimalFormat("######.##");
         double sWeight = _exerciseSetList.get(position).getSetWeight();
-        setWeight.setText(String.valueOf(weightDF.format(sWeight)));
+        String weight = String.valueOf(weightDF.format(sWeight));
+
+        setNumber.setText(String.valueOf(_exerciseSetList.get(position).getSetNumber()));
+        setWeight.setText(weight);
         setWeightType.setText(_sp.getString("units", "lb"));
         setReps.setText(String.valueOf(_exerciseSetList.get(position).getSetReps()));
 

@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/units_setup"
-        android:id="@+id/units_setup"
+        android:id="@+id/units_setup_text"
         android:layout_below="@+id/lets_set_things_up"
         android:layout_alignParentStart="true"
         android:layout_marginTop="50dp" />
@@ -34,15 +34,14 @@
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/units_setup"
+        android:layout_below="@+id/units_setup_text"
+        android:id="@+id/units_setup"
         android:layout_alignParentStart="true">
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pounds"
             android:id="@+id/setup_pounds"
-            android:layout_below="@+id/units_setup"
-            android:layout_alignParentStart="true"
             android:checked="true" />
 
         <RadioButton
@@ -50,8 +49,6 @@
             android:layout_height="wrap_content"
             android:text="Kilograms"
             android:id="@+id/setup_kilograms"
-            android:layout_below="@+id/setup_pounds"
-            android:layout_alignParentStart="true"
             android:checked="false" />
     </RadioGroup>
 

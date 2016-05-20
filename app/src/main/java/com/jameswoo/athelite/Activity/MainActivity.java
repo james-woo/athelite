@@ -69,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //SharedPreferences sp = getSharedPreferences("setup", Context.MODE_PRIVATE);
-        //boolean setUpSeen = sp.getBoolean("setupSeen", false); //will return false if there is no shared preference
-        //if(setUpSeen){
-        //    showSetUp();
-        //    SharedPreferences.Editor ed = sp.edit();
-        //    ed.putBoolean("setupSeen", true);
-        //    ed.commit();
-        //}
+        SharedPreferences sp = getSharedPreferences("setup", Context.MODE_PRIVATE);
+        boolean setupSeen = sp.getBoolean("setupSeen", false); //will return false if there is no shared preference
+        //if(setupSeen){
+            showSetUp();
+            SharedPreferences.Editor ed = sp.edit();
+            ed.putBoolean("setupSeen", true);
+            ed.apply();
+       // }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
