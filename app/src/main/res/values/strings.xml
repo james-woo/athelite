@@ -43,7 +43,7 @@
     <!-- Strings related to Settings -->
 
     <!-- Strings related to Settings -->
-    <string name="settings_title_my_account">My Account</string>
+    <string name="settings_title_my_account">My Profile</string>
     <string name="settings_title_username_name">Name</string>
     <string name="settings_summary_username_name">Name</string>
     <string name="settings_key_username_name">name</string>
@@ -91,6 +91,18 @@
         <item>lb</item>
         <item>kg</item>
     </string-array>
+
+    <string-array name="genderArray">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="genderListValues">
+        <item>male</item>
+        <item>female</item>
+        <item>other</item>
+    </string-array>
+
     <string-array name="soundArray">
         <item>Sound</item>
         <item>Vibrate</item>
@@ -178,4 +190,5 @@
     <string name="title_activity_setup">SetupActivity</string>
     <string name="lets_set_up">Let\'s set things up</string>
     <string name="units_setup">Units</string>
+
 </resources>

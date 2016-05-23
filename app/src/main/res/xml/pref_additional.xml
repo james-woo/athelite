@@ -12,5 +12,8 @@
         android:summary="@string/settings_summary_feedback"
         android:key="@string/settings_key_feedback" />
     -->
+    <PreferenceCategory android:title="Feedback"/>
+
+    <PreferenceCategory android:title="Donate"/>
 
 </PreferenceScreen>

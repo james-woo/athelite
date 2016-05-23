@@ -1,5 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="Profile"/>
+
     <EditTextPreference
         android:title="@string/settings_title_username_name"
         android:summary="@string/settings_summary_username_name"
@@ -12,5 +14,36 @@
         android:summary="@string/settings_summary_email"
         android:defaultValue="email@email.com"
         android:key="@string/settings_key_email" />
+
+    <EditTextPreference
+        android:title="Height"
+        android:summary="Height"
+        android:defaultValue="0"
+        android:key="user_height"
+        android:dialogTitle="Your Height" />
+
+    <EditTextPreference
+        android:title="Weight"
+        android:summary="Weight"
+        android:defaultValue="0"
+        android:key="user_weight"
+        android:dialogTitle="Your Weight" />
+
+    <ListPreference
+        android:title="Gender"
+        android:summary="Gender"
+        android:key="user_gender"
+        android:defaultValue="1"
+        android:entries="@array/unitsArray"
+        android:entryValues="@array/unitsListValues"/>
+
+    <PreferenceCategory android:title="Optional"/>
+
+    <EditTextPreference
+        android:title="Body Fat Percentage"
+        android:summary="Body Fat Percentage"
+        android:defaultValue="0"
+        android:key="user_bf"
+        android:dialogTitle="Your Body Fat Percentage" />
 
 </PreferenceScreen>

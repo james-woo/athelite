@@ -1,5 +1,6 @@
 package com.jameswoo.athelite.Activity;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +28,8 @@ import com.jameswoo.athelite.Tabs.HomeTabFragment;
 import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
 
 import java.io.IOException;
+
+import br.com.goncalves.pugnotification.notification.PugNotification;
 
 public class MainActivity extends AppCompatActivity {
 

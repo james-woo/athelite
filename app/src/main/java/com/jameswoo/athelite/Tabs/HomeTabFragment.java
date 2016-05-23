@@ -1,7 +1,11 @@
 package com.jameswoo.athelite.Tabs;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -23,12 +27,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import br.com.goncalves.pugnotification.notification.PugNotification;
+
 public class HomeTabFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+
 
     private DBHandler _db;
     private TextView _todayWorkoutTextView;
@@ -43,7 +50,11 @@ public class HomeTabFragment extends Fragment {
     private WorkoutPlan _nextWorkout;
     private WorkoutPlan _prevWorkout;
 
-    private Calendar _dateTime = Calendar.getInstance();;
+    private SharedPreferences _sp;
+
+    private Calendar _dateTime = Calendar.getInstance();
+    private Date lastSentNotification = new Date(0);
+    private boolean sentNotification = false;
 
     private final long DAY_IN_MILLISECONDS = 86400000;
 
@@ -79,7 +90,7 @@ public class HomeTabFragment extends Fragment {
         _prevWorkoutCard = (CardView) rootView.findViewById(R.id.previous_workout_card_view);
 
         _dateTime.setTime(CalendarDay.today().getDate());
-
+        _sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         updateHomePage();
 
         _todayWorkoutCard.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +125,7 @@ public class HomeTabFragment extends Fragment {
                 }
             }
         });
-
+        setNotification();
         return rootView;
     }
 
@@ -159,14 +170,14 @@ public class HomeTabFragment extends Fragment {
     private void startViewDayActivity(long time) {
         Intent intent = new Intent(getContext(), ViewDay.class);
         intent.putExtra("VIEW_DAY_PARENT", "Home");
-        intent.putExtra("DATETIME", time);
+        intent.putExtra("VIEW_DAY_DATETIME", time);
         startActivity(intent);
     }
 
     private void startViewWorkoutActivity(WorkoutPlan workoutPlan, long time) {
         Intent intent = new Intent(getContext(), ViewDay.class);
         intent.putExtra("VIEW_DAY_PARENT", "Home");
-        intent.putExtra("DATETIME", time);
+        intent.putExtra("VIEW_DAY_DATETIME", time);
         startActivity(intent);
     }
 
@@ -175,5 +186,35 @@ public class HomeTabFragment extends Fragment {
         intent.putExtra("VIEW_WORKOUT_PARENT", "Home");
         intent.putExtra(WorkoutPlanAdapter.WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(workoutPlan));
         getContext().startActivity(intent);
+    }
+
+    private void setNotification() {
+        _dateTime.setTime(CalendarDay.today().getDate());
+        if(!sentNotification
+                && _todayWorkout != null
+                && lastSentNotification.getTime() < _dateTime.getTimeInMillis()
+                && _sp.getBoolean("receive_notifications", true)
+        ){
+            lastSentNotification.setTime(_dateTime.getTimeInMillis());
+
+            Intent viewDay = new Intent(getContext(), ViewDay.class);
+            viewDay.putExtra("VIEW_DAY_DATETIME", _dateTime.getTimeInMillis());
+            viewDay.putExtra("VIEW_DAY_PARENT", "Home");
+
+            PugNotification.with(getContext())
+                    .load()
+                    .title("Today's Workout")
+                    .message("Tap to see your workout for today")
+                    .smallIcon(R.drawable.ic_workout_icon_24dp)
+                    .largeIcon(R.drawable.ic_workout_icon_24dp)
+                    .flags(Notification.DEFAULT_ALL)
+                    .when(_todayWorkout.getDate().getTime())
+                    .onlyAlertOnce(true)
+                    .autoCancel(true)
+                    .click(PendingIntent.getActivity(getContext(), 0, viewDay, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .simple()
+                    .build();
+            sentNotification = true;
+        }
     }
 }

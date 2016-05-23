@@ -15,6 +15,8 @@
         android:entryValues="@array/soundListValues" />
     -->
 
+    <PreferenceCategory android:title="Workouts"/>
+
     <ListPreference
         android:title="@string/settings_title_units"
         android:summary="@string/settings_summary_units"
@@ -32,5 +34,13 @@
         android:title="@string/settings_title_target_reps"
         android:defaultValue="5"
         android:key="@string/settings_key_target_reps" />
+
+    <PreferenceCategory android:title="Notifications"/>
+
+    <CheckBoxPreference
+        android:title="@string/settings_title_notifications"
+        android:summary="@string/settings_summary_notifications"
+        android:key="@string/settings_key_notifications"
+        android:defaultValue="@string/settings_default_value_notifications" />
 
 </PreferenceScreen>
