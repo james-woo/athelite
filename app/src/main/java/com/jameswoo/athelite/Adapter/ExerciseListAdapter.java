@@ -114,6 +114,16 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
             DecimalFormat setDF = new DecimalFormat("Set ###");
 
             String weight = String.valueOf(weightDF.format(es.getSetWeight()));
+            es.setWeightType(_sp.getString("units", "lb"));
+
+            if(_sp.getString("units_setup", "lb").equals("lb") && (_sp.getString("units", "lb")).equals("kg") && _sp.getBoolean("switched_units", false)) {
+                weight = String.valueOf(weightDF.format(es.getSetWeight() / 2.2));
+                es.setWeightType("kg");
+            } else if (_sp.getString("units_setup", "lb").equals("kg") && (_sp.getString("units", "lb")).equals("lb") && _sp.getBoolean("switched_units", false)) {
+                weight = String.valueOf(weightDF.format(es.getSetWeight() * 2.2));
+                es.setWeightType("lb");
+            }
+
             String weightType = es.getWeightType();
 
             exerciseSetNumber += String.format(Locale.US, "%s\n",
@@ -125,6 +135,9 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                     String.valueOf(repDF.format(es.getSetReps())));
 
         }
+        SharedPreferences.Editor editor = _sp.edit();
+        editor.putBoolean("switched_units", false);
+        editor.apply();
 
         exerciseSetNumberTV.setText(exerciseSetNumber);
         exerciseSetWeightTV.setText(exerciseSetWeight);

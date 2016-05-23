@@ -4,6 +4,7 @@ package com.jameswoo.athelite.Activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +42,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
+            if(preference.getKey().equals("units")) {
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean("switched_units", true);
+                editor.apply();
+            }
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
@@ -171,6 +178,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("units"));
             bindPreferenceSummaryToValue(findPreference("target_sets"));
             bindPreferenceSummaryToValue(findPreference("target_reps"));
+
         }
 
         @Override

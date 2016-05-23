@@ -54,10 +54,14 @@ public class SetupActivity extends AppCompatActivity {
 
         // Write to shared prefs
         SharedPreferences.Editor editor = _sp.edit();
-        if(r.getText().toString().equals("Pounds"))
+        if(r.getText().toString().equals("Pounds")) {
             editor.putString("units_setup", "lb");
-        else if(r.getText().toString().equals("Kilograms"))
+            editor.putString("units", "lb");
+        }
+        else if(r.getText().toString().equals("Kilograms")) {
             editor.putString("units_setup", "kg");
+            editor.putString("units", "kg");
+        }
 
         editor.apply();
     }

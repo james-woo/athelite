@@ -54,10 +54,22 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
         double sWeight = _exerciseSetList.get(position).getSetWeight();
         String weight = String.valueOf(weightDF.format(sWeight));
 
+        if(_sp.getString("units_setup", "lb").equals("lb") && (_sp.getString("units", "lb")).equals("kg") && _sp.getBoolean("switched_units", false)) {
+            weight = String.valueOf(weightDF.format(_exerciseSetList.get(position).getSetWeight() / 2.2));
+            _exerciseSetList.get(position).setWeightType("kg");
+        } else if (_sp.getString("units_setup", "lb").equals("kg") && (_sp.getString("units", "lb")).equals("lb") && _sp.getBoolean("switched_units", false)) {
+            weight = String.valueOf(weightDF.format(_exerciseSetList.get(position).getSetWeight() * 2.2));
+            _exerciseSetList.get(position).setWeightType("lb");
+        }
+
         setNumber.setText(String.valueOf(_exerciseSetList.get(position).getSetNumber()));
         setWeight.setText(weight);
         setWeightType.setText(_sp.getString("units", "lb"));
         setReps.setText(String.valueOf(_exerciseSetList.get(position).getSetReps()));
+
+        SharedPreferences.Editor editor = _sp.edit();
+        editor.putBoolean("switched_units", false);
+        editor.apply();
 
         return convertView;
     }
