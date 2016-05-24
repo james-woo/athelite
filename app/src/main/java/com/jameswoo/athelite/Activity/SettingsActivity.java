@@ -176,7 +176,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             //bindPreferenceSummaryToValue(findPreference("rest_time"));
             //bindPreferenceSummaryToValue(findPreference("timer_alarm"));
-            bindPreferenceSummaryToValue(findPreference("units"));
+            bindPreferenceSummaryToValue(findPreference("units"));123
             bindPreferenceSummaryToValue(findPreference("target_sets"));
             bindPreferenceSummaryToValue(findPreference("target_reps"));
 
@@ -211,6 +211,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("name"));
             //bindPreferenceSummaryToValue(findPreference("email"));
+            bindPreferenceSummaryToValue(findPreference("user_height"));
+            bindPreferenceSummaryToValue(findPreference("user_weight"));
+            bindPreferenceSummaryToValue(findPreference("user_age"));
+            bindPreferenceSummaryToValue(findPreference("user_gender"));
         }
 
         @Override

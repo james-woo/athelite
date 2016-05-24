@@ -24,12 +24,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Athelite will use this information for certain calculations. Don&apos;t worry, we won&apos;t use this information for anything else."
+        android:id="@+id/setup_exp"
+        android:layout_below="@+id/lets_set_things_up"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/units_setup"
         android:id="@+id/units_setup_text"
-        android:layout_below="@+id/lets_set_things_up"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/setup_exp"
+        android:layout_alignParentStart="true" />
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -40,16 +49,178 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pounds"
+            android:text="Imperial"
             android:id="@+id/setup_pounds"
             android:checked="true" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kilograms"
+            android:text="Metric"
             android:id="@+id/setup_kilograms"
             android:checked="false" />
     </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select the units you wish to use."
+        android:id="@+id/textView"
+        android:layout_below="@+id/units_setup"
+        android:layout_alignParentStart="true" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:id="@+id/space"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Height"
+        android:id="@+id/height_text"
+        android:layout_below="@+id/space"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/edit_height"
+        android:layout_below="@+id/textView"
+        android:layout_alignEnd="@+id/lets_set_things_up"
+        android:layout_toEndOf="@+id/height_text"
+        android:layout_alignStart="@+id/edit_weight" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="cm"
+        android:id="@+id/height_units"
+        android:layout_alignBottom="@+id/height_text"
+        android:layout_toEndOf="@+id/lets_set_things_up" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_below="@+id/height_text"
+        android:layout_alignParentStart="true"
+        android:id="@+id/space2"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Weight"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/space2"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/edit_weight"
+        android:layout_alignTop="@+id/space2"
+        android:layout_alignEnd="@+id/lets_set_things_up"
+        android:layout_alignStart="@+id/edit_age" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="lb"
+        android:id="@+id/weight_units"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_toEndOf="@+id/lets_set_things_up" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_below="@+id/edit_weight"
+        android:layout_alignParentStart="true"
+        android:id="@+id/space3"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="years"
+        android:id="@+id/age_units"
+        android:layout_above="@+id/space4"
+        android:layout_alignStart="@+id/weight_units" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/edit_age"
+        android:layout_alignBottom="@+id/age_text"
+        android:layout_alignEnd="@+id/gender_spinner"
+        android:layout_toEndOf="@+id/gender_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Age"
+        android:id="@+id/age_text"
+        android:layout_below="@+id/space3"
+        android:layout_alignParentStart="true" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_below="@+id/edit_age"
+        android:layout_alignParentStart="true"
+        android:id="@+id/space4"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Gender"
+        android:id="@+id/gender_text"
+        android:layout_below="@+id/space4"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gender_spinner"
+        android:layout_alignEnd="@+id/lets_set_things_up"
+        android:layout_toEndOf="@+id/gender_text"
+        android:layout_alignBottom="@+id/gender_text"
+        android:layout_alignTop="@+id/space4"
+        android:spinnerMode="dropdown" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_below="@+id/gender_text"
+        android:layout_alignParentStart="true"
+        android:id="@+id/space5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="This information will only be used in this application. You can always change or update your profile in the settings."
+        android:id="@+id/textView3"
+        android:layout_below="@+id/space5"
+        android:layout_alignEnd="@+id/age_units" />
+
+
 
 </RelativeLayout>

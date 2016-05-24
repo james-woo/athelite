@@ -1,35 +1,41 @@
 <resources>
     <string name="app_name">Athelite</string>
+
+    <!-- Menu -->
     <string name="action_settings">Settings</string>
     <string name="action_help">Help</string>
-    <string name="title_activity_view_workout">ViewWorkout</string>
 
-    <string name="back_to_workout_page">Workouts</string>
+    <!-- Main Activity -->
     <string name="new_workout">New Workout</string>
-    <string name="title_activity_view_exercise">ViewExercise</string>
+    <string name="main_next_workout">Next Workout</string>
+    <string name="main_today_workout">Today\'s Workout</string>
+    <string name="main_previous_workout">Last Workout</string>
 
+    <!-- View Workout -->
+    <string name="title_activity_view_workout">ViewWorkout</string>
+    <string name="back_to_workout_page">Workouts</string>
+    <string name="action_delete_workout">Delete Workout</string>
+
+    <!-- View Exercise -->
+    <string name="title_activity_view_exercise">ViewExercise</string>
     <string name="back_to_exercises_page">Exercises</string>
     <string name="new_exercise">New Exercise</string>
     <string name="reps">reps</string>
     <string name="lb">lb</string>
     <string name="set">Set</string>
-
-    <string name="action_delete_workout">Delete Workout</string>
     <string name="action_delete_exercise">Delete Exercise</string>
     <string name="action_move_up">Move Up</string>
     <string name="action_move_down">Move Down</string>
-    <string name="title_activity_view_day">ViewDay</string>
 
+    <!-- View Day -->
+    <string name="title_activity_view_day">ViewDay</string>
     <string name="back_to_calendar_page">Calendar</string>
     <string name="add_a_workout">Add A Workout</string>
     <string name="add_a_workout_help">Tap The Plus</string>
     <string name="no_workout_selected">No Workout Selected</string>
 
-    <string name="main_next_workout">Next Workout</string>
-    <string name="main_today_workout">Today\'s Workout</string>
-    <string name="main_previous_workout">Last Workout</string>
+    <!-- Help -->
     <string name="title_activity_help">HelpActivity</string>
-
     <string name="help_text">Help</string>
     <string name="help_text_content">Athelite is a fully customizable workout logger designed for any athlete.
         \n\nSimply create a template in the "Templates" section by tapping the plus button.
@@ -38,11 +44,14 @@
         To create an exercise, simply change the name and the new exercise will be automatically saved.
         \n\nFinally, you can customize your exercises by adding the appropriate number of sets, reps,
         and weight.</string>
+
+    <!-- Dialogs -->
+    <string name="alert_dialog_ok">Ok</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="empty_list">Empty List</string>
+
+    <!-- Strings related to Settings -->
     <string name="title_activity_settings">Settings</string>
-
-    <!-- Strings related to Settings -->
-
-    <!-- Strings related to Settings -->
     <string name="settings_title_my_account">My Profile</string>
     <string name="settings_title_username_name">Name</string>
     <string name="settings_summary_username_name">Name</string>
@@ -113,6 +122,7 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+
     <string-array name="goalsArray">
         <item>Starting Out</item>
         <item>Maintain</item>
@@ -126,69 +136,14 @@
         <item>4</item>
     </string-array>
 
-    <string name="alert_dialog_ok">Ok</string>
-    <string name="alert_dialog_cancel">Cancel</string>
-    <string name="empty_list">Empty List</string>
-
-    <!-- Strings related to Settings -->
-
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
-
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
-    <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
+    <!-- Setup Activity -->
     <string name="title_activity_setup">SetupActivity</string>
     <string name="lets_set_up">Let\'s set things up</string>
     <string name="units_setup">Units</string>
+
 
 </resources>

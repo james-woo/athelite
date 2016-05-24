@@ -29,13 +29,20 @@
         android:key="user_weight"
         android:dialogTitle="Your Weight" />
 
+    <EditTextPreference
+        android:title="Age"
+        android:summary="Age"
+        android:defaultValue="0"
+        android:key="user_age"
+        android:dialogTitle="Your Age" />
+
     <ListPreference
         android:title="Gender"
-        android:summary="Gender"
+        android:summary="Select your gender"
         android:key="user_gender"
         android:defaultValue="1"
-        android:entries="@array/unitsArray"
-        android:entryValues="@array/unitsListValues"/>
+        android:entries="@array/genderArray"
+        android:entryValues="@array/genderListValues"/>
 
     <PreferenceCategory android:title="Optional"/>
 
