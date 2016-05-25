@@ -93,11 +93,11 @@
 
     <string name="title_activity_profile">Profile</string>
     <string-array name="unitsArray">
-        <item>lb</item>
+        <item>lbs</item>
         <item>kg</item>
     </string-array>
     <string-array name="unitsListValues">
-        <item>lb</item>
+        <item>lbs</item>
         <item>kg</item>
     </string-array>
 
@@ -107,9 +107,9 @@
         <item>Other</item>
     </string-array>
     <string-array name="genderListValues">
-        <item>male</item>
-        <item>female</item>
-        <item>other</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="soundArray">

@@ -6,14 +6,18 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jameswoo.athelite.R;
+import com.jameswoo.athelite.Util.TextValidator;
 
 public class SetupActivity extends AppCompatActivity {
 
@@ -25,6 +29,7 @@ public class SetupActivity extends AppCompatActivity {
     private EditText _etWeight;
     private EditText _etAge;
 
+    private FloatingActionButton _fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +37,41 @@ public class SetupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setup);
         initToolbar();
         initPreferences();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_done);
-        assert fab != null;
-        fab.setOnClickListener(new View.OnClickListener() {
+        setupEditTextValidation();
+        _fab = (FloatingActionButton) findViewById(R.id.fab_done);
+        assert _fab != null;
+        _fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                savePreferences();
-                onBackPressed();
+                if(validateInformation()) {
+                    savePreferences();
+                    onBackPressed();
+                } else {
+                    Toast.makeText(SetupActivity.this, "Your information is invalid", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private boolean validateInformation() {
+        double height, weight, age;
+        if(_etHeight.getText().toString().equals("")) {
+            return false;
+        } else {
+            height = Double.parseDouble(_etHeight.getText().toString());
+        }
+        if(_etWeight.getText().toString().equals("")) {
+            return false;
+        } else {
+            weight = Double.parseDouble(_etWeight.getText().toString());
+        }
+        if(_etAge.getText().toString().equals("")) {
+            return false;
+        } else {
+            age = Double.parseDouble(_etAge.getText().toString());
+        }
+
+        return !(height > 300 || height < 0 || weight > 1000 || weight < 0 || age > 150 || age < 0);
     }
 
     private void initPreferences() {
@@ -48,6 +79,19 @@ public class SetupActivity extends AppCompatActivity {
 
         // Units
         _unitsRadioGroup = (RadioGroup) findViewById(R.id.units_setup);
+        _unitsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton r = (RadioButton) findViewById(checkedId);
+                if(r != null && r.getText().toString().equals("Imperial")) {
+                    ((TextView) findViewById(R.id.height_units)).setText("in");
+                    ((TextView) findViewById(R.id.weight_units)).setText("lbs");
+                } else {
+                    ((TextView) findViewById(R.id.height_units)).setText("cm");
+                    ((TextView) findViewById(R.id.weight_units)).setText("kg");
+                }
+            }
+        });
 
         // Gender
         _genderSpinner = (Spinner) findViewById(R.id.gender_spinner);
@@ -84,11 +128,11 @@ public class SetupActivity extends AppCompatActivity {
 
         // Write to shared prefs
         SharedPreferences.Editor editor = _sp.edit();
-        if(r.getText().toString().equals("Pounds")) {
+        if(r.getText().toString().equals("Imperial")) {
             editor.putString("units_setup", "lb");
             editor.putString("units", "lb");
         }
-        else if(r.getText().toString().equals("Kilograms")) {
+        else if(r.getText().toString().equals("Metric")) {
             editor.putString("units_setup", "kg");
             editor.putString("units", "kg");
         }
@@ -99,6 +143,60 @@ public class SetupActivity extends AppCompatActivity {
         editor.putString("user_gender", _genderSpinner.getSelectedItem().toString());
 
         editor.apply();
+    }
+
+    private void setupEditTextValidation() {
+        _etHeight.addTextChangedListener(new TextValidator(_etHeight) {
+            @Override public void validate(TextView textView, String text) {
+                if(text.equals("")) {
+                    Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try{
+                    if(Double.parseDouble(text) > 300 || Double.parseDouble(text) < 0) {
+                        textView.setText("300");
+                        Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e("ATHELITE_SETUP", e.toString());
+                    textView.setText("0");
+                }
+            }
+        });
+        _etWeight.addTextChangedListener(new TextValidator(_etWeight) {
+            @Override public void validate(TextView textView, String text) {
+                if(text.equals("")) {
+                    Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    if (Double.parseDouble(text) > 1000 || Double.parseDouble(text) < 0) {
+                        textView.setText("1000");
+                        Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e("ATHELITE_SETUP", e.toString());
+                    textView.setText("0");
+                }
+            }
+        });
+        _etAge.addTextChangedListener(new TextValidator(_etAge) {
+            @Override public void validate(TextView textView, String text) {
+                if(text.equals("")) {
+                    Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    if (Double.parseDouble(text) > 150 || Double.parseDouble(text) < 0) {
+                        textView.setText("150");
+                        Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e("ATHELITE_SETUP", e.toString());
+                    textView.setText("0");
+                }
+            }
+        });
     }
 
 }

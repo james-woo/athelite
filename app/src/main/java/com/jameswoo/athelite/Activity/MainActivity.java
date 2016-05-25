@@ -74,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sp = getSharedPreferences("setup", Context.MODE_PRIVATE);
         boolean setupSeen = sp.getBoolean("setupSeen", false); //will return false if there is no shared preference
-        //if(setupSeen){
+        if(setupSeen){
             showSetUp();
             SharedPreferences.Editor ed = sp.edit();
             ed.putBoolean("setupSeen", true);
             ed.apply();
-       // }
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
