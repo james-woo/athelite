@@ -13,7 +13,26 @@
         android:key="@string/settings_key_feedback" />
     -->
     <PreferenceCategory android:title="Feedback"/>
+    <Preference
+        android:title="Problems or Feature Requests"
+        android:summary="Send an email to the developer team">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="mailto:atheliteteam@gmail.com">
+            <extra
+                android:name="android.intent.extra.SUBJECT"
+                android:value="Feedback"/>
+        </intent>
+    </Preference>
 
     <PreferenceCategory android:title="Donate"/>
+    <Preference
+        android:title="Like the app?"
+        android:summary="@string/donate_summary">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://paypal.me/JamesWoo/2">
+        </intent>
+    </Preference>
 
 </PreferenceScreen>

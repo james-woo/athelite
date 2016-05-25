@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -72,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sp = getSharedPreferences("setup", Context.MODE_PRIVATE);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         boolean setupSeen = sp.getBoolean("setupSeen", false); //will return false if there is no shared preference
-        if(setupSeen){
+        if(!setupSeen){
             showSetUp();
             SharedPreferences.Editor ed = sp.edit();
             ed.putBoolean("setupSeen", true);

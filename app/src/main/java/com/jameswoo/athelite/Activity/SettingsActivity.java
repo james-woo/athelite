@@ -16,10 +16,12 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.Toast;
 
 import com.jameswoo.athelite.R;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -37,6 +39,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
+    static SettingsActivity settingsActivity;
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
@@ -61,6 +64,68 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                 : null);
 
             } else {
+                switch(preference.getKey()) {
+                    case "user_name":
+                        if(value.toString().equals("")) {
+                            Toast.makeText(settingsActivity, "Invalid name", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        break;
+                    case "user_height":
+                        if(value.toString().equals("")) {
+                            Toast.makeText(settingsActivity, "Invalid height", Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if(Double.parseDouble(value.toString()) < 0 || Double.parseDouble(value.toString()) > 300 ) {
+                            Toast.makeText(settingsActivity, "Invalid height", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        break;
+                    case "user_weight":
+                        if(value.toString().equals("")) {
+                            Toast.makeText(settingsActivity, "Invalid weight", Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if(Double.parseDouble(value.toString()) < 0 || Double.parseDouble(value.toString()) > 1000 ) {
+                            Toast.makeText(settingsActivity, "Invalid weight", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        break;
+                    case "user_age":
+                        if(value.toString().equals("")) {
+                            Toast.makeText(settingsActivity, "Invalid age", Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if(Double.parseDouble(value.toString()) < 0 || Double.parseDouble(value.toString()) > 150 ) {
+                            Toast.makeText(settingsActivity, "Invalid age", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        break;
+                    case "user_bf":
+                        if(value.toString().equals("")) {
+                            Toast.makeText(settingsActivity, "Invalid body fat percentage", Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if(Double.parseDouble(value.toString()) < 0 || Double.parseDouble(value.toString()) > 100 ) {
+                            Toast.makeText(settingsActivity, "Invalid body fat percentage", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        break;
+                    case "target_sets":
+                        if(value.toString().equals("")) {
+                            Toast.makeText(settingsActivity, "Invalid target sets", Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if(Double.parseDouble(value.toString()) < 0) {
+                            Toast.makeText(settingsActivity, "Invalid target sets", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        break;
+                    case "target_reps":
+                        if(value.toString().equals("")) {
+                            Toast.makeText(settingsActivity, "Invalid target reps", Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if(Double.parseDouble(value.toString()) < 0) {
+                            Toast.makeText(settingsActivity, "Invalid target reps", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        break;
+                }
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
@@ -105,6 +170,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        settingsActivity = this;
     }
 
     /**
@@ -209,12 +275,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("name"));
+            bindPreferenceSummaryToValue(findPreference("user_name"));
             //bindPreferenceSummaryToValue(findPreference("email"));
             bindPreferenceSummaryToValue(findPreference("user_height"));
             bindPreferenceSummaryToValue(findPreference("user_weight"));
             bindPreferenceSummaryToValue(findPreference("user_age"));
             bindPreferenceSummaryToValue(findPreference("user_gender"));
+            bindPreferenceSummaryToValue(findPreference("user_bf"));
         }
 
         @Override
