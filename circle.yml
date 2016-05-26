@@ -1,6 +1,11 @@
+general:
+    artifacts:
+        - /home/ubuntu/athelite2/app/build/outputs/apk/
+        
 machine:
     environment:
-
+        ANDROID_HOME: /usr/local/android-sdk-linux
+        
 dependencies:
     pre:
         - echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
@@ -13,18 +18,8 @@ dependencies:
 #Replace 
 test:
     override:
-    # start the emulator
-    - emulator -avd circleci-android22 -no-audio -no-window:
-        background: true
-        parallel: true
-    # wait for it to have booted
-    - circle-android wait-for-boot
-    # run tests  against the emulator.
-    - ./gradlew connectedAndroidTest
-    # copy the build outputs to artifacts
-    - cp -r athelite2/build/outputs $CIRCLE_ARTIFACTS
-    # copy the test results to the test results directory.
-    - cp -r athelite2/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
-    post:
-        - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-        - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+    - (./gradlew assemble -PdisablePreDex):
+        timeout: 360
+    - cp -r ${HOME}/${CIRCLE_PROJECT_REPONAME}/app/build/outputs/apk/ $CIRCLE_ARTIFACTS
+    
+    - ./gradlew test
