@@ -21,6 +21,7 @@ public final class DBContract {
         public static final String TABLE_NAME = "exercises";
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_ONEREPMAX = "oneRepMax";
     }
 
     public static abstract class ExerciseListTable implements BaseColumns {

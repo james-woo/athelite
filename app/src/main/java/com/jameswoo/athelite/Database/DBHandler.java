@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class DBHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 15;
+    private static final int DATABASE_VERSION = 16;
 
     // Database Name
     private static final String DATABASE_NAME = "athelite";
@@ -34,7 +34,8 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String CREATE_EXERCISE_TABLE =
             "CREATE TABLE " + DBContract.ExerciseTable.TABLE_NAME + "(" +
                     DBContract.ExerciseTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
-                    DBContract.ExerciseTable.COLUMN_NAME + " TEXT" + ")";
+                    DBContract.ExerciseTable.COLUMN_NAME + " TEXT," +
+                    DBContract.ExerciseTable.COLUMN_ONEREPMAX + " TEXT" + ")";
 
     private static final String CREATE_WORKOUT_EXERCISE_TABLE =
             "CREATE TABLE " + DBContract.WorkoutExerciseTable.TABLE_NAME + "(" +
@@ -423,6 +424,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(DBContract.ExerciseTable.COLUMN_NAME, newExercise.getExerciseName());
+        values.put(DBContract.ExerciseTable.COLUMN_ONEREPMAX, "0.0");
         long id = db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
         newExercise.setId(id);
         values.clear();
@@ -432,10 +434,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<ExerciseSet> exerciseSets = new ArrayList<>();
 
+        //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(db.get)
         exerciseSets.add(createExerciseSetForExercise(db, newExercise, 1));
         exerciseSets.add(createExerciseSetForExercise(db, newExercise, 2));
         exerciseSets.add(createExerciseSetForExercise(db, newExercise, 3));
 
+        newExercise.setOneRepMax(0.0);
         newExercise.setExerciseSets(exerciseSets);
 
         return newExercise;
@@ -483,6 +487,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Exercise exercise = new Exercise.Builder(exerciseName)
                     .exerciseId(exerciseId)
                     .exerciseSets(readExerciseSetsWithExerciseId(db, exerciseId))
+                    .oneRepMax(Double.parseDouble(cursor.getString(2)))
                     .build();
             cursor.close();
             return exercise;
@@ -497,6 +502,8 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(DBContract.ExerciseTable.COLUMN_NAME, exercise.getExerciseName());
+        values.put(DBContract.ExerciseTable.COLUMN_ONEREPMAX, String.valueOf(exercise.getOneRepMax()));
+
         String whereClauseExerciseTable = DBContract.ExerciseTable.COLUMN_ID + " =  ?";
         db.update(DBContract.ExerciseTable.TABLE_NAME, values, whereClauseExerciseTable,
                 new String[] { String.valueOf(exercise.getId()) });

@@ -97,6 +97,11 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
             }
         });
 
+        double oneRepMax = _exerciseList.get(position).getOneRepMax();
+        DecimalFormat oneRepDF = new DecimalFormat("#####.##");
+        TextView oneRepMaxTV = (TextView) convertView.findViewById(R.id.exercise_one_rep_max);
+        oneRepMaxTV.setText(String.format("%s %s %s","1 RM: ", String.valueOf(oneRepDF.format(oneRepMax)), _sp.getString("units", "lb")));
+
         TextView exerciseSetNumberTV = (TextView) convertView.findViewById(R.id.exercise_set_number);
         TextView exerciseSetWeightTV = (TextView) convertView.findViewById(R.id.exercise_set_weight);
         TextView exerciseSetRepsTV = (TextView) convertView.findViewById(R.id.exercise_set_reps);

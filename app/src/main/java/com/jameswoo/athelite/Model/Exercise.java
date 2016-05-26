@@ -7,11 +7,13 @@ public class Exercise {
     private long _id;
     private String _exerciseName;
     private ArrayList<ExerciseSet> _exerciseSets = new ArrayList<>();
+    private double _oneRepMax;
 
     private Exercise(Builder builder) {
         _id = builder.bId;
         _exerciseName = builder.bExerciseName;
         _exerciseSets = builder.bExerciseSets;
+        _oneRepMax = builder.bOneRepMax;
     }
 
     public String getExerciseName() {
@@ -34,6 +36,8 @@ public class Exercise {
         return _id;
     }
 
+    public double getOneRepMax() { return _oneRepMax; }
+
     public String toString() {
         return _exerciseName;
     }
@@ -46,12 +50,30 @@ public class Exercise {
         _exerciseName = name;
     }
 
+    public void setOneRepMax(double orm) { _oneRepMax = orm; }
+
+    public void calculateOneRepMax() {
+        // Epley Formula
+        double maxWeight = 0;
+        int maxReps = 0;
+        for(ExerciseSet es : _exerciseSets) {
+            double weight = es.getSetWeight();
+            if(weight > maxWeight) {
+                maxWeight = weight;
+                maxReps = es.getSetReps();
+            }
+        }
+        _oneRepMax = maxWeight * (1 + (maxReps / 30.0));
+        System.out.println(_oneRepMax);
+    }
+
     public static class Builder {
 
         private long bId;
         private long bWorkoutPlanId;
         private String bExerciseName;
         private ArrayList<ExerciseSet> bExerciseSets = new ArrayList<>();
+        private double bOneRepMax;
 
         public Builder(String name) {
             this.bExerciseName = name;
@@ -74,6 +96,11 @@ public class Exercise {
 
         public Builder exerciseSet(ExerciseSet exerciseSet) {
             this.bExerciseSets.add(exerciseSet);
+            return this;
+        }
+
+        public Builder oneRepMax(double orm) {
+            this.bOneRepMax = orm;
             return this;
         }
 

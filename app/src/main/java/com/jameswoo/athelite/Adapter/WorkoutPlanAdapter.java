@@ -2,7 +2,9 @@ package com.jameswoo.athelite.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,7 @@ import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -31,6 +34,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
     private ArrayList<WorkoutPlan> _workOutPlanList;
     private Context _context;
     private DBHandler _db;
+    private SharedPreferences _sp;
 
     public final static String WORKOUT_PLAN = "com.jameswoo.athelite.WORKOUT_PLAN";
 
@@ -38,6 +42,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         public TextView vWorkoutPlanExerciseNames;
         public CardView vWorkoutCardView;
         public Toolbar vWorkoutCardMenu;
+        public TextView vWorkoutPlanExerciseOneReps;
 
         public ViewHolder(View v) {
             super(v);
@@ -45,6 +50,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
             vWorkoutCardView = (CardView) v.findViewById(R.id.card_view);
             vWorkoutCardMenu = (Toolbar) v.findViewById(R.id.card_workout_toolbar);
             vWorkoutCardMenu.inflateMenu(R.menu.menu_workout_card);
+            vWorkoutPlanExerciseOneReps = (TextView) v.findViewById(R.id.workout_plan_exercise_one_rep_max);
         }
     }
 
@@ -52,6 +58,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         _context = context;
         _workOutPlanList = workouts;
         _db = new DBHandler(_context);
+        _sp = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -110,13 +117,17 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
         ArrayList<Exercise> workoutPlanExercises = _workOutPlanList.get(position).getWorkoutPlanExercises();
         String exerciseNames = "";
+        String exerciseOneReps = "";
+        DecimalFormat oneRepDF = new DecimalFormat("#####.##");
 
         if(!workoutPlanExercises.isEmpty() && workoutPlanExercises != null)
-            for(Exercise e : workoutPlanExercises) {
-                if(e == null) break;
-                exerciseNames = exerciseNames + e.getExerciseName() + "\n";
-            }
+        for(Exercise e : workoutPlanExercises) {
+            if(e == null) break;
+            exerciseNames = exerciseNames + e.getExerciseName() + "\n";
+            exerciseOneReps = " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
+        }
         holder.vWorkoutPlanExerciseNames.setText(exerciseNames);
+        holder.vWorkoutPlanExerciseOneReps.setText(exerciseOneReps);
 
         holder.vWorkoutCardView.setOnClickListener(new View.OnClickListener() {
             @Override

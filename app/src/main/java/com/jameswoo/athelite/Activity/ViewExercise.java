@@ -145,6 +145,7 @@ public class ViewExercise extends AppCompatActivity {
         if(_exerciseName.getText().toString().equals("")) {
             _exerciseName.setText(R.string.new_exercise);
         }
+        _exercise.calculateOneRepMax();
         _exercise.setExerciseName(_exerciseName.getText().toString());
         _exercise.setExerciseSets(_adapter.getExerciseSets());
         _db.updateExercise(_exercise);

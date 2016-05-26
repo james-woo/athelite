@@ -28,14 +28,28 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="15dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#424242"
-                android:id="@+id/workout_plan_exercise_names" />
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal" android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#424242"
+                    android:id="@+id/workout_plan_exercise_names"
+                    android:layout_weight="0.75" />
+
+                <TextView
+                    android:layout_width="61dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#424242"
+                    android:id="@+id/workout_plan_exercise_one_rep_max"
+                    android:layout_weight="0.25" />
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -24,6 +24,14 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:id="@+id/exercise_one_rep_max"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#424242"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
