@@ -1,20 +1,15 @@
 package com.jameswoo.athelite.Tabs;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.jameswoo.athelite.Database.DBHandler;
-import com.jameswoo.athelite.Model.Exercise;
-import com.jameswoo.athelite.Model.ExerciseSet;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.Adapter.WorkoutPlanAdapter;

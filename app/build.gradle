@@ -90,6 +90,7 @@ dependencies {
     compile 'com.prolificinteractive:material-calendarview:1.2.1'
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.github.halysongoncalves:pugnotification:1.8.1'
+    compile 'com.jjoe64:graphview:4.0.1'
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.

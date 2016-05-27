@@ -124,7 +124,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         for(Exercise e : workoutPlanExercises) {
             if(e == null) break;
             exerciseNames = exerciseNames + e.getExerciseName() + "\n";
-            exerciseOneReps = " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
+            exerciseOneReps = exerciseOneReps + " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
         }
         holder.vWorkoutPlanExerciseNames.setText(exerciseNames);
         holder.vWorkoutPlanExerciseOneReps.setText(exerciseOneReps);

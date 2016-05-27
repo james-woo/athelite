@@ -25,6 +25,7 @@ import com.jameswoo.athelite.Database.DBExerciseList;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Tabs.CalendarTabFragment;
+import com.jameswoo.athelite.Tabs.GraphTabFragment;
 import com.jameswoo.athelite.Tabs.HomeTabFragment;
 import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
 
@@ -54,13 +55,15 @@ public class MainActivity extends AppCompatActivity {
     private HomeTabFragment _homeTabFragment;
     private WorkoutPlanTabFragment _workoutPlanTabFragment;
     private CalendarTabFragment _calendarTabFragment;
+    private GraphTabFragment _graphTabFragment;
 
     private DBHandler _db;
 
     private final int[] ICONS = new int[]{
             R.drawable.home,
             R.drawable.workout,
-            R.drawable.calendar
+            R.drawable.calendar,
+            R.drawable.graph
     };
 
     private void showSetUp(){
@@ -191,6 +194,11 @@ public class MainActivity extends AppCompatActivity {
                         _fab.setImageResource(android.R.drawable.ic_menu_edit);
                         _fab.show();
                         break;
+                    case 3:
+                        if(getActionBar() != null)
+                            getActionBar().setTitle("Graph");
+                        _currentPage = "Graph";
+                        _fab.hide();
                     default:
                         break;
                 }
@@ -254,6 +262,9 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     _calendarTabFragment = CalendarTabFragment.newInstance(2);
                     return _calendarTabFragment;
+                case 3:
+                    _graphTabFragment = GraphTabFragment.newInstance(3);
+                    return _graphTabFragment;
                 default:
                     return null;
             }
@@ -261,8 +272,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
         @Override
@@ -274,6 +285,8 @@ public class MainActivity extends AppCompatActivity {
                     return "TEMPLATES";
                 case 2:
                     return "CALENDAR";
+                case 3:
+                    return "GRAPH";
             }
             return null;
         }

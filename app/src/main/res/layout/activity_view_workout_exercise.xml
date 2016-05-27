@@ -47,29 +47,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
-                    android:textSize="18sp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#424242"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.35" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/exercise_set_weight"
                     android:layout_margin="15dp"
-                    android:textSize="18sp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#424242"
                     android:layout_weight="0.35"
-                    android:textAlignment="textEnd" />
+                    android:textAlignment="textStart" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/exercise_set_reps"
                     android:layout_margin="15dp"
-                    android:textSize="18sp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#424242"
-                    android:layout_weight="0.35"
-                    android:autoText="false"
+                    android:layout_weight="0.30"
                     android:textAlignment="textEnd" />
             </LinearLayout>
 

@@ -53,4 +53,13 @@ public final class DBContract {
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_WORKOUT_ID = "workoutId";
     }
+
+    public static abstract class WorkoutHistory implements BaseColumns {
+        public static final String TABLE_NAME = "workoutHistory";
+        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_WORKOUT_ID = "workoutId";
+        public static final String COLUMN_EXERCISE_ID = "exerciseId";
+        public static final String COLUMN_EXERCISE_NAME = "exerciseName";
+    }
 }

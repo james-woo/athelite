@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
+import android.support.v4.util.ArrayMap;
 import android.util.Log;
 
 import com.jameswoo.athelite.Model.Exercise;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class DBHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 17;
 
     // Database Name
     private static final String DATABASE_NAME = "athelite";
@@ -56,7 +57,15 @@ public class DBHandler extends SQLiteOpenHelper {
             "CREATE TABLE " + DBContract.CalendarTable.TABLE_NAME + "(" +
                     DBContract.CalendarTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
                     DBContract.CalendarTable.COLUMN_DATE + " INTEGER," +
-                    DBContract.CalendarTable.COLUMN_WORKOUT_ID + " TEXT" + ")";
+                    DBContract.CalendarTable.COLUMN_WORKOUT_ID + " TEXT" +")";
+
+    private static final String CREATE_WORKOUT_HISTORY_TABLE =
+            "CREATE TABLE " + DBContract.WorkoutHistory.TABLE_NAME + "(" +
+                    DBContract.WorkoutHistory.COLUMN_ID + " INTEGER PRIMARY KEY," +
+                    DBContract.WorkoutHistory.COLUMN_DATE + " INTEGER," +
+                    DBContract.WorkoutHistory.COLUMN_WORKOUT_ID + " TEXT," +
+                    DBContract.WorkoutHistory.COLUMN_EXERCISE_ID + " TEXT," +
+                    DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME + " TEXT" + ")";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -69,6 +78,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_WORKOUT_EXERCISE_TABLE);
         db.execSQL(CREATE_EXERCISESET_TABLE);
         db.execSQL(CREATE_CALENDAR_TABLE);
+        db.execSQL(CREATE_WORKOUT_HISTORY_TABLE);
     }
 
     @Override
@@ -78,6 +88,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseSetTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.CalendarTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutHistory.TABLE_NAME);
         onCreate(db);
     }
 
@@ -88,6 +99,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutExerciseTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ExerciseSetTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.CalendarTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.WorkoutHistory.TABLE_NAME);
         onCreate(db);
     }
 
@@ -567,6 +579,64 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ArrayList<Exercise> getCompletedExercises(SQLiteDatabase db) {
+        String query = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
+                       " ORDER BY " + DBContract.ExerciseTable.COLUMN_NAME + " ASC";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        if(cursor.moveToFirst()) {
+            do {
+                int exerciseId = cursor.getInt(0);
+                String exerciseName = cursor.getString(1);
+                double oneRepMax = cursor.getDouble(2);
+                Exercise exercise = new Exercise.Builder(exerciseName)
+                                                .exerciseId(exerciseId)
+                                                .oneRepMax(oneRepMax)
+                                                .build();
+                exercises.add(exercise);
+            } while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return exercises;
+    }
+
+    public ArrayMap<Date, Double> getExerciseHistory(SQLiteDatabase db, Exercise exercise) {
+
+        ArrayMap<Date, Double> exerciseGraphData = new ArrayMap<>();
+
+        String cQuery = "SELECT * FROM " + DBContract.WorkoutHistory.TABLE_NAME +
+                " WHERE " + DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME +
+                " =  \"" + exercise.getExerciseName() + "\"";
+        Cursor cCursor = db.rawQuery(cQuery, null);
+        if (cCursor.moveToFirst()) {
+            do {
+                long exerciseId = cCursor.getLong(3);
+                String eQuery = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
+                        " WHERE " + DBContract.WorkoutHistory.COLUMN_EXERCISE_ID +
+                        " =  \"" + exerciseId + "\"";
+
+                Cursor eCursor = db.rawQuery(eQuery, null);
+
+                if(eCursor.moveToFirst()) {
+                    do {
+                        double oneRepMax = eCursor.getDouble(2);
+                        Date date = new Date(cCursor.getLong(1));
+                        exerciseGraphData.put(date, oneRepMax);
+                    }while(eCursor.moveToNext());
+                }
+                eCursor.close();
+            } while (cCursor.moveToNext());
+        }
+        cCursor.close();
+        db.close();
+        return exerciseGraphData;
+    }
+
     /***************************************EXERCISESET********************************************/
 
     public ExerciseSet createExerciseSetForExercise(SQLiteDatabase db, Exercise exercise, int setNumber) {
@@ -654,6 +724,15 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(DBContract.CalendarTable.COLUMN_DATE, dateTime);
         values.put(DBContract.CalendarTable.COLUMN_WORKOUT_ID, copiedWorkoutPlan.getId());
         db.insert(DBContract.CalendarTable.TABLE_NAME, null, values);
+
+        for(Exercise e : workoutPlan.getWorkoutPlanExercises()) {
+            values.clear();
+            values.put(DBContract.WorkoutHistory.COLUMN_DATE, dateTime);
+            values.put(DBContract.WorkoutHistory.COLUMN_WORKOUT_ID, copiedWorkoutPlan.getId());
+            values.put(DBContract.WorkoutHistory.COLUMN_EXERCISE_ID, e.getId());
+            values.put(DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME, e.getExerciseName());
+            db.insert(DBContract.WorkoutHistory.TABLE_NAME, null, values);
+        }
 
         db.close();
     }
