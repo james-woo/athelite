@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             throw new Error(sqle.getMessage());
         }
 
-        //_db.deleteDB();
+        _db.deleteDB();
     }
 
     @Override
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     case "Calendar":
                         Intent intent = new Intent(getBaseContext(), ViewDay.class);
                         intent.putExtra("VIEW_DAY_PARENT", "Calendar");
-                        intent.putExtra("DATETIME", _calendarTabFragment.getDateTimeInMilliseconds());
+                        intent.putExtra("VIEW_DAY_DATETIME", _calendarTabFragment.getDateTimeInMilliseconds());
                         startActivity(intent);
                         break;
                 }

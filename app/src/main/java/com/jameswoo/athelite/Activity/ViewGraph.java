@@ -19,13 +19,17 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 
 public class ViewGraph extends AppCompatActivity {
 
     private GraphView _graph;
-    private TextView _graphExerciseNameTV;
     private DBHandler _db;
     private Exercise _exercise;
 
@@ -48,18 +52,20 @@ public class ViewGraph extends AppCompatActivity {
     }
 
     private void initInstances() {
-        _graphExerciseNameTV = (TextView) findViewById(R.id.graph_exercise_name);
         _graph = (GraphView) findViewById(R.id.graph_exercise);
 
         _exercise = JsonSerializer.getExerciseFromJson(getIntent().getStringExtra("VIEW_GRAPH_EXERCISE"));
-        _graphExerciseNameTV.setText(_exercise.getExerciseName());
+        _graph.setTitle(_exercise.getExerciseName());
         _db = new DBHandler(this);
         ArrayMap<Date, Double> graphData = _db.getExerciseHistory(_db.getWritableDatabase(), _exercise);
-
+        List<Date> keys = new ArrayList<Date>(graphData.keySet());
+        List<Double> values = new ArrayList<Double>(graphData.values());
+        Collections.sort(keys);
+        Collections.sort(values);
         ArrayList<DataPoint> data = new ArrayList<>();
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
         for(int i = 0; i < graphData.size(); i++) {
-            DataPoint dp = new DataPoint(graphData.keyAt(i), graphData.valueAt(i));
+            DataPoint dp = new DataPoint(keys.get(i), values.get(i));
             series.appendData(dp, false, 100);
         }
 

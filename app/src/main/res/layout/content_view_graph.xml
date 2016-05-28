@@ -12,11 +12,6 @@
     tools:context="com.jameswoo.athelite.Activity.ViewGraph"
     tools:showIn="@layout/activity_view_graph">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/graph_exercise_name" />
-
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
