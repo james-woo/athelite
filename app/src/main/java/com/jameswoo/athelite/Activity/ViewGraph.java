@@ -15,10 +15,12 @@ import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -59,17 +61,25 @@ public class ViewGraph extends AppCompatActivity {
         _db = new DBHandler(this);
         ArrayMap<Date, Double> graphData = _db.getExerciseHistory(_db.getWritableDatabase(), _exercise);
         List<Date> keys = new ArrayList<Date>(graphData.keySet());
-        List<Double> values = new ArrayList<Double>(graphData.values());
         Collections.sort(keys);
-        Collections.sort(values);
-        ArrayList<DataPoint> data = new ArrayList<>();
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
+
         for(int i = 0; i < graphData.size(); i++) {
-            DataPoint dp = new DataPoint(keys.get(i), values.get(i));
+            DataPoint dp = new DataPoint(keys.get(i), graphData.get(keys.get(i)));
             series.appendData(dp, false, 100);
         }
 
         _graph.addSeries(series);
+        _graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
+        _graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
+
+        // set manual x bounds to have nice steps
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.YEAR, -1);
+        _graph.getViewport().setMinX(c.getTimeInMillis());
+        c.add(Calendar.YEAR, 1);
+        _graph.getViewport().setMaxX(c.getTimeInMillis());
+        _graph.getViewport().setXAxisBoundsManual(true);
     }
 
     @Override

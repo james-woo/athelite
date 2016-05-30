@@ -606,22 +606,32 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public ArrayList<Exercise> getCompletedExercises(SQLiteDatabase db) {
-        String query = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
-                       " ORDER BY " + DBContract.ExerciseTable.COLUMN_NAME + " ASC";
+        String query = "SELECT * FROM " + DBContract.WorkoutHistory.TABLE_NAME +
+                       " ORDER BY " + DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME + " ASC";
 
         Cursor cursor = db.rawQuery(query, null);
 
         ArrayList<Exercise> exercises = new ArrayList<>();
         if(cursor.moveToFirst()) {
             do {
-                int exerciseId = cursor.getInt(0);
-                String exerciseName = cursor.getString(1);
-                double oneRepMax = cursor.getDouble(2);
-                Exercise exercise = new Exercise.Builder(exerciseName)
-                                                .exerciseId(exerciseId)
-                                                .oneRepMax(oneRepMax)
-                                                .build();
-                exercises.add(exercise);
+                int exerciseId = cursor.getInt(3);
+                String exerciseName = cursor.getString(4);
+
+
+                String eQuery = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
+                        " WHERE " + DBContract.ExerciseTable.COLUMN_ID + " =  \"" + exerciseId + "\"";
+
+                Cursor eCursor = db.rawQuery(eQuery, null);
+
+                if(eCursor.moveToFirst()) {
+                    double oneRepMax = eCursor.getDouble(2);
+                    Exercise exercise = new Exercise.Builder(exerciseName)
+                            .exerciseId(exerciseId)
+                            .oneRepMax(oneRepMax)
+                            .build();
+                    exercises.add(exercise);
+                }
+                eCursor.close();
             } while(cursor.moveToNext());
         }
 
