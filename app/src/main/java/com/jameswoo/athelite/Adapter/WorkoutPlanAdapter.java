@@ -3,9 +3,7 @@ package com.jameswoo.athelite.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,10 +11,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.jameswoo.athelite.Activity.MainActivity;
 import com.jameswoo.athelite.Activity.ViewWorkout;
 import com.jameswoo.athelite.Database.DBHandler;
 import com.jameswoo.athelite.Model.Exercise;
@@ -46,11 +42,11 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
         public ViewHolder(View v) {
             super(v);
-            vWorkoutPlanExerciseNames = (TextView) v.findViewById(R.id.workout_plan_exercise_names);
+            vWorkoutPlanExerciseNames = (TextView) v.findViewById(R.id.card_workout_plan_exercise_names);
             vWorkoutCardView = (CardView) v.findViewById(R.id.card_view);
             vWorkoutCardMenu = (Toolbar) v.findViewById(R.id.card_workout_toolbar);
             vWorkoutCardMenu.inflateMenu(R.menu.menu_workout_card);
-            vWorkoutPlanExerciseOneReps = (TextView) v.findViewById(R.id.workout_plan_exercise_one_rep_max);
+            vWorkoutPlanExerciseOneReps = (TextView) v.findViewById(R.id.card_workout_plan_exercise_one_rep_max);
         }
     }
 

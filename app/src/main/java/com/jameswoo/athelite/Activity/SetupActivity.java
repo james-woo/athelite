@@ -1,7 +1,6 @@
 package com.jameswoo.athelite.Activity;
 
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -39,7 +38,7 @@ public class SetupActivity extends AppCompatActivity {
         initToolbar();
         initPreferences();
         setupEditTextValidation();
-        _fab = (FloatingActionButton) findViewById(R.id.fab_done);
+        _fab = (FloatingActionButton) findViewById(R.id.setup_fab);
         assert _fab != null;
         _fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,23 +78,23 @@ public class SetupActivity extends AppCompatActivity {
         _sp = PreferenceManager.getDefaultSharedPreferences(getApplication());
 
         // Units
-        _unitsRadioGroup = (RadioGroup) findViewById(R.id.units_setup);
+        _unitsRadioGroup = (RadioGroup) findViewById(R.id.setup_units);
         _unitsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton r = (RadioButton) findViewById(checkedId);
                 if(r != null && r.getText().toString().equals("Imperial")) {
-                    ((TextView) findViewById(R.id.height_units)).setText("in");
-                    ((TextView) findViewById(R.id.weight_units)).setText("lbs");
+                    ((TextView) findViewById(R.id.setup_height_units)).setText("in");
+                    ((TextView) findViewById(R.id.setup_weight_units)).setText("lbs");
                 } else {
-                    ((TextView) findViewById(R.id.height_units)).setText("cm");
-                    ((TextView) findViewById(R.id.weight_units)).setText("kg");
+                    ((TextView) findViewById(R.id.setup_height_units)).setText("cm");
+                    ((TextView) findViewById(R.id.setup_weight_units)).setText("kg");
                 }
             }
         });
 
         // Gender
-        _genderSpinner = (Spinner) findViewById(R.id.gender_spinner);
+        _genderSpinner = (Spinner) findViewById(R.id.setup_gender_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.genderArray, android.R.layout.simple_spinner_item);
@@ -103,13 +102,13 @@ public class SetupActivity extends AppCompatActivity {
         _genderSpinner.setAdapter(adapter);
 
         // Height
-        _etHeight = (EditText) findViewById(R.id.edit_height);
+        _etHeight = (EditText) findViewById(R.id.setup_edit_height);
 
         // Weight
-        _etWeight = (EditText) findViewById(R.id.edit_weight);
+        _etWeight = (EditText) findViewById(R.id.setup_edit_weight);
 
         // Age
-        _etAge = (EditText) findViewById(R.id.edit_age);
+        _etAge = (EditText) findViewById(R.id.setup_edit_age);
     }
 
     private void initToolbar() {

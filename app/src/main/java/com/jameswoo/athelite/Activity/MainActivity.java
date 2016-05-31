@@ -1,7 +1,5 @@
 package com.jameswoo.athelite.Activity;
 
-import android.app.Notification;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
@@ -30,8 +28,6 @@ import com.jameswoo.athelite.Tabs.HomeTabFragment;
 import com.jameswoo.athelite.Tabs.WorkoutPlanTabFragment;
 
 import java.io.IOException;
-
-import br.com.goncalves.pugnotification.notification.PugNotification;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             ed.apply();
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.view_exercise_toolbar);
         setSupportActionBar(toolbar);
         setFAB();
         setViewPager();
@@ -116,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFAB() {
-        _fab = (FloatingActionButton) findViewById(R.id.fab);
+        _fab = (FloatingActionButton) findViewById(R.id.view_workout_fab);
         if(_fab != null)
             _fab.hide();
         _fab.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupTabIcons() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         if(tabLayout != null)
             for (int i=0; i < tabLayout.getTabCount(); i++)
             {
@@ -154,12 +150,12 @@ public class MainActivity extends AppCompatActivity {
         _sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        _viewPager = (ViewPager) findViewById(R.id.container);
+        _viewPager = (ViewPager) findViewById(R.id.main_container);
         if (_viewPager != null) {
             _viewPager.setAdapter(_sectionsPagerAdapter);
         }
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         if (tabLayout != null) {
             tabLayout.setupWithViewPager(_viewPager);
         }

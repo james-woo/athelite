@@ -13,14 +13,14 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/view_exercise_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/edit_exercise_name_layout"
+            android:id="@+id/view_exercise_edit_exercise_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="beforeDescendants"
@@ -41,7 +41,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <ListView
-        android:id="@+id/set_list_view"
+        android:id="@+id/view_exercise_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="110dp"
@@ -54,7 +54,7 @@
     </ListView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_remove"
+        android:id="@+id/view_exercise_fab_remove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -63,7 +63,7 @@
         android:src="@drawable/ic_remove_black_24dp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add"
+        android:id="@+id/view_exercise_fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -71,7 +71,7 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="top|end"
         android:layout_marginBottom="80dp"
-        app:layout_anchor="@id/fab_remove"
+        app:layout_anchor="@id/view_exercise_fab_remove"
         app:layout_anchorGravity="top"
         android:tint="@color/icons"
         android:src="@android:drawable/ic_input_add" />

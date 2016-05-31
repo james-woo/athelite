@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:id="@+id/exercise_one_rep_max"
+                android:id="@+id/card_exercise_one_rep_max"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#424242"/>
 
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/exercise_set_number"
+                    android:id="@+id/card_exercise_set_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/exercise_set_weight"
+                    android:id="@+id/card_exercise_set_weight"
                     android:layout_margin="15dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#424242"
@@ -64,7 +64,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/exercise_set_reps"
+                    android:id="@+id/card_exercise_set_reps"
                     android:layout_margin="15dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#424242"

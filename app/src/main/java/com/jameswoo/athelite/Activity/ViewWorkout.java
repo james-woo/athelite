@@ -40,7 +40,7 @@ public class ViewWorkout extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.workout_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.view_workout_toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getIntent().getStringExtra("VIEW_WORKOUT_PARENT"));
@@ -53,7 +53,7 @@ public class ViewWorkout extends AppCompatActivity {
         String workoutPlanJson = intent.getStringExtra(WorkoutPlanAdapter.WORKOUT_PLAN);
         _workoutPlan = JsonSerializer.getWorkoutPlanFromJson(workoutPlanJson);
 
-        _workoutName = (EditText) findViewById(R.id.edit_workout_name);
+        _workoutName = (EditText) findViewById(R.id.view_workout_edit_name);
         if(_workoutName != null) {
             _workoutName.setSelectAllOnFocus(true);
             _workoutName.setText(_workoutPlan.getWorkoutPlanName());
@@ -65,11 +65,11 @@ public class ViewWorkout extends AppCompatActivity {
     void initInstances() {
         _db = new DBHandler(this);
         _adapter = new ExerciseListAdapter(this, _workoutPlan.getWorkoutPlanExercises(), _workoutPlan);
-        _listView = (ListView) findViewById(R.id.exercise_list_view);
+        _listView = (ListView) findViewById(R.id.view_workout_exercise_list_view);
         if(_listView != null)
             _listView.setAdapter(_adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.view_workout_fab);
         if(fab != null)
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override

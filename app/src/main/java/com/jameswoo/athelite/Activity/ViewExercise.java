@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Adapter.ExerciseSetListAdapter;
@@ -26,7 +25,6 @@ import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Util.JsonSerializer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ViewExercise extends AppCompatActivity {
 
@@ -49,7 +47,7 @@ public class ViewExercise extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.view_exercise_toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.back_to_exercises_page);
@@ -61,11 +59,11 @@ public class ViewExercise extends AppCompatActivity {
         _db = new DBHandler(this);
         _dbe = new DBExerciseList(this);
         _adapter = new ExerciseSetListAdapter(this, _exercise.getExerciseSets());
-        _listView = (ListView) findViewById(R.id.set_list_view);
+        _listView = (ListView) findViewById(R.id.view_exercise_list_view);
         if(_listView != null)
             _listView.setAdapter(_adapter);
 
-        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.view_exercise_fab_add);
         if(fabAdd != null)
             fabAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,7 +74,7 @@ public class ViewExercise extends AppCompatActivity {
                 }
             });
 
-        FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.fab_remove);
+        FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.view_exercise_fab_remove);
         if(fabRemove != null)
             fabRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,8 +127,8 @@ public class ViewExercise extends AppCompatActivity {
     private void updateSets() {
         for(int i = 0; i < _listView.getCount(); i++) {
             View item  = _listView.getChildAt(i);
-            EditText setWeight = (EditText) item.findViewById(R.id.set_weight);
-            EditText setReps = (EditText) item.findViewById(R.id.set_reps);
+            EditText setWeight = (EditText) item.findViewById(R.id.view_exercise_set_weight);
+            EditText setReps = (EditText) item.findViewById(R.id.view_exercise_set_reps);
             _adapter.getItem(i).setSetWeight(Double.valueOf(setWeight.getText().toString()));
             _adapter.getItem(i).setSetReps(Integer.valueOf(setReps.getText().toString()));
         }

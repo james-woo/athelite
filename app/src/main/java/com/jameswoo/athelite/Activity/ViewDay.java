@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 
 import com.jameswoo.athelite.Adapter.ExerciseListAdapter;
 import com.jameswoo.athelite.Database.DBHandler;
-import com.jameswoo.athelite.Dialog.DeleteConfirmation;
 import com.jameswoo.athelite.Dialog.EmptyTemplatesDialog;
 import com.jameswoo.athelite.Dialog.PickWorkout;
 import com.jameswoo.athelite.Model.Exercise;
@@ -30,9 +28,6 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 public class ViewDay extends AppCompatActivity implements DialogInterface.OnDismissListener{
 
@@ -59,7 +54,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.calendar_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.view_day_toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getIntent().getStringExtra("VIEW_DAY_PARENT"));
@@ -75,14 +70,14 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         _dateTime = intent.getLongExtra("VIEW_DAY_DATETIME", 0);
         _workoutDay = _db.getWorkoutForDay(new Date(_dateTime));
 
-        _fab = (FloatingActionButton) findViewById(R.id.fab_pick_workout);
-        _calendarTitle = (TextView)findViewById(R.id.calendar_title);
+        _fab = (FloatingActionButton) findViewById(R.id.view_day_fab);
+        _calendarTitle = (TextView)findViewById(R.id.view_day_title);
         _calendarTitle.setText(df.format(new Date(_dateTime)));
-        _addAWorkoutTextView = (TextView) findViewById(R.id.add_a_workout);
-        _addAWorkoutTextViewHelp = (TextView) findViewById(R.id.add_workout_help);
+        _addAWorkoutTextView = (TextView) findViewById(R.id.view_day_add_a_workout);
+        _addAWorkoutTextViewHelp = (TextView) findViewById(R.id.view_day_add_workout_help);
         _workoutName = (EditText) findViewById(R.id.view_day_edit_workout_name);
 
-        _listView = (ListView) findViewById(R.id.workoutday_exercise_list_view);
+        _listView = (ListView) findViewById(R.id.view_day_exercise_list_view);
         if(_listView != null)
             _listView.setAdapter(_adapter);
 

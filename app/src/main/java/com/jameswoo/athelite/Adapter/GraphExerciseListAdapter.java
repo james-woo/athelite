@@ -39,15 +39,15 @@ public class GraphExerciseListAdapter extends ArrayAdapter<Exercise> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_view_graph_exercise_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.card_graph_exercise, parent, false);
         }
 
         double oneRepMax = _exerciseList.get(position).getOneRepMax();
         DecimalFormat oneRepDF = new DecimalFormat("#####.##");
-        TextView oneRepMaxTV = (TextView) convertView.findViewById(R.id.graph_exercise_one_rep_max);
+        TextView oneRepMaxTV = (TextView) convertView.findViewById(R.id.card_graph_exercise_one_rep_max);
         oneRepMaxTV.setText(String.format("%s %s %s","1 RM: ", String.valueOf(oneRepDF.format(oneRepMax)), _sp.getString("units", "lb")));
 
-        TextView exerciseNameTV = (TextView) convertView.findViewById(R.id.graph_exercise_name);
+        TextView exerciseNameTV = (TextView) convertView.findViewById(R.id.card_graph_exercise_name);
         exerciseNameTV.setText(_exerciseList.get(position).getExerciseName());
 
         CardView eCardView = (CardView) convertView.findViewById(R.id.graph_exercise_card_view);
