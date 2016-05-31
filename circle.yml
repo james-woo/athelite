@@ -34,8 +34,10 @@ test:
         - fb-adb shell settings put global animator_duration_scale 0
     
     override:
-        - ./gradlew jacocoReport
+        - ./gradlew createDebugCoverageReport
         - ./gradlew test
 
     post:
         - cp -r ${HOME}/${CIRCLE_PROJECT_REPONAME}/app/build/outputs $CIRCLE_ARTIFACTS
+        - cp -r app/build/outputs/androidTest-results/ $CIRCLE_TEST_REPORTS
+        - cp -r app/build/reports/coverage/ $CIRCLE_TEST_REPORTS

@@ -2,102 +2,207 @@
 <items version="2" >
 
     <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.3.0/jars/classes.jar"
-        jumboMode="true"
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support.test.espresso\espresso-intents\2.2.1\jars\classes.jar"
+        jumboMode="false"
         revision="23.0.3"
-        sha1="82ce13fd19cdfde0e392f03c27edeba8d4333648">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-23.3.0_a0d9fa266126137df99e1a69510291ae233e370d.jar" />
+        sha1="41a6f45fc287003d7409ef40a8806e6821c4fe57">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\com.android.support.test.espresso-espresso-intents-2.2.1_a75f2bca3806b905ed4672bbbb3ecaf44eadceda.jar" />
     </item>
     <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.android.support/design/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="f0001e71cea6ae432a00021c6f727f5ef0f3d27e">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.3.0_71f3bb494c6f7b701fc5cdc3426c407fb76973e1.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.3.0_4e9bd8b81e082e30b486fe1c441829f1c2670d49.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.3.0_0341e32c1c68c000d5da4907796dd895f36a2616.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="2a15b60d2d8c2b6dd205e975bfd91b165fa98949">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_827308b27730e8f0c1a67b3f2d5c24106067774b.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="debf30ce0a7560396b6235edef77e447006454c2">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.3.0_516d78832762af6fe42b19f4385b49f47a2f2237.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.prolificinteractive/material-calendarview/1.2.1/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="1e22eb6581f0c51760e17181f2ec8caabbf8df41">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.prolificinteractive-material-calendarview-1.2.1_01a01e060b020187100a9c7038d5fcd4fba4b749.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="f5ae58b639e423bcfd2af05cc004188ba1092180">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/instant-run_82f133cd43d40386190c5d751cf9cdc563973c20.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.github.halysongoncalves/pugnotification/1.8.1/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="dd72e971ae6a7defa5e184470b749583c9a31923">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.github.halysongoncalves-pugnotification-1.8.1_7f2dfc248934a8f545abfc9f569b3f74936c2905.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/internal_impl-23.3.0_7ab157f473727f97fdca4fa1d759d84c7046fe68.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/support-annotations-23.3.0_6129d3dc454bc687c7f71f6463868b651689aa7b.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.jjoe64/graphview/4.0.1/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="37bf8de5b4f9e7e93006db783b9b3168e32e38e9">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.jjoe64-graphview-4.0.1_0dabfa8e29249ebb0981ee51933704e34d7c1f59.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.3.0_2aeb78fee57b85472af99d2f7f9e1ca0384aae7c.jar" />
-    </item>
-    <item
-        jar="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
-        jumboMode="true"
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.3.0\jars\classes.jar"
+        jumboMode="false"
         revision="23.0.3"
         sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
-        <dex dex="/Users/jameswoo/Documents/Development/athelite2/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.3.0_8ce88feeaa10f7f2d9880bedf0d7e560f6caffab.jar" />
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.3.0_389d9b38cd2fc70ea768ddc28c7298f77446e410.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support.test\runner\0.4.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="f607369e68cb756b3f8f523403e3d80433a68aa1">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\com.android.support.test-runner-0.4.1_c2dca23a644a1e504f90f6d00fee794f0697fc8f.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\javax.inject\javax.inject\1\6975da39a7040257bd51d21a231b76c915872d38\javax.inject-1.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\javax.inject-1_ddf09d96e2e244e5a8d58dd69ddde1c1d8fe3f3e.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.3.0_5d3bf459858c84d9a819189604cd81610f0ccfd0.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\junit\junit\4.12\2973d150c0dc1fefe998f834810d68f278ea58ec\junit-4.12.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="2973d150c0dc1fefe998f834810d68f278ea58ec">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\junit-4.12_8c57b2689c2ae6c2039032ebf07815aad5c68f23.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\org.hamcrest\hamcrest-integration\1.3\5de0c73fef18917cd85d0ab70bb23818685e4dfd\hamcrest-integration-1.3.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="5de0c73fef18917cd85d0ab70bb23818685e4dfd">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\hamcrest-integration-1.3_21dab5cbf233845428b01b1ba0df5168f159717f.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.3.0_7e7ab9d050abb1dd79699b441c0ec04ea2361622.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support.test.espresso\espresso-contrib\2.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="3a0fb44da5f5919b3fc86c9d1e103f59be5b58cf">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\com.android.support.test.espresso-espresso-contrib-2.2.1_408aae078c9d3dd598613a65d256098b3bd8f6fc.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support\design\23.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="f0001e71cea6ae432a00021c6f727f5ef0f3d27e">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.3.0_44aa47ae1a133b8d9871c2054499e1b31d4b1751.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.prolificinteractive\material-calendarview\1.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="1e22eb6581f0c51760e17181f2ec8caabbf8df41">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.prolificinteractive-material-calendarview-1.2.1_aab8c4fae53bfde84b4356b1568292878f68bd8e.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\org.hamcrest\hamcrest-core\1.3\42a25dc3219429f0e5d060061f71acb49bf010a0\hamcrest-core-1.3.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="42a25dc3219429f0e5d060061f71acb49bf010a0">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\hamcrest-core-1.3_175a6f5f812459679c59d67cb06da348f69c100a.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support.test.espresso\espresso-core\2.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="25a72389e79fbac13f78412a4a6ffacc1cdb0673">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\com.android.support.test.espresso-espresso-core-2.2.1_0a3a9f0621ccc25a8f24afbf19a90cdab0edf842.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support.test.espresso\espresso-idling-resource\2.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="83e81537012f1975aa902eedbdb8da5aa515aea5">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\com.android.support.test.espresso-espresso-idling-resource-2.2.1_6e159fd448ce83e64abd32c0c8f776279252855f.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\jacoco\jacocoagent.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ea73283d55c98ab1fccb8c23d76c68b7d7ecbd83">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\jacocoagent_82bc66b45b661b2c1e0ac8d09b56192a91aac75b.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\com.squareup\javawriter\2.1.1\67ff45d9ae02e583d0f9b3432a5ebbe05c30c966\javawriter-2.1.1.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="67ff45d9ae02e583d0f9b3432a5ebbe05c30c966">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\javawriter-2.1.1_97aa757cc43f9384e0072ac9de8e9bccb7fd4fe5.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\libs\internal_impl-23.3.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\internal_impl-23.3.0_383e4c63c9e18d64fb440c18b3d4159d3c5c08e5.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.3.0_1a080b635ccd12ee9b939208e329daacb31ca943.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.3.0_f55119d28836a996dd648937b57d8db05b3c9b12.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="82ce13fd19cdfde0e392f03c27edeba8d4333648">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.3.0_cbbed8fece6ac72f3e15af74386be041619ec225.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\2.0.1\516c03b21d50a644d538de0f0369c620989cd8f0\jsr305-2.0.1.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="516c03b21d50a644d538de0f0369c620989cd8f0">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\jsr305-2.0.1_d748d683ade4405eb69aeee0e6d7a98735326ad2.jar" />
+    </item>
+    <item
+        jar="C:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\support-annotations-23.3.0_a4ea006b60a31b1ef1f45205b3aa598eb0850127.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\com.google.android.apps.common.testing.accessibility.framework\accessibility-test-framework\2.0\7837f95bdff9f797003454247fef02b78d49ae75\accessibility-test-framework-2.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="7837f95bdff9f797003454247fef02b78d49ae75">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\accessibility-test-framework-2.0_0e2dd503d6a83ccb0fbb8be917130ea1f93eb056.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.jjoe64\graphview\4.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="37bf8de5b4f9e7e93006db783b9b3168e32e38e9">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.jjoe64-graphview-4.0.1_b6cc6d722fa373a73953b0c974277a7a2ab2375f.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\org.hamcrest\hamcrest-library\1.3\4785a3c21320980282f9f33d0d1264a69040538f\hamcrest-library-1.3.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="4785a3c21320980282f9f33d0d1264a69040538f">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\hamcrest-library-1.3_dcdcd4ad23ca1470006cce403c3087a75e56b4d1.jar" />
+    </item>
+    <item
+        jar="C:\Users\James Woo\.gradle\caches\modules-2\files-2.1\javax.annotation\javax.annotation-api\1.2\479c1e06db31c432330183f5cae684163f186146\javax.annotation-api-1.2.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="479c1e06db31c432330183f5cae684163f186146">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\javax.annotation-api-1.2_c8bac1de256e6bd3d4e9cfcab12d89e34f321530.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.github.halysongoncalves\pugnotification\1.8.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="dd72e971ae6a7defa5e184470b749583c9a31923">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\debug\com.github.halysongoncalves-pugnotification-1.8.1_0a6eae650a9c1847cc5914632d5a6dbed175e06c.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support.test\rules\0.4.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="e4805433aedef15e73a7eedf7e3496eb4363a583">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\com.android.support.test-rules-0.4.1_35ba0e6c91bb0d0b49377a7df4544c4523d0f0e6.jar" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite2\app\build\intermediates\exploded-aar\com.android.support.test\exposed-instrumentation-api-publish\0.4.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="e1d90a3498ab7a4b68ea6e936e71cf7f4e95453f">
+        <dex dex="D:\James\Development\Athelite2\app\build\intermediates\pre-dexed\androidTest\debug\com.android.support.test-exposed-instrumentation-api-publish-0.4.1_fabf4e16d4b18241139fe60390f5ae31ff25bc12.jar" />
     </item>
 
 </items>
