@@ -23,6 +23,7 @@ import com.jameswoo.athelite.Model.Exercise;
 import com.jameswoo.athelite.Model.WorkoutPlan;
 import com.jameswoo.athelite.R;
 import com.jameswoo.athelite.Tabs.CalendarTabFragment;
+import com.jameswoo.athelite.Tabs.GraphTabFragment;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.sql.Date;
@@ -177,6 +178,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             _workoutDay.setExercises(_adapter.getExerciseList());
             _db.updateWorkoutPlan(_workoutDay);
             CalendarTabFragment.getInstance().updateSelectedDate(new Date(_dateTime));
+            GraphTabFragment.getInstance().updateExercises();
         }
     }
 

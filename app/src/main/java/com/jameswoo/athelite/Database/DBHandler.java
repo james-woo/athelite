@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class DBHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 21;
 
     // Database Name
     private static final String DATABASE_NAME = "athelite";
@@ -364,9 +364,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
         long id = db.insert(DBContract.WorkoutPlanTable.TABLE_NAME, null, values);
 
+        ArrayList<Exercise> copiedExercises = new ArrayList<>();
+
         for(Exercise e : workoutPlan.getWorkoutPlanExercises()) {
             values.clear();
             Exercise copy = copyExercise(db, e, id);
+            copiedExercises.add(copy);
             values.put(DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID, id);
             values.put(DBContract.WorkoutExerciseTable.COLUMN_EXERCISE_ID, copy.getId());
             db.insert(DBContract.WorkoutExerciseTable.TABLE_NAME, null, values);
@@ -374,7 +377,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return new WorkoutPlan.Builder(workoutPlan.getWorkoutPlanName())
                 .workoutPlanId(id)
-                .exercises(workoutPlan.getWorkoutPlanExercises())
+                .exercises(copiedExercises)
                 .build();
     }
 
@@ -386,19 +389,24 @@ public class DBHandler extends SQLiteOpenHelper {
 
         long id = db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
 
+        ArrayList<ExerciseSet> copiedExerciseSets = new ArrayList<>();
+
         for(ExerciseSet es : exercise.getExerciseSets()) {
             values.clear();
+
             values.put(DBContract.ExerciseSetTable.COLUMN_SET_NUMBER, es.getSetNumber());
             values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, es.getSetWeight());
             values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, es.getWeightType());
             values.put(DBContract.ExerciseSetTable.COLUMN_REPS, es.getSetReps());
             values.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, workoutExerciseId);
-            db.insert(DBContract.ExerciseSetTable.TABLE_NAME, null, values);
+            long esid = db.insert(DBContract.ExerciseSetTable.TABLE_NAME, null, values);
+            ExerciseSet copy = new ExerciseSet(esid, es.getSetNumber(), es.getSetWeight(), es.getWeightType(), es.getSetReps());
+            copiedExerciseSets.add(copy);
         }
 
         return new Exercise.Builder(exercise.getExerciseName())
                 .exerciseId(id)
-                .exerciseSets(exercise.getExerciseSets())
+                .exerciseSets(copiedExerciseSets)
                 .oneRepMax(exercise.getOneRepMax())
                 .build();
     }
@@ -605,40 +613,33 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<Exercise> getCompletedExercises(SQLiteDatabase db) {
-        String query = "SELECT * FROM " + DBContract.WorkoutHistory.TABLE_NAME +
-                       " ORDER BY " + DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME + " ASC";
+    public ArrayMap<String, ArrayList<Exercise>> getCompletedExercises(SQLiteDatabase db) {
+        String query = "SELECT * FROM " + DBContract.WorkoutHistory.TABLE_NAME;
 
         Cursor cursor = db.rawQuery(query, null);
-
-        ArrayList<Exercise> exercises = new ArrayList<>();
+        ArrayMap<String, ArrayList<Exercise>> exerciseList = new ArrayMap<>();
         if(cursor.moveToFirst()) {
             do {
                 int exerciseId = cursor.getInt(3);
-                String exerciseName = cursor.getString(4);
-
-
-                String eQuery = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
-                        " WHERE " + DBContract.ExerciseTable.COLUMN_ID + " =  \"" + exerciseId + "\"";
-
-                Cursor eCursor = db.rawQuery(eQuery, null);
-
-                if(eCursor.moveToFirst()) {
-                    double oneRepMax = eCursor.getDouble(2);
-                    Exercise exercise = new Exercise.Builder(exerciseName)
-                            .exerciseId(exerciseId)
-                            .oneRepMax(oneRepMax)
-                            .build();
-                    exercises.add(exercise);
+                Exercise exercise = readExerciseWithId(db, exerciseId);
+                if(exercise != null) {
+                    Date date = new Date(cursor.getLong(1));
+                    exercise.setExerciseDate(date);
+                    String exerciseName = exercise.getExerciseName();
+                    if (exerciseList.containsKey(exerciseName)) {
+                        exerciseList.get(exerciseName).add(exercise);
+                    } else {
+                        exerciseList.put(exerciseName, new ArrayList<Exercise>());
+                        exerciseList.get(exerciseName).add(exercise);
+                    }
                 }
-                eCursor.close();
             } while(cursor.moveToNext());
         }
 
         cursor.close();
         db.close();
 
-        return exercises;
+        return exerciseList;
     }
 
     public ArrayMap<Date, Double> getExerciseHistory(SQLiteDatabase db, Exercise exercise) {
@@ -647,25 +648,16 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String cQuery = "SELECT * FROM " + DBContract.WorkoutHistory.TABLE_NAME +
                 " WHERE " + DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME +
-                " =  \"" + exercise.getExerciseName() + "\"";
+                " =  \"" + exercise.getExerciseName() + "\"" + " ORDER BY " + DBContract.WorkoutHistory.COLUMN_DATE + " ASC";
         Cursor cCursor = db.rawQuery(cQuery, null);
         if (cCursor.moveToFirst()) {
             do {
-                long exerciseId = cCursor.getLong(3);
-                String eQuery = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME +
-                        " WHERE " + DBContract.ExerciseTable.COLUMN_ID +
-                        " =  \"" + exerciseId + "\"";
+                int exerciseId = cCursor.getInt(3);
+                Exercise e = readExerciseWithId(db, exerciseId);
 
-                Cursor eCursor = db.rawQuery(eQuery, null);
-
-                if(eCursor.moveToFirst()) {
-                    do {
-                        double oneRepMax = eCursor.getDouble(2);
-                        Date date = new Date(cCursor.getLong(1));
-                        exerciseGraphData.put(date, oneRepMax);
-                    }while(eCursor.moveToNext());
-                }
-                eCursor.close();
+                double oneRepMax = e.getOneRepMax();
+                Date date = new Date(cCursor.getLong(1));
+                exerciseGraphData.put(date, oneRepMax);
             } while (cCursor.moveToNext());
         }
         cCursor.close();

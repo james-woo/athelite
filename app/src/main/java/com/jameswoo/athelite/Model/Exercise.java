@@ -1,6 +1,7 @@
 package com.jameswoo.athelite.Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Exercise {
 
@@ -8,12 +9,14 @@ public class Exercise {
     private String _exerciseName;
     private ArrayList<ExerciseSet> _exerciseSets = new ArrayList<>();
     private double _oneRepMax;
+    private Date _exerciseDate;
 
     private Exercise(Builder builder) {
         _id = builder.bId;
         _exerciseName = builder.bExerciseName;
         _exerciseSets = builder.bExerciseSets;
         _oneRepMax = builder.bOneRepMax;
+        _exerciseDate = builder.bExerciseDate;
     }
 
     public String getExerciseName() {
@@ -38,6 +41,8 @@ public class Exercise {
 
     public double getOneRepMax() { return _oneRepMax; }
 
+    public Date getExerciseDate() { return _exerciseDate; }
+
     public String toString() {
         return _exerciseName;
     }
@@ -52,6 +57,10 @@ public class Exercise {
 
     public void setOneRepMax(double orm) { _oneRepMax = orm; }
 
+    public void setExerciseDate(Date date) {
+        _exerciseDate = date;
+    }
+
     public void calculateOneRepMax() {
         // Epley Formula
         double maxWeight = 0;
@@ -64,7 +73,6 @@ public class Exercise {
             }
         }
         _oneRepMax = maxWeight * (1 + (maxReps / 30.0));
-        System.out.println(_oneRepMax);
     }
 
     public static class Builder {
@@ -74,6 +82,7 @@ public class Exercise {
         private String bExerciseName;
         private ArrayList<ExerciseSet> bExerciseSets = new ArrayList<>();
         private double bOneRepMax;
+        private Date bExerciseDate;
 
         public Builder(String name) {
             this.bExerciseName = name;
@@ -101,6 +110,11 @@ public class Exercise {
 
         public Builder oneRepMax(double orm) {
             this.bOneRepMax = orm;
+            return this;
+        }
+
+        public Builder exerciseDate(Date date) {
+            this.bExerciseDate = date;
             return this;
         }
 
