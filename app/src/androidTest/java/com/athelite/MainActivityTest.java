@@ -6,7 +6,6 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.athelite.Activity.MainActivity;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,8 +22,20 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class MainActivityTest {
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
-            MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityRule =
+            new ActivityTestRule<MainActivity>(MainActivity.class) {
+                @Override
+                protected void afterActivityLaunched() {
+                    // Enter setup
+                    onView(withId(R.id.setup_edit_height))
+                            .perform(typeText("170"), closeSoftKeyboard());
+                    onView(withId(R.id.setup_edit_weight))
+                            .perform(typeText("165"), closeSoftKeyboard());
+                    onView(withId(R.id.setup_edit_age))
+                            .perform(typeText("24"), closeSoftKeyboard());
+                    onView(withId(R.id.setup_fab)).perform(click());
+                }
+            };
 
     @Test
     public void hometab_workoutcards_exists() {
