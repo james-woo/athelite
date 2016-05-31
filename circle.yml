@@ -34,7 +34,7 @@ test:
         - fb-adb shell settings put global animator_duration_scale 0
     
     override:
-        - ./gradlew createMockDebugCoverageReport
+        - ./gradlew jacocoReport
         - ./gradlew test
     
     post:
