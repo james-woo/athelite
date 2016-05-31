@@ -5,12 +5,12 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.jameswoo.athelite"
+        applicationId "com.athelite"
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.jameswoo.athelite.CustomTestRunner"
+        testInstrumentationRunner "com.athelite.CustomTestRunner"
     }
     
     productFlavors {
@@ -99,7 +99,7 @@ task grantAnimationPermissions(type: Exec, dependsOn: 'installMock') {
     description = 'Grant permissions for testing.'
 
     def absolutePath = file('..') // Get project absolute path
-    commandLine "$absolutePath/set_animation_permissions.sh com.jameswoo.athelite".split(" ")
+    commandLine "$absolutePath/set_animation_permissions.sh com.athelite".split(" ")
 }
 
 // Source: http://stackoverflow.com/q/29908110/112705

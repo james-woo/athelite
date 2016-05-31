@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jameswoo.athelite">
+    package="com.athelite">
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -42,7 +42,7 @@
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jameswoo.athelite.Activity.ViewWorkout" />
+                android:value="com.athelite.Activity.ViewWorkout" />
         </activity>
         <activity
             android:name=".Activity.ViewDay"
@@ -52,7 +52,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jameswoo.athelite.Activity.MainActivity" />
+                android:value="com.athelite.Activity.MainActivity" />
         </activity>
         <activity
             android:name=".Activity.HelpActivity"
@@ -62,7 +62,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jameswoo.athelite.Activity.MainActivity" />
+                android:value="com.athelite.Activity.MainActivity" />
         </activity>
         <activity
             android:name=".Activity.SettingsActivity"
@@ -71,7 +71,7 @@
             android:parentActivityName=".Activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jameswoo.athelite.Activity.MainActivity" />
+                android:value="com.athelite.Activity.MainActivity" />
         </activity>
         <activity
             android:name=".Activity.SetupActivity"
@@ -80,7 +80,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jameswoo.athelite.Activity.MainActivity" />
+                android:value="com.athelite.Activity.MainActivity" />
         </activity>
         <activity
             android:name=".Activity.ViewGraph"
@@ -90,7 +90,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jameswoo.athelite.Activity.MainActivity" />
+                android:value="com.athelite.Activity.MainActivity" />
         </activity>
     </application>
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.jameswoo.athelite.Activity.ViewExercise">
+    tools:context="com.athelite.Activity.ViewExercise">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:descendantFocusability="beforeDescendants"
             android:focusableInTouchMode="true">
-            <com.jameswoo.athelite.AutoComplete.ExerciseAutoCompleteView
+            <com.athelite.AutoComplete.ExerciseAutoCompleteView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"

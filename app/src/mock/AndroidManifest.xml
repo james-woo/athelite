@@ -2,7 +2,7 @@
 <!-- Put this file in the "debug" folder so it only gets merged into debug builds -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jameswoo.athelite">
+    package="com.athelite">
 
 
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>

@@ -1,4 +1,4 @@
-package com.jameswoo.athelite;
+package com.athelite;
 
 import android.content.Context;
 
