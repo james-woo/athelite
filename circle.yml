@@ -27,11 +27,11 @@ test:
             background: true
             parallel: true
         - circle-android wait-for-boot
-        - fb-adb shell input keyevent 82
-        - fb-adb shell svc power stayon true
-        - fb-adb shell settings put global window_animation_scale 0
-        - fb-adb shell settings put global transition_animation_scale 0
-        - fb-adb shell settings put global animator_duration_scale 0
+        - adb shell input keyevent 82
+        - adb shell svc power stayon true
+        - adb shell settings put global window_animation_scale 0
+        - adb shell settings put global transition_animation_scale 0
+        - adb shell settings put global animator_duration_scale 0
     
     override:
         - ./gradlew createDebugCoverageReport
