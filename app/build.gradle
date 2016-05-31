@@ -10,24 +10,9 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.athelite.CustomTestRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    
-    productFlavors {
-        mock {
-        }
-        prod {
-        }
-    }
-    
-    // Remove mockRelease as it's not needed.
-    android.variantFilter { variant ->
-        if (variant.buildType.name.equals('release')
-                && variant.getFlavors().get(0).name.equals('mock')) {
-            variant.setIgnore(true);
-        }
-    }
-    
+
     // Always show the result of every unit test, even if it passes.
     testOptions.unitTests.all {
         testLogging {
@@ -91,24 +76,4 @@ dependencies {
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.github.halysongoncalves:pugnotification:1.8.1'
     compile 'com.jjoe64:graphview:4.0.1'
-}
-
-// Grant animation permissions to avoid test failure because of ui sync.
-task grantAnimationPermissions(type: Exec, dependsOn: 'installMock') {
-    group = 'test'
-    description = 'Grant permissions for testing.'
-
-    def absolutePath = file('..') // Get project absolute path
-    commandLine "$absolutePath/set_animation_permissions.sh com.athelite".split(" ")
-}
-
-// Source: http://stackoverflow.com/q/29908110/112705
-afterEvaluate {
-    // When launching individual tests from Android Studio, it seems that only the assemble tasks
-    // get called directly, not the install* versions
-    tasks.each { task ->
-        if (task.name.startsWith('assembleMockAndroidTest')) {
-            task.dependsOn grantAnimationPermissions
-        }
-    }
 }

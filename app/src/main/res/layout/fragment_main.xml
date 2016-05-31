@@ -20,7 +20,7 @@
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/next_workout_card_view"
+            android:id="@+id/home_tab_next_workout_card"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_margin="1dp"
@@ -34,19 +34,19 @@
                 android:background="#ffffff"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/next_workout_card_title"
+                    android:id="@+id/home_tab_next_workout_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/main_next_workout"/>
                 <TextView
-                    android:id="@+id/next_workout_title"
+                    android:id="@+id/home_tab_next_workout_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#424242" />
                 <TextView
-                    android:id="@+id/next_workout_exercises"
+                    android:id="@+id/home_tab_next_workout_exercises"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#424242" />
@@ -55,7 +55,7 @@
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/today_workout_card_view"
+            android:id="@+id/home_tab_today_workout_card"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_margin="1dp"
@@ -69,19 +69,19 @@
                 android:background="#ffffff"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/today_workout_card_title"
+                    android:id="@+id/home_tab_today_workout_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/main_today_workout"/>
                 <TextView
-                    android:id="@+id/today_workout_title"
+                    android:id="@+id/home_tab_today_workout_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#424242" />
                 <TextView
-                    android:id="@+id/today_workout_card_content"
+                    android:id="@+id/home_tab_today_workout_card_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#424242" />
@@ -90,7 +90,7 @@
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/previous_workout_card_view"
+            android:id="@+id/home_tab_previous_workout_card"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_margin="1dp"
@@ -104,19 +104,19 @@
                 android:background="#ffffff"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/previous_workout_card_title"
+                    android:id="@+id/home_tab_previous_workout_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/main_previous_workout"/>
                 <TextView
-                    android:id="@+id/previous_workout_title"
+                    android:id="@+id/home_tab_previous_workout_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#424242" />
                 <TextView
-                    android:id="@+id/previous_workout_card_content"
+                    android:id="@+id/home_tab_previous_workout_card_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#424242"/>

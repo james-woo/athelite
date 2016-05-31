@@ -81,13 +81,13 @@ public class HomeTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         _db = new DBHandler(getContext());
-        _todayWorkoutTextView = (TextView) rootView.findViewById(R.id.today_workout_title);
-        _nextWorkoutTextView = (TextView) rootView.findViewById(R.id.next_workout_title);
-        _prevWorkoutTextView = (TextView) rootView.findViewById(R.id.previous_workout_title);
+        _todayWorkoutTextView = (TextView) rootView.findViewById(R.id.home_tab_today_workout_title);
+        _nextWorkoutTextView = (TextView) rootView.findViewById(R.id.home_tab_next_workout_title);
+        _prevWorkoutTextView = (TextView) rootView.findViewById(R.id.home_tab_previous_workout_title);
 
-        _todayWorkoutCard = (CardView) rootView.findViewById(R.id.today_workout_card_view);
-        _nextWorkoutCard = (CardView) rootView.findViewById(R.id.next_workout_card_view);
-        _prevWorkoutCard = (CardView) rootView.findViewById(R.id.previous_workout_card_view);
+        _todayWorkoutCard = (CardView) rootView.findViewById(R.id.home_tab_today_workout_card);
+        _nextWorkoutCard = (CardView) rootView.findViewById(R.id.home_tab_next_workout_card);
+        _prevWorkoutCard = (CardView) rootView.findViewById(R.id.home_tab_previous_workout_card);
 
         _dateTime.setTime(CalendarDay.today().getDate());
         _sp = PreferenceManager.getDefaultSharedPreferences(getContext());
