@@ -6,6 +6,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.athelite.Activity.MainActivity;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
