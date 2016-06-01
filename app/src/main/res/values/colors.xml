@@ -2,11 +2,7 @@
 <resources>
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#D32F2F</color>
-    <color name="colorPrimaryLight">#FFCDD2</color>
-    <color name="tabsScrollColor">#F44336</color>
     <color name="colorAccent">#FF5252</color>
-    <color name="primaryText">#212121</color>
     <color name="secondaryText">#727272</color>
     <color name="icons">#FFFFFF</color>
-    <color name="divider">#B6B6B6</color>
 </resources>

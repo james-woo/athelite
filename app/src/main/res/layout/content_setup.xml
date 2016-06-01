@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     android:paddingTop="50dp">
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -31,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Athelite will use this information for certain calculations. Don&apos;t worry, we won&apos;t use this information for anything else."
+        android:text="@string/setup_information_disclaimer"
         android:id="@+id/setup_exp"
         android:layout_below="@+id/setup_lets_set_things_up"
         android:layout_alignParentStart="true" />
@@ -56,14 +54,14 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Imperial"
+            android:text="@string/setup_imperial"
             android:id="@+id/setup_pounds"
             android:checked="true" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Metric"
+            android:text="@string/setup_metric"
             android:id="@+id/setup_kilograms"
             android:checked="false" />
     </RadioGroup>
@@ -71,14 +69,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select the units you wish to use."
+        android:text="@string/setup_select_units_string"
         android:id="@+id/setup_units_text_helper"
         android:layout_below="@+id/setup_units_text"
         android:layout_alignParentStart="true" />
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_below="@+id/setup_units_text_helper"
         android:layout_alignParentStart="true"
         android:id="@+id/setup_space"
@@ -88,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Height"
+        android:text="@string/setup_height_string"
         android:id="@+id/setup_height_text"
         android:layout_below="@+id/setup_information_disclaimer_text"
         android:layout_alignParentStart="true"
@@ -103,20 +101,21 @@
         android:layout_below="@+id/setup_information_disclaimer_text"
         android:layout_alignEnd="@+id/setup_edit_weight"
         android:layout_toEndOf="@+id/setup_profile_text"
-        android:layout_alignStart="@+id/setup_edit_weight" />
+        android:layout_alignStart="@+id/setup_edit_weight"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="cm"
+        android:text="@string/setup_height_units_string"
         android:id="@+id/setup_height_units"
         android:layout_alignTop="@+id/setup_height_text"
         android:layout_toEndOf="@+id/setup_edit_height" />
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_below="@+id/setup_height_text"
         android:layout_alignParentStart="true"
         android:id="@+id/setup_space2"
@@ -126,7 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Weight"
+        android:text="@string/setup_weight_string"
         android:id="@+id/setup_weight_text"
         android:layout_below="@+id/setup_space2"
         android:layout_alignParentStart="true" />
@@ -139,20 +138,21 @@
         android:id="@+id/setup_edit_weight"
         android:layout_alignTop="@+id/setup_space2"
         android:layout_alignEnd="@+id/setup_units_text_helper"
-        android:layout_toEndOf="@+id/setup_gender_text" />
+        android:layout_toEndOf="@+id/setup_gender_text"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="lb"
+        android:text="@string/setup_weight_text_string"
         android:id="@+id/setup_weight_units"
         android:layout_alignTop="@+id/setup_weight_text"
         android:layout_toEndOf="@+id/setup_edit_weight" />
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_below="@+id/setup_edit_weight"
         android:layout_alignParentStart="true"
         android:id="@+id/setup_space3"
@@ -162,7 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="years"
+        android:text="@string/setup_age_units_string"
         android:id="@+id/setup_age_units"
         android:layout_alignTop="@+id/setup_space3"
         android:layout_alignStart="@+id/setup_height_units" />
@@ -175,20 +175,21 @@
         android:id="@+id/setup_edit_age"
         android:layout_below="@+id/setup_edit_weight"
         android:layout_alignStart="@+id/setup_edit_weight"
-        android:layout_toStartOf="@+id/setup_age_units" />
+        android:layout_toStartOf="@+id/setup_age_units"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Age"
+        android:text="@string/setup_age_text_string"
         android:id="@+id/setup_age_text"
         android:layout_alignTop="@+id/setup_space3"
         android:layout_alignParentStart="true" />
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_below="@+id/setup_edit_age"
         android:layout_alignParentStart="true"
         android:id="@+id/setup_space4"
@@ -198,7 +199,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Gender"
+        android:text="@string/setup_gender_text_string"
         android:id="@+id/setup_gender_text"
         android:layout_alignTop="@+id/setup_space4"
         android:layout_alignParentStart="true" />
@@ -214,8 +215,8 @@
         android:layout_toStartOf="@+id/setup_age_units" />
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_below="@+id/setup_gender_text"
         android:layout_alignParentStart="true"
         android:id="@+id/space5" />
@@ -224,7 +225,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="This information will only be used in this application. You can always change or update your profile in the settings."
+        android:text="@string/setup_change_info_string"
         android:id="@+id/setup_information_disclaimer_text"
         android:layout_below="@+id/setup_profile_text"
         android:layout_alignParentStart="true" />
@@ -233,7 +234,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Your Profile"
+        android:text="@string/setup_profile_string"
         android:id="@+id/setup_profile_text"
         android:layout_below="@+id/setup_units"
         android:layout_alignParentStart="true"

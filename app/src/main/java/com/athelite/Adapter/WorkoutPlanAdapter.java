@@ -1,5 +1,6 @@
 package com.athelite.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,7 +66,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.vWorkoutCardMenu.setTitle(_workOutPlanList.get(position).getWorkoutPlanName());
         if (holder.vWorkoutCardMenu != null) {
             holder.vWorkoutCardMenu.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

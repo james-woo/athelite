@@ -1,5 +1,6 @@
 package com.athelite.Database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,8 +8,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import com.athelite.R;
 
 import java.io.FileOutputStream;
@@ -20,16 +19,12 @@ import java.util.ArrayList;
 public class DBExerciseList  extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
+    @SuppressLint("SdCardPath")
     private static String DB_PATH = "/data/data/com.athelite/databases/";
     private static String DB_NAME = "athelite_exercises";
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
-    /**
-     * Constructor
-     * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
-     * @param context
-     */
     public DBExerciseList(Context context) {
 
         super(context, DB_NAME, null, 1);
@@ -166,22 +161,6 @@ public class DBExerciseList  extends SQLiteOpenHelper {
             do {
                 String exerciseName = cursor.getString(0);
                 exercises.add(exerciseName);
-            } while(cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return exercises;
-    }
-
-    public ArrayList<String> readAllExercises() {
-        SQLiteDatabase db = this.getWritableDatabase();ArrayList<String> exercises = new ArrayList<>();
-        String query = "SELECT * " +
-                " FROM " + DBContract.ExerciseListTable.TABLE_NAME;
-        Cursor cursor = db.rawQuery(query, null);
-
-        if(cursor.moveToFirst()) {
-            do {
-                exercises.add(cursor.getString(0));
             } while(cursor.moveToNext());
         }
         cursor.close();

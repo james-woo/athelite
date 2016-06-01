@@ -13,7 +13,6 @@
 
     <!-- View Workout -->
     <string name="title_activity_view_workout">ViewWorkout</string>
-    <string name="back_to_workout_page">Workouts</string>
     <string name="action_delete_workout">Delete Workout</string>
 
     <!-- View Exercise -->
@@ -21,7 +20,6 @@
     <string name="back_to_exercises_page">Exercises</string>
     <string name="new_exercise">New Exercise</string>
     <string name="reps">reps</string>
-    <string name="lb">lb</string>
     <string name="set">Set</string>
     <string name="action_delete_exercise">Delete Exercise</string>
     <string name="action_move_up">Move Up</string>
@@ -29,7 +27,6 @@
 
     <!-- View Day -->
     <string name="title_activity_view_day">ViewDay</string>
-    <string name="back_to_calendar_page">Calendar</string>
     <string name="add_a_workout">Add A Workout</string>
     <string name="add_a_workout_help">Tap The Plus</string>
     <string name="no_workout_selected">No Workout Selected</string>
@@ -46,7 +43,7 @@
         and weight.</string>
 
     <!-- Dialogs -->
-    <string name="alert_dialog_ok">Ok</string>
+    <string name="alert_dialog_ok">OK</string>
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="empty_list">Empty List</string>
 
@@ -55,14 +52,7 @@
     <string name="settings_title_my_account">My Profile</string>
     <string name="settings_title_username_name">Name</string>
     <string name="settings_summary_username_name">Name</string>
-    <string name="settings_key_username_name">user_name</string>
     <string name="settings_dialogue_username_name">Enter your name</string>
-    <string name="settings_title_username">Username</string>
-    <string name="settings_summary_username">username</string>
-    <string name="settings_key_username">username</string>
-    <string name="settings_title_email">Email</string>
-    <string name="settings_summary_email">email@example.com</string>
-    <string name="settings_key_email">email</string>
 
     <string name="settings_title_workout">Workout</string>
     <string name="settings_title_timer">Timer Rest Time</string>
@@ -146,5 +136,22 @@
     <string name="lets_set_up">Let\'s set things up</string>
     <string name="units_setup">Units</string>
     <string name="title_activity_view_graph">ViewGraph</string>
+    <string name="setup_information_disclaimer">Athelite will use this information for certain calculations. Don\'t worry, we won\'t use this information for anything else.</string>
+    <string name="setup_imperial">Imperial</string>
+    <string name="setup_metric">Metric</string>
+    <string name="setup_select_units_string">Select the units you wish to use.</string>
+    <string name="setup_height_string">Height</string>
+    <string name="setup_height_units_string">cm</string>
+    <string name="setup_weight_string">Weight</string>
+    <string name="setup_weight_text_string">lb</string>
+    <string name="setup_age_units_string">years</string>
+    <string name="setup_age_text_string">Age</string>
+    <string name="setup_gender_text_string">Gender</string>
+    <string name="setup_change_info_string">This information will only be used in this application. You can always change or update your profile in the settings.</string>
+    <string name="setup_profile_string">Your Profile</string>
+    <string name="setup_inch_tv">in</string>
+    <string name="setup_pounds_tv">lbs</string>
+    <string name="setup_cm_tv">cm</string>
+    <string name="setup_kg_tv">kg</string>
 
 </resources>

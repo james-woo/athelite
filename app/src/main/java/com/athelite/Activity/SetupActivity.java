@@ -29,8 +29,6 @@ public class SetupActivity extends AppCompatActivity {
     private EditText _etWeight;
     private EditText _etAge;
 
-    private FloatingActionButton _fab;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +36,9 @@ public class SetupActivity extends AppCompatActivity {
         initToolbar();
         initPreferences();
         setupEditTextValidation();
-        _fab = (FloatingActionButton) findViewById(R.id.setup_fab);
-        assert _fab != null;
-        _fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.setup_fab);
+        assert fab != null;
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(validateInformation()) {
@@ -78,17 +76,21 @@ public class SetupActivity extends AppCompatActivity {
         _sp = PreferenceManager.getDefaultSharedPreferences(getApplication());
 
         // Units
+        final TextView heightUnitsTV = ((TextView) findViewById(R.id.setup_height_units));
+        final TextView weightUnitsTV = ((TextView) findViewById(R.id.setup_weight_units));
         _unitsRadioGroup = (RadioGroup) findViewById(R.id.setup_units);
         _unitsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton r = (RadioButton) findViewById(checkedId);
-                if(r != null && r.getText().toString().equals("Imperial")) {
-                    ((TextView) findViewById(R.id.setup_height_units)).setText("in");
-                    ((TextView) findViewById(R.id.setup_weight_units)).setText("lbs");
-                } else {
-                    ((TextView) findViewById(R.id.setup_height_units)).setText("cm");
-                    ((TextView) findViewById(R.id.setup_weight_units)).setText("kg");
+                if(heightUnitsTV != null && weightUnitsTV != null) {
+                    if (r != null && r.getText().toString().equals("Imperial")) {
+                        heightUnitsTV.setText(R.string.setup_inch_tv);
+                        weightUnitsTV.setText(R.string.setup_pounds_tv);
+                    } else {
+                        heightUnitsTV.setText(R.string.setup_cm_tv);
+                        weightUnitsTV.setText(R.string.setup_kg_tv);
+                    }
                 }
             }
         });
@@ -154,7 +156,8 @@ public class SetupActivity extends AppCompatActivity {
                 }
                 try{
                     if(Double.parseDouble(text) > 300 || Double.parseDouble(text) < 0) {
-                        textView.setText("300");
+                        String maxHeight = "300";
+                        textView.setText(maxHeight);
                         Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
                     }
                 } catch (NumberFormatException e) {
@@ -171,7 +174,8 @@ public class SetupActivity extends AppCompatActivity {
                 }
                 try {
                     if (Double.parseDouble(text) > 1000 || Double.parseDouble(text) < 0) {
-                        textView.setText("1000");
+                        String maxWeight = "1000";
+                        textView.setText(maxWeight);
                         Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
                     }
                 } catch (NumberFormatException e) {
@@ -188,7 +192,8 @@ public class SetupActivity extends AppCompatActivity {
                 }
                 try {
                     if (Double.parseDouble(text) > 150 || Double.parseDouble(text) < 0) {
-                        textView.setText("150");
+                        String maxAge = "150";
+                        textView.setText(maxAge);
                         Toast.makeText(SetupActivity.this, "Please enter a valid height", Toast.LENGTH_SHORT).show();
                     }
                 } catch (NumberFormatException e) {
