@@ -25,6 +25,8 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   - sys-img-armeabi-v7a-$ANDROID_TARGET
+before_install:
+  - chmod +x gradlew
 script:
   - ./gradlew build
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
