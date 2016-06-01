@@ -20,5 +20,6 @@ devices=$($adb devices | grep -v 'List of devices' | cut -f1 | grep '.')
 
 for device in $devices; do
     echo "Setting permissions to device" $device "for package" $package
+    $adb -s $device shell pm list packages
     $adb -s $device shell pm grant $package android.permission.SET_ANIMATION_SCALE
 done
