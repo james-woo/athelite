@@ -43,6 +43,4 @@ after_failure:
   - ./imgurbash.sh screen.png
   - pandoc builder/build/reports/tests/index.html -t plain | sed -n '/^Failed tests/,/default-package/p'
 after_success:
-  - ./gradlew jacocoFullReport
-  - pip install --user codecov
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
