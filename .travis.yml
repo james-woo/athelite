@@ -17,7 +17,7 @@ android:
   - platform-tools
   - tools
   - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-  - $ANDROID_TARGET
+  - android-23
   - extra-google-google_play_services
   - extra-android-support
   - extra-google-m2repository
