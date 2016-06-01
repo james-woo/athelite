@@ -1,14 +1,19 @@
 package com.athelite;
 
 import android.content.SharedPreferences;
+import android.graphics.Point;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.athelite.Activity.MainActivity;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +51,23 @@ public class MainActivityTest {
                     }
                 }
             };
+    @Before
+    public void init(){
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        Point[] coordinates = new Point[4];
+        coordinates[0] = new Point(248, 1520);
+        coordinates[1] = new Point(248, 929);
+        coordinates[2] = new Point(796, 1520);
+        coordinates[3] = new Point(796, 929);
+        try {
+            if (!uiDevice.isScreenOn()) {
+                uiDevice.wakeUp();
+                uiDevice.swipe(coordinates, 10);
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void tabs_exist_with_fresh_install() {

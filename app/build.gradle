@@ -46,6 +46,8 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
     testCompile("org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito")
     testCompile("org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito")
+
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
     
     androidTestCompile("com.android.support.test:runner:$rootProject.ext.runnerVersion") {
         exclude module: 'support-annotations'
