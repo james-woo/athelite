@@ -86,7 +86,7 @@ dependencies {
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.
-task grantAnimationPermissions(type: Exec, dependsOn: 'assembleDebug') {
+task grantAnimationPermissions(type: Exec, dependsOn: 'installDebug') {
     group = 'test'
     description = 'Grant permissions for testing.'
 
