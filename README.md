@@ -1,6 +1,7 @@
 # Athelite
 
-[![Build Status](https://travis-ci.org/james-woo/athelite.svg?branch=master)](https://travis-ci.org/james-woo/athelite) 
+[![Build Status](https://travis-ci.org/james-woo/athelite.svg?branch=master)](https://travis-ci.org/james-woo/athelite)  [![codecov](https://codecov.io/gh/james-woo/athelite/branch/master/graph/badge.svg)](https://codecov.io/gh/james-woo/athelite)
+
 
 Athelite is a simple workout tracking android application. No ads, no added complexity, just a simple workout logger anyone can use.
 
