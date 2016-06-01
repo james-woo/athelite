@@ -26,6 +26,13 @@ android {
     lintOptions {
         abortOnError false
     }
+    
+    productFlavors {
+        dev {
+        }
+        prod {
+        }
+    }
 
     buildTypes {
         release {
@@ -88,7 +95,7 @@ dependencies {
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.
-task grantAnimationPermissions(type: Exec, dependsOn: 'installDebug') {
+task grantAnimationPermissions(type: Exec, dependsOn: 'installDevDebug') {
     group = 'test'
     description = 'Grant permissions for testing.'
 
