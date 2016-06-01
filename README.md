@@ -1,3 +1,11 @@
-# athelite2
+# Athelite
 
-![status](https://circleci.com/gh/james-woo/athelite2.png?circle-token=cfa3675b4894f90acd01046b7105a91c7e1d0fbd) ![shield](https://circleci.com/gh/james-woo/athelite2.svg?style=shield&circle-token=cfa3675b4894f90acd01046b7105a91c7e1d0fbd)
+[![Build Status](https://travis-ci.org/james-woo/athelite.svg?branch=master)](https://travis-ci.org/james-woo/athelite) 
+
+Athelite is a simple workout tracking android application. No ads, no added complexity, just a simple workout logger anyone can use.
+
+# Features
+- Create templates. Design your custom workout template that you can copy over to each daily workout you have
+- Edit your workouts. Reached an even higher goal? Track it, edit it!
+- Get notifications of your up coming workouts.
+- See your progress with a simple graph tracking your exercises
