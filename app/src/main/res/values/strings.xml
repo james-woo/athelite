@@ -153,5 +153,6 @@
     <string name="setup_pounds_tv">lbs</string>
     <string name="setup_cm_tv">cm</string>
     <string name="setup_kg_tv">kg</string>
+    <string name="settings_key_username_name">user_name</string>
 
 </resources>
