@@ -1,34 +1,37 @@
-sudo: required
 language: android
-jdk: oraclejdk8
-cache:
-  directories:
-    - $HOME/.gradle/caches/2.10
-    - $HOME/.gradle/caches/jars-1
-    - $HOME/.gradle/daemon
-    - $HOME/.gradle/native
-    - $HOME/.gradle/wrapper
+sudo: false
+jdk: oraclejdk7
 env:
   global:
-    - ANDROID_TARGET=android-19
-    - ADB_INSTALL_TIMEOUT=10
-    - ANDROID_ABI=armeabi-v7a
+  - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
+  matrix:
+  - ADB_INSTALL_TIMEOUT=15 ANDROID_BUILD_TOOLS_VERSION=23.0.3 ANDROID_TARGET=android-22
+    ANDROID_ABI=armeabi-v7a
+cache:
+  directories:
+  - "${TRAVIS_BUILD_DIR}/gradle/caches/"
+  - "${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/"
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 android:
   components:
-  - tools
   - platform-tools
-  - build-tools-23.0.3
+  - tools
+  - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+  - "$ANDROID_TARGET"
   - android-23
+  - extra-google-google_play_services
+  - extra-android-support
+  - extra-google-m2repository
   - extra-android-m2repository
-  - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+  - sys-img-armeabi-v7a-$ANDROID_TARGET
 script:
-  - ./gradlew build jacocoTestReport assembleAndroidTest
+  - ./gradlew build
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb devices
   - adb shell input keyevent 82 &amp;
-  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
   - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace
   - ./gradlew test
 after_failure:
