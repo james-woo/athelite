@@ -28,7 +28,6 @@ android:
 before_install:
   - chmod +x gradlew
 script:
-  - ./gradlew build
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - ./gradlew assembleDebug -PdisablePreDex
@@ -38,13 +37,7 @@ script:
   - adb shell input keyevent 82 &
   - adb install -r app/build/outputs/apk/app-debug.apk
   - adb install -r app/build/outputs/apk/app-debug-androidTest-unaligned.apk
-  - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace
-  - ./gradlew test
-after_failure:
-  - wget http://imgur.com/tools/imgurbash.sh
-  - chmod a+x imgurbash.sh
-  - adb shell screencap -p | sed 's/\r$//' &gt; screen.png
-  - ./imgurbash.sh screen.png
-  - pandoc builder/build/reports/tests/index.html -t plain | sed -n '/^Failed tests/,/default-package/p'
+  - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace --info
+  - ./gradlew test --info
 after_success:
   - bash <(curl -s https://codecov.io/bash)
