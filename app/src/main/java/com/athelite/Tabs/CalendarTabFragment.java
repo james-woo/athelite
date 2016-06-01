@@ -51,7 +51,7 @@ public class CalendarTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
         _db = new DBHandler(getContext());
-        _calendar = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
+        _calendar = (MaterialCalendarView) rootView.findViewById(R.id.calendar_tab_calendar_view);
         _calendar.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
 
         _dateTime.setTime(CalendarDay.today().getDate());
@@ -65,7 +65,7 @@ public class CalendarTabFragment extends Fragment {
 
         });
 
-        _currentlySelectedDate = (TextView) rootView.findViewById(R.id.currently_selected_date);
+        _currentlySelectedDate = (TextView) rootView.findViewById(R.id.calendar_tab_currently_selected_date);
         setSelectedDates(CalendarDay.today());
         updateSelectedDate();
         return rootView;

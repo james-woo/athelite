@@ -6,22 +6,23 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Tabs.CalendarTabFragment">
+    tools:context=".Tabs.CalendarTabFragment"
+    android:id="@+id/calendar_tab_layout">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/currently_selected_date"
-        android:layout_above="@+id/calendarView"
-        android:layout_alignStart="@+id/calendarView"
-        android:layout_alignEnd="@+id/calendarView"
+        android:id="@+id/calendar_tab_currently_selected_date"
+        android:layout_above="@+id/calendar_tab_calendar_view"
+        android:layout_alignStart="@+id/calendar_tab_calendar_view"
+        android:layout_alignEnd="@+id/calendar_tab_calendar_view"
         android:textAlignment="center"/>
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/calendarView"
+        android:id="@+id/calendar_tab_calendar_view"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         xmlns:app="http://schemas.android.com/apk/res-auto"

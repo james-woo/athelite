@@ -62,7 +62,7 @@ public class WorkoutPlanTabFragment extends Fragment {
         _workoutPlanRecyclerView.setLayoutManager(_workoutPlanLayoutManager);
         _workoutPlanAdapter = new WorkoutPlanAdapter(getContext(), _workoutPlans);
         _workoutPlanRecyclerView.setAdapter(_workoutPlanAdapter);
-        _emptyList = (ImageView) rootView.findViewById(R.id.empty_list);
+        _emptyList = (ImageView) rootView.findViewById(R.id.workout_tab_empty_list);
         checkEmptyList();
         return rootView;
     }
