@@ -28,7 +28,7 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:orientation="horizontal" android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
@@ -49,7 +49,7 @@
                     android:textColor="#424242"
                     android:id="@+id/card_workout_plan_exercise_one_rep_max"
                     android:layout_weight="0.35"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginEnd="15dp" />
             </LinearLayout>
 
         </LinearLayout>

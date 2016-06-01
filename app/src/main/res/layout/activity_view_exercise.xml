@@ -68,7 +68,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_gravity="top|end"
         android:layout_marginBottom="80dp"
         app:layout_anchor="@id/view_exercise_fab_remove"
