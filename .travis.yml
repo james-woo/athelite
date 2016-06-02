@@ -1,6 +1,10 @@
 language: android
 sudo: false
 jdk: oraclejdk7
+addons:
+  apt:
+    packages:
+    - python2.7
 env:
   global:
   - GRADLE_OPTS="-Xmx2048M -XX:MaxPermSize=2048M"
@@ -15,6 +19,8 @@ android:
   - platform-tools
   - build-tools-23.0.3
   - android-23
+  - extra-google-google_play_services
+  - extra-google-m2repository
   - extra-android-m2repository
   - sys-img-armeabi-v7a-android-23
 before_install:
@@ -33,6 +39,7 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - ./scripts/travis_upload_release_to_github.py
 
 notifications:
   webhooks:
