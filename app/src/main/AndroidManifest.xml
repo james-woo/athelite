@@ -52,8 +52,8 @@
         <activity
             android:name=".Activity.ViewDay"
             android:label="@string/title_activity_view_day"
-            android:screenOrientation="portrait"
             android:parentActivityName=".Activity.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator">
             <meta-data
@@ -63,8 +63,8 @@
         <activity
             android:name=".Activity.HelpActivity"
             android:label="@string/title_activity_help"
-            android:screenOrientation="portrait"
             android:parentActivityName=".Activity.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator">
             <meta-data
@@ -74,8 +74,8 @@
         <activity
             android:name=".Activity.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait"
             android:parentActivityName=".Activity.MainActivity"
+            android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -93,15 +93,19 @@
         </activity>
         <activity
             android:name=".Activity.ViewGraph"
-            android:screenOrientation="landscape"
             android:label="@string/title_activity_view_graph"
             android:parentActivityName=".Activity.MainActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.athelite.Activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".Activity.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

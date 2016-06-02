@@ -53,6 +53,7 @@
     <string name="settings_title_username_name">Name</string>
     <string name="settings_summary_username_name">Name</string>
     <string name="settings_dialogue_username_name">Enter your name</string>
+    <string name="settings_key_username_name">user_name</string>
 
     <string name="settings_title_workout">Workout</string>
     <string name="settings_title_timer">Timer Rest Time</string>
@@ -153,6 +154,11 @@
     <string name="setup_pounds_tv">lbs</string>
     <string name="setup_cm_tv">cm</string>
     <string name="setup_kg_tv">kg</string>
-    <string name="settings_key_username_name">user_name</string>
+
+    <!-- About -->
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="action_about">About</string>
+    <string name="about_title_string">About</string>
+    <string name="about_what_is_athelite_string">a</string>
 
 </resources>

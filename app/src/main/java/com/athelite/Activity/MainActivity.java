@@ -229,6 +229,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent helpIntent = new Intent(getBaseContext(), HelpActivity.class);
                 startActivity(helpIntent);
                 break;
+            case R.id.action_about:
+                Intent aboutIntent = new Intent(getBaseContext(), AboutActivity.class);
+                startActivity(aboutIntent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

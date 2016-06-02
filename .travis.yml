@@ -24,13 +24,10 @@ before_install:
   - ./wait_for_emulator.sh
 script:
 # build app and assemble APK, in debug mode
-  - ./gradlew assembleDebug
-# run all the local unit tests of app module
-  - ./gradlew :testDebug
-# run all the instrumented tests of app module - DISABLED until we get an stable setup for Espresso in Travis
-# - ./gradlew connectedDebugAndroidTest --info
-# install app, then assemble and install instrumented tests of app module
-  - ./gradlew :installDebug
-  - ./gradlew :installDebugAndroidTest
+  - ./gradlew assembleDev
+  - ./gradlew installDevDebug
+  - ./gradlew installDevDebugAndroidTest
+  - ./gradlew grantAnimationPermissions
+  - ./gradlew connectedDevDebugAndroidTest
 after_success:
   - bash <(curl -s https://codecov.io/bash)
