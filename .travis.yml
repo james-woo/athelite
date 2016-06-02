@@ -27,7 +27,7 @@ script:
   - ./gradlew assembleDev
   - ./gradlew installDevDebug
   - ./gradlew installDevDebugAndroidTest
-  - ./gradlew grantAnimationPermissions
-  - ./gradlew connectedDevDebugAndroidTest
+
+# - ./gradlew connectedDevDebugAndroidTest
 after_success:
   - bash <(curl -s https://codecov.io/bash)

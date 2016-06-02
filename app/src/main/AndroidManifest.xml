@@ -72,6 +72,15 @@
                 android:value="com.athelite.Activity.MainActivity" />
         </activity>
         <activity
+            android:name=".Activity.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.athelite.Activity.MainActivity" />
+        </activity>
+        <activity
             android:name=".Activity.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Activity.MainActivity"
@@ -102,10 +111,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.athelite.Activity.MainActivity" />
         </activity>
-        <activity
-            android:name=".Activity.AboutActivity"
-            android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
