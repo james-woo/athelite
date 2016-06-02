@@ -28,7 +28,7 @@ script:
   - ./gradlew installDevDebug
   - ./gradlew installDevDebugAndroidTest
 # - ./gradlew connectedDevDebugAndroidTest
-  - ./gradlew createDevDebugCoverageReport
+#  - ./gradlew createDevDebugCoverageReport
   - ./gradlew testDevDebugUnitTest
 
 
