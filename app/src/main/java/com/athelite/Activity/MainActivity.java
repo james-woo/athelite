@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             throw new Error(sqle.getMessage());
         }
 
-        //_db.deleteDB();
+        _db.deleteDB();
     }
 
     @Override
@@ -228,6 +228,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_help:
                 Intent helpIntent = new Intent(getBaseContext(), HelpActivity.class);
                 startActivity(helpIntent);
+                break;
+            case R.id.action_about:
+                Intent aboutIntent = new Intent(getBaseContext(), AboutActivity.class);
+                startActivity(aboutIntent);
                 break;
         }
 

@@ -133,6 +133,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             _workoutName.setSelectAllOnFocus(true);
             _workoutDayExercises = _workoutDay.getWorkoutPlanExercises();
             _adapter.updateExerciseList(_workoutDayExercises);
+            _adapter.setWorkout(_workoutDay);
             _adapter.notifyDataSetChanged();
             _addAWorkoutTextView.setVisibility(View.INVISIBLE);
             _addAWorkoutTextViewHelp.setVisibility(View.INVISIBLE);
@@ -162,6 +163,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         if(_workoutDay != null) {
             _workoutDay.setExercises(_db.getExercisesForWorkoutPlan(_workoutDay));
             _adapter.updateExerciseList(_workoutDay.getWorkoutPlanExercises());
+            _adapter.setWorkout(_workoutDay);
             _adapter.notifyDataSetChanged();
         }
     }
@@ -176,9 +178,10 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         if(_workoutDay != null) {
             _workoutDay.setWorkoutPlanName(_workoutName.getText().toString());
             _workoutDay.setExercises(_adapter.getExerciseList());
+            _adapter.setWorkout(_workoutDay);
             _db.updateWorkoutPlan(_workoutDay);
             CalendarTabFragment.getInstance().updateSelectedDate(new Date(_dateTime));
-            GraphTabFragment.getInstance().updateExercises();
+            GraphTabFragment.getInstance().addExercises(_workoutDay.getWorkoutPlanExercises());
         }
     }
 
@@ -208,6 +211,9 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 _db.deleteWorkoutDay(_workoutDay);
                 CalendarTabFragment.getInstance().unSetSelectedDate(new Date(_dateTime));
                 CalendarTabFragment.getInstance().setSelectedDate(CalendarDay.today().getDate());
+                _adapter.clear();
+                _workoutDayExercises.clear();
+                _adapter.setWorkout(null);
                 _workoutDay = null;
                 onBackPressed();
                 break;

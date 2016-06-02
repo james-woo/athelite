@@ -6,36 +6,38 @@ env:
   - GRADLE_OPTS="-Xmx2048M -XX:MaxPermSize=2048M"
   matrix:
   - ADB_INSTALL_TIMEOUT=15 ANDROID_BUILD_TOOLS_VERSION=23.0.3 ANDROID_TARGET=android-23 ANDROID_ABI=armeabi-v7a
-cache:
-  directories:
-  - "${TRAVIS_BUILD_DIR}/gradle/caches/"
-  - "${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/"
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
 android:
   components:
-  - platform-tools
+# first 'tools' updates SDK tools 'til last version ** in remote repository number 10 **
   - tools
-  - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-  - $ANDROID_TARGET
-  - extra-google-google_play_services
-  - extra-android-support
-  - extra-google-m2repository
+# second 'tools' updates SDK tools 'til last version ** in remote repository number 11 ** (current last one)
+  - tools
+  - platform-tools
+  - build-tools-23.0.3
+  - android-23
   - extra-android-m2repository
-  - sys-img-armeabi-v7a-$ANDROID_TARGET
+  - sys-img-armeabi-v7a-android-23
 before_install:
-  - chmod +x gradlew
-script:
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI -c 20M
   - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-  - ./gradlew installDevDebug -PdisablePreDex
-  - ./gradlew assembleDevDebug -PdisablePreDex
-  - ./gradlew assembleDevAndroidTest -PdisablePreDex
-  - adb install -r app/build/outputs/apk/app-debug.apk
-  - adb install -r app/build/outputs/apk/app-debug-androidTest-unaligned.apk
-  - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace --info
-  - ./gradlew test --info
+  - chmod +x ./wait_for_emulator.sh
+  - ./wait_for_emulator.sh
+script:
+# build app and assemble APK, in debug mode
+  - ./gradlew assembleDev
+  - ./gradlew installDevDebug
+  - ./gradlew installDevDebugAndroidTest
+# - ./gradlew connectedDevDebugAndroidTest
+#  - ./gradlew createDevDebugCoverageReport
+  - ./gradlew testDevDebugUnitTest
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/9c566b2860f6b4230aa3
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Athelite.iml" filepath="$PROJECT_DIR$/Athelite.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/athelite.iml" filepath="$PROJECT_DIR$/athelite.iml" />
     </modules>
   </component>
 </project>

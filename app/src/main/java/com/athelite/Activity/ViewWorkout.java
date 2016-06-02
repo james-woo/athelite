@@ -95,6 +95,7 @@ public class ViewWorkout extends AppCompatActivity {
             }
             _workoutPlan.setWorkoutPlanName(_workoutName.getText().toString());
             _workoutPlan.setExercises(_adapter.getExerciseList());
+            _adapter.setWorkout(_workoutPlan);
             _db.updateWorkoutPlan(_workoutPlan);
         }
     }
@@ -105,6 +106,7 @@ public class ViewWorkout extends AppCompatActivity {
         if(_workoutPlan != null) {
             _workoutPlan.setExercises(_db.getExercisesForWorkoutPlan(_workoutPlan));
             _adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
+            _adapter.setWorkout(_workoutPlan);
             _adapter.notifyDataSetChanged();
         }
     }
