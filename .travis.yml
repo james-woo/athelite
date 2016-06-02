@@ -36,6 +36,7 @@ script:
 # - ./gradlew connectedDevDebugAndroidTest
 #  - ./gradlew createDevDebugCoverageReport
   - ./gradlew testDevDebugUnitTest
+  - ./gradlew signingReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
