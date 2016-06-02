@@ -53,6 +53,18 @@ public class MainActivityTest {
             };
     @Before
     public void init(){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mActivityRule.getActivity());
+        if(!sp.getBoolean("setupSeen", false)) {
+            // Enter setup
+            onView(withId(R.id.setup_edit_height))
+                    .perform(typeText("170"), closeSoftKeyboard());
+            onView(withId(R.id.setup_edit_weight))
+                    .perform(typeText("165"), closeSoftKeyboard());
+            onView(withId(R.id.setup_edit_age))
+                    .perform(typeText("24"), closeSoftKeyboard());
+            onView(withId(R.id.setup_fab)).perform(click());
+        }
+
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         Point[] coordinates = new Point[4];
         coordinates[0] = new Point(248, 1520);
