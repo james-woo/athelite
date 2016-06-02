@@ -15,7 +15,9 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_setup"
-    tools:context="com.athelite.Activity.SetupActivity">
+    tools:context="com.athelite.Activity.SetupActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
 
     <TextView
@@ -99,10 +101,9 @@
         android:ems="10"
         android:id="@+id/setup_edit_height"
         android:layout_below="@+id/setup_information_disclaimer_text"
-        android:layout_alignEnd="@+id/setup_edit_weight"
-        android:layout_toEndOf="@+id/setup_profile_text"
         android:layout_alignStart="@+id/setup_edit_weight"
-        tools:ignore="LabelFor" />
+        tools:ignore="LabelFor"
+        android:layout_alignEnd="@+id/setup_units_text_helper" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -127,7 +128,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/setup_weight_string"
         android:id="@+id/setup_weight_text"
-        android:layout_below="@+id/setup_space2"
+        android:layout_alignTop="@+id/setup_space2"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -136,10 +137,10 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/setup_edit_weight"
-        android:layout_alignTop="@+id/setup_space2"
+        tools:ignore="LabelFor"
+        android:layout_below="@+id/setup_height_units"
         android:layout_alignEnd="@+id/setup_units_text_helper"
-        android:layout_toEndOf="@+id/setup_gender_text"
-        tools:ignore="LabelFor" />
+        android:layout_toEndOf="@+id/setup_gender_text" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -164,8 +165,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/setup_age_units_string"
         android:id="@+id/setup_age_units"
-        android:layout_alignTop="@+id/setup_space3"
-        android:layout_alignStart="@+id/setup_height_units" />
+        android:layout_alignTop="@+id/setup_age_text"
+        android:layout_toEndOf="@+id/setup_edit_age" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -173,10 +174,10 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/setup_edit_age"
-        android:layout_below="@+id/setup_edit_weight"
+        tools:ignore="LabelFor"
+        android:layout_below="@+id/setup_weight_units"
         android:layout_alignStart="@+id/setup_edit_weight"
-        android:layout_toStartOf="@+id/setup_age_units"
-        tools:ignore="LabelFor" />
+        android:layout_toStartOf="@+id/setup_weight_units" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -184,7 +185,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/setup_age_text_string"
         android:id="@+id/setup_age_text"
-        android:layout_alignTop="@+id/setup_space3"
+        android:layout_alignBottom="@+id/setup_space3"
         android:layout_alignParentStart="true" />
 
     <Space

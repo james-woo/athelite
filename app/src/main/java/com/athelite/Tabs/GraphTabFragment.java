@@ -56,15 +56,19 @@ public class GraphTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_graph, container, false);
 
-        _db = new DBHandler(getContext());
+        initInstances();
         updateExercises();
-
         _adapter = new GraphExerciseListAdapter(getContext(), _exercises);
         _listView = (ListView) rootView.findViewById(R.id.graph_exercise_list);
         if(_listView != null)
             _listView.setAdapter(_adapter);
 
+
         return rootView;
+    }
+
+    private void initInstances() {
+        _db = new DBHandler(getContext());
     }
 
     public void updateExercises() {
@@ -73,6 +77,9 @@ public class GraphTabFragment extends Fragment {
         }
         if(_graphExerciseList != null) {
             _graphExerciseList.clear();
+        }
+        if(_db == null) {
+            _db = new DBHandler(getActivity());
         }
         _graphExerciseList = _db.getCompletedExercises(_db.getWritableDatabase());
         Double highestOneRepMax = 0.0;
@@ -90,6 +97,21 @@ public class GraphTabFragment extends Fragment {
                 }
             }
             _exercises.add(heaviestExercise);
+        }
+        if(_adapter != null)
+            _adapter.notifyDataSetChanged();
+    }
+
+    public void addExercises(ArrayList<Exercise> exercises) {
+        for(Exercise e : exercises) {
+            if(!_exercises.contains(e)) {
+                _exercises.add(e);
+            } else {
+                int index = _exercises.indexOf(e);
+                if(_exercises.get(index).getOneRepMax() < e.getOneRepMax()) {
+                    _exercises.get(index).setOneRepMax(e.getOneRepMax());
+                }
+            }
         }
         if(_adapter != null)
             _adapter.notifyDataSetChanged();

@@ -25,7 +25,9 @@
             android:layout_marginStart="16dp"
             android:textSize="18sp"
             android:textColor="@android:color/white"
-            android:id="@+id/view_day_title" />
+            android:id="@+id/view_day_title"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
 
         <EditText
             android:layout_width="match_parent"

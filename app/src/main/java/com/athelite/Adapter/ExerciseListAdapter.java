@@ -183,4 +183,8 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
     public ArrayList<Exercise> getExerciseList() {
         return _exerciseList;
     }
+
+    public void setWorkout(WorkoutPlan workout) {
+        _workoutPlan = workout;
+    }
 }
