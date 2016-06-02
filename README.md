@@ -1,8 +1,8 @@
 # Athelite
 
-[![Join the chat at https://gitter.im/james-woo/athelite](https://badges.gitter.im/james-woo/athelite.svg)](https://gitter.im/james-woo/athelite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status](https://travis-ci.org/james-woo/athelite.svg?branch=master)](https://travis-ci.org/james-woo/athelite)  [![codecov](https://codecov.io/gh/james-woo/athelite/branch/master/graph/badge.svg)](https://codecov.io/gh/james-woo/athelite)
+
+[![Build Status](https://travis-ci.org/james-woo/athelite.svg?branch=master)](https://travis-ci.org/james-woo/athelite)  [![codecov](https://codecov.io/gh/james-woo/athelite/branch/master/graph/badge.svg)](https://codecov.io/gh/james-woo/athelite) [![Join the chat at https://gitter.im/james-woo/athelite](https://badges.gitter.im/james-woo/athelite.svg)](https://gitter.im/james-woo/athelite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 Athelite is a simple workout tracking android application. No ads, no added complexity, just a simple workout logger anyone can use.
