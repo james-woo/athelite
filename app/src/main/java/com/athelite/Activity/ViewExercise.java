@@ -122,6 +122,7 @@ public class ViewExercise extends AppCompatActivity {
     private void addExerciseSet() {
         ExerciseSet newSet = _db.createExerciseSetForExercise(_db.getWritableDatabase(), _exercise, getNextSetNumber());
         _adapter.addExerciseSet(newSet);
+        updateSets();
         _adapter.notifyDataSetChanged();
         _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
     }
