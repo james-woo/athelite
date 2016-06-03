@@ -29,7 +29,7 @@ script:
   - ./gradlew assemble
   - ./gradlew test
 deploy:
-  - ls /app/build/outputs/
+  - ls /app/build/outputs/apk/
   provider: releases
   api_key: $GITHUB_ACCESS_TOKEN
   file: 'app-dev-release.apk'
