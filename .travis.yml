@@ -28,13 +28,14 @@ script:
 # build app and assemble APK, in debug mode
   - ./gradlew assemble
   #- ./gradlew test
-
+before_deploy:
+  - ls app/build/outputs/apk/
 deploy:
   provider: releases
   api_key: $GITHUB_ACCESS_TOKEN
   file: 'app/build/outputs/apk/app-dev-release.apk'
   skip_cleanup: true
+  overwrite: true
   on:
     tags: true
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+    all_branches: true
