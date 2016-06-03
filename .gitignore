@@ -1,3 +1,4 @@
+.gitignore.swp
 # built application files
 *.apk
 *.ap_
@@ -19,3 +20,4 @@ local.properties
 .gradle
 .DS_Store
 .idea/vcs.xml
+.idea/libraries/android_android_23.xml
