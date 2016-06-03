@@ -33,7 +33,7 @@ script:
   - ./gradlew assemble
   - ls app/build/outputs/apk/
   - ./gradlew test
-  - ./gradlew signingReports
+  - ./gradlew signingReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
