@@ -33,7 +33,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_ACCESS_TOKEN
-  file: 'app/build/outputs/apk/app-dev-release.apk'
+  file: 'app/build/outputs/apk/app-prod-release.apk'
   skip_cleanup: true
   overwrite: true
   on:
