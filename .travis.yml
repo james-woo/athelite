@@ -28,8 +28,8 @@ script:
 # build app and assemble APK, in debug mode
   - ./gradlew assemble
   - ./gradlew test
+  - ls /app/build/outputs/
 deploy:
-  - ls /app/build/outputs/apk/
   provider: releases
   api_key: $GITHUB_ACCESS_TOKEN
   file: 'app-dev-release.apk'
@@ -38,4 +38,3 @@ deploy:
     tags: true
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-
