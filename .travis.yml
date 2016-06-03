@@ -1,4 +1,5 @@
 language: android
+sudo: false
 jdk: oraclejdk7
 env:
   global:
@@ -30,19 +31,10 @@ script:
 deploy:
   provider: releases
   api_key: $GITHUB_ACCESS_TOKEN
-  file: "/app/build/outputs/apk/app-dev-release.apk"
+  file: '/app/build/outputs/apk/app-dev-release.apk'
   skip_cleanup: true
   on:
     tags: true
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-#  - ./travis_upload_release_to_github.py
 
-notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/9c566b2860f6b4230aa3
-    on_success: change  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: never     # options: [always|never|change] default: always
