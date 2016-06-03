@@ -27,9 +27,10 @@ before_install:
 script:
 # build app and assemble APK, in debug mode
   - ./gradlew assemble
-  - ./gradlew test
-  - ls /app/build/outputs/
+  #- ./gradlew test
+
 before_deploy:
+  - ls /app/build/outputs/
   - export DEVRELEASE=$(ls app/build/outputs/apk/app-dev-release.apk)
 deploy:
   provider: releases
