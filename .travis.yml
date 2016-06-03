@@ -30,14 +30,12 @@ before_install:
   - ./wait_for_emulator.sh
 script:
 # build app and assemble APK, in debug mode
-  - ls
   - ./gradlew assembleDev
   - ./gradlew installDevDebug
   - ./gradlew installDevDebugAndroidTest
 # - ./gradlew connectedDevDebugAndroidTest
-#  - ./gradlew createDevDebugCoverageReport
+# - ./gradlew createDevDebugCoverageReport
   - ./gradlew testDevDebugUnitTest
-  - ./gradlew signingReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
