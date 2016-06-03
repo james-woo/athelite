@@ -30,11 +30,12 @@ before_install:
   - ./wait_for_emulator.sh
 script:
 # build app and assemble APK, in debug mode
-  - ./gradlew build
+  - ./gradlew assemble
+  - ./gradlew test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - ./scripts/travis_upload_release_to_github.py
+  - ./travis_upload_release_to_github.py
 
 notifications:
   webhooks:
