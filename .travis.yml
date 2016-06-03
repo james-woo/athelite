@@ -32,6 +32,7 @@ script:
 # build app and assemble APK, in debug mode
   - ./gradlew assemble
   - ./gradlew test
+  - ./gradlew signingReports
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
