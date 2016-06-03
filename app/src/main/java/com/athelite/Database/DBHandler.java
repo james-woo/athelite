@@ -355,7 +355,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         for(Exercise e : workoutPlan.getWorkoutPlanExercises()) {
             values.clear();
-            Exercise copy = copyExercise(db, e, id);
+            Exercise copy = copyExercise(db, e);
             copiedExercises.add(copy);
             values.put(DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID, id);
             values.put(DBContract.WorkoutExerciseTable.COLUMN_EXERCISE_ID, copy.getId());
@@ -494,7 +494,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return exerciseList;
     }
 
-    public Exercise copyExercise(SQLiteDatabase db, Exercise exercise, long workoutExerciseId) {
+    public Exercise copyExercise(SQLiteDatabase db, Exercise exercise) {
         ContentValues values = new ContentValues();
 
         values.put(DBContract.ExerciseTable.COLUMN_NAME, exercise.getExerciseName());
@@ -511,7 +511,7 @@ public class DBHandler extends SQLiteOpenHelper {
             values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, es.getSetWeight());
             values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, es.getWeightType());
             values.put(DBContract.ExerciseSetTable.COLUMN_REPS, es.getSetReps());
-            values.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, workoutExerciseId);
+            values.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, id);
             long esid = db.insert(DBContract.ExerciseSetTable.TABLE_NAME, null, values);
             ExerciseSet copy = new ExerciseSet(esid, es.getSetNumber(), es.getSetWeight(), es.getWeightType(), es.getSetReps());
             copiedExerciseSets.add(copy);
@@ -559,11 +559,9 @@ public class DBHandler extends SQLiteOpenHelper {
         db.update(DBContract.ExerciseTable.TABLE_NAME, values, whereClauseExerciseTable,
                 new String[] { String.valueOf(exercise.getId()) });
 
-        long workoutExerciseId = getWorkoutExerciseIdForExerciseSet(exercise.getId(), db);
-
         String query = "SELECT * FROM " + DBContract.ExerciseSetTable.TABLE_NAME +
                 " WHERE " + DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID +
-                " =  \"" + workoutExerciseId + "\"";
+                " =  \"" + exercise.getId() + "\"";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -580,7 +578,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, set.getWeightType());
                 values.put(DBContract.ExerciseSetTable.COLUMN_REPS, set.getSetReps());
                 db.update(DBContract.ExerciseSetTable.TABLE_NAME, values, where,
-                        new String[]{String.valueOf(setNumber), String.valueOf(workoutExerciseId)});
+                        new String[]{String.valueOf(setNumber), String.valueOf(exercise.getId())});
             } while(cursor.moveToNext());
         }
         cursor.close();
@@ -703,34 +701,14 @@ public class DBHandler extends SQLiteOpenHelper {
     /***************************************EXERCISESET********************************************/
 
     public ExerciseSet createExerciseSetForExercise(SQLiteDatabase db, Exercise exercise, int setNumber) {
-
-        long exerciseId = exercise.getId();
-        long workoutExerciseId = getWorkoutExerciseIdForExerciseSet(exerciseId, db);
-
-        String query = "SELECT * FROM " + DBContract.ExerciseSetTable.TABLE_NAME +
-                " WHERE " + DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID +
-                " =  \"" + workoutExerciseId + "\"" +
-                " AND " + DBContract.ExerciseSetTable.COLUMN_SET_NUMBER +
-                " =  \"" + setNumber + "\"";
-        Cursor cursor = db.rawQuery(query, null);
-        if(cursor.getCount() <= 0) {
-            ContentValues values = new ContentValues();
-            values.put(DBContract.ExerciseSetTable.COLUMN_SET_NUMBER, setNumber);
-            values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, 0.0);
-            values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, "lb");
-            values.put(DBContract.ExerciseSetTable.COLUMN_REPS, 0);
-            values.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, workoutExerciseId);
-            long id = db.insert(DBContract.ExerciseSetTable.TABLE_NAME, null, values);
-            return new ExerciseSet(id, setNumber, 0.0, "lb", 0);
-        }
-        else {
-            cursor.moveToFirst();
-            long id = cursor.getLong(0);
-            double weight = cursor.getDouble(2);
-            String weightType = cursor.getString(3);
-            int reps = cursor.getInt(4);
-            return new ExerciseSet(id, setNumber, weight, weightType, reps);
-        }
+        ContentValues values = new ContentValues();
+        values.put(DBContract.ExerciseSetTable.COLUMN_SET_NUMBER, setNumber);
+        values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, 0.0);
+        values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, "lb");
+        values.put(DBContract.ExerciseSetTable.COLUMN_REPS, 0);
+        values.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, exercise.getId());
+        long id = db.insert(DBContract.ExerciseSetTable.TABLE_NAME, null, values);
+        return new ExerciseSet(id, setNumber, 0.0, "lb", 0);
     }
 
     public ArrayList<ExerciseSet> readExerciseSetsWithExerciseId(SQLiteDatabase db, long exerciseId) {
@@ -741,12 +719,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<ExerciseSet> exerciseSets = new ArrayList<>();
 
-        long workoutExerciseId;
         if(cursor.moveToFirst()) {
-            workoutExerciseId = cursor.getInt(0);
             String esQuery = "SELECT * FROM " + DBContract.ExerciseSetTable.TABLE_NAME +
                     " WHERE " + DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID +
-                    " =  \"" + workoutExerciseId + "\"";
+                    " =  \"" + exerciseId + "\"";
             Cursor esCursor = db.rawQuery(esQuery, null);
             if(esCursor.moveToFirst()) {
                 do {
@@ -784,7 +760,7 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         long workoutExerciseId = 0;
         if(cursor.moveToFirst()) {
-            workoutExerciseId = cursor.getInt(0);
+            workoutExerciseId = cursor.getLong(0);
         }
         cursor.close();
         return workoutExerciseId;

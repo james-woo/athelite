@@ -131,6 +131,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             _workoutName.setFocusable(true);
             _workoutName.setFocusableInTouchMode(true);
             _workoutName.setSelectAllOnFocus(true);
+            _workoutDay.setExercises(_db.getExercisesForWorkoutPlan(_workoutDay));
             _workoutDayExercises = _workoutDay.getWorkoutPlanExercises();
             _adapter.updateExerciseList(_workoutDayExercises);
             _adapter.setWorkout(_workoutDay);

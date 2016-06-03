@@ -84,6 +84,7 @@ public class ViewWorkout extends AppCompatActivity {
     private void addExercise() {
         Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan);
         _adapter.addExercise(newExercise);
+        _adapter.setWorkout(_workoutPlan);
         _adapter.notifyDataSetChanged();
         _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
     }
