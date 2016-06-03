@@ -84,6 +84,7 @@ public class ViewExercise extends AppCompatActivity {
                     if(_adapter.getExerciseSets().size() - 1 >= 0) {
                         _db.deleteExerciseSet(_adapter.getExerciseSets().get(_adapter.getExerciseSets().size() - 1));
                         _adapter.removeLastExerciseSet();
+                        updateSets();
                         _adapter.notifyDataSetChanged();
                     }
                 }
