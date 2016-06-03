@@ -33,17 +33,35 @@ public class DBHandler extends SQLiteOpenHelper {
                     DBContract.WorkoutPlanTable.COLUMN_NAME + " TEXT," +
                     DBContract.WorkoutPlanTable.COLUMN_TEMPLATE + " INTEGER" + ")";
 
+    private static class WORKOUT_PLAN_TABLE{
+        public static final int ID = 0;
+        public static final int NAME = 1;
+        public static final int TEMPLATE = 2;
+    };
+
     private static final String CREATE_EXERCISE_TABLE =
             "CREATE TABLE " + DBContract.ExerciseTable.TABLE_NAME + "(" +
                     DBContract.ExerciseTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
                     DBContract.ExerciseTable.COLUMN_NAME + " TEXT," +
                     DBContract.ExerciseTable.COLUMN_ONEREPMAX + " TEXT" + ")";
 
+    private static class EXERCISE_TABLE{
+        public static final int ID = 0;
+        public static final int NAME = 1;
+        public static final int ONEREPMAX = 2;
+    };
+
     private static final String CREATE_WORKOUT_EXERCISE_TABLE =
             "CREATE TABLE " + DBContract.WorkoutExerciseTable.TABLE_NAME + "(" +
                     DBContract.WorkoutExerciseTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
                     DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID + " INTEGER," +
                     DBContract.WorkoutExerciseTable.COLUMN_EXERCISE_ID + " INTEGER" + ")";
+
+    private static class WORKOUT_EXERCISE_TABLE{
+        public static final int ID = 0;
+        public static final int WORKOUTID = 1;
+        public static final int EXERCISEID = 2;
+    };
 
     private static final String CREATE_EXERCISESET_TABLE =
             "CREATE TABLE " + DBContract.ExerciseSetTable.TABLE_NAME + "(" +
@@ -54,11 +72,26 @@ public class DBHandler extends SQLiteOpenHelper {
                     DBContract.ExerciseSetTable.COLUMN_REPS + " INTEGER," +
                     DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " INTEGER" + ")";
 
+    private static class EXERCISE_SET_TABLE{
+        public static final int ID = 0;
+        public static final int SETNUMBER = 1;
+        public static final int WEIGHT = 2;
+        public static final int WEIGHTTYPE = 3;
+        public static final int REPS = 4;
+        public static final int WORKOUTEXERCISEID = 5;
+    };
+
     private static final String CREATE_CALENDAR_TABLE =
             "CREATE TABLE " + DBContract.CalendarTable.TABLE_NAME + "(" +
                     DBContract.CalendarTable.COLUMN_ID + " INTEGER PRIMARY KEY," +
                     DBContract.CalendarTable.COLUMN_DATE + " INTEGER," +
                     DBContract.CalendarTable.COLUMN_WORKOUT_ID + " INTEGER" +")";
+
+    private static class CALENDAR_TABLE{
+        public static final int ID = 0;
+        public static final int DATE = 1;
+        public static final int WORKOUTID = 2;
+    };
 
     private static final String CREATE_WORKOUT_HISTORY_TABLE =
             "CREATE TABLE " + DBContract.WorkoutHistory.TABLE_NAME + "(" +
@@ -67,6 +100,14 @@ public class DBHandler extends SQLiteOpenHelper {
                     DBContract.WorkoutHistory.COLUMN_WORKOUT_ID + " INTEGER," +
                     DBContract.WorkoutHistory.COLUMN_EXERCISE_ID + " INTEGER," +
                     DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME + " TEXT" + ")";
+
+    private static class WORKOUT_HISTORY_TABLE{
+        public static final int ID = 0;
+        public static final int DATE = 1;
+        public static final int WORKOUTID = 2;
+        public static final int EXERCISEID = 3;
+        public static final int EXERCISENAME = 4;
+    };
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -144,7 +185,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                long workoutPlanId = cursor.getLong(0);
+                long workoutPlanId = cursor.getLong(WORKOUT_PLAN_TABLE.ID);
 
                 query = "SELECT * " +
                         " FROM " + DBContract.WorkoutExerciseTable.TABLE_NAME +
@@ -156,7 +197,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 if(wCursor.moveToFirst()) {
                     exerciseList = new ArrayList<>();
                     do {
-                        int exerciseId = wCursor.getInt(2);
+                        int exerciseId = wCursor.getInt(WORKOUT_EXERCISE_TABLE.EXERCISEID);
 
                         Exercise exercise = readExerciseWithId(db, exerciseId);
                         try {
@@ -215,8 +256,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
             if(weCursor.moveToFirst()) {
                 do {
-                    int workoutExerciseId = weCursor.getInt(0);
-                    int exerciseId = weCursor.getInt(2);
+                    int workoutExerciseId = weCursor.getInt(WORKOUT_EXERCISE_TABLE.ID);
+                    int exerciseId = weCursor.getInt(WORKOUT_EXERCISE_TABLE.EXERCISEID);
                     db.delete(DBContract.ExerciseSetTable.TABLE_NAME,
                             DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " = ?",
                             new String[] { String.valueOf(workoutExerciseId) });
@@ -255,10 +296,10 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()) {
-            long workoutId = cursor.getLong(2);
+            long workoutId = cursor.getLong(CALENDAR_TABLE.WORKOUTID);
             WorkoutPlan workout = readWorkout(workoutId);
             if(workout != null) {
-                workout.setDate(new Date(cursor.getLong(1)));
+                workout.setDate(new Date(cursor.getLong(CALENDAR_TABLE.DATE)));
             }
             return workout;
         }
@@ -283,9 +324,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 null); // No limit
 
         if(cursor.moveToFirst()) {
-            long workoutId = cursor.getLong(2);
+            long workoutId = cursor.getLong(CALENDAR_TABLE.WORKOUTID);
             WorkoutPlan nextWorkout = readWorkout(workoutId);
-            nextWorkout.setDate(new Date(cursor.getLong(1)));
+            nextWorkout.setDate(new Date(cursor.getLong(CALENDAR_TABLE.DATE)));
             return nextWorkout;
         }
 
@@ -309,9 +350,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 null); // No limit
 
         if(cursor.moveToFirst()) {
-            long workoutId = cursor.getLong(2);
+            long workoutId = cursor.getLong(CALENDAR_TABLE.WORKOUTID);
             WorkoutPlan prevWorkout = readWorkout(workoutId);
-            prevWorkout.setDate(new Date(cursor.getLong(1)));
+            prevWorkout.setDate(new Date(cursor.getLong(CALENDAR_TABLE.DATE)));
             return prevWorkout;
         }
 
@@ -333,7 +374,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                workoutDays.add(new Date(cursor.getLong(1)));
+                workoutDays.add(new Date(cursor.getLong(CALENDAR_TABLE.DATE)));
             } while(cursor.moveToNext());
         }
 
@@ -382,7 +423,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if(cursor.moveToFirst()) {
             exerciseList = new ArrayList<>();
             do {
-                int exerciseId = cursor.getInt(2);
+                int exerciseId = cursor.getInt(WORKOUT_EXERCISE_TABLE.EXERCISEID);
 
                 Exercise exercise = readExerciseWithId(db, exerciseId);
                 try {
@@ -402,7 +443,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Cursor wCursor = db.rawQuery(wQuery, null);
             String workoutName = "";
             if(wCursor.moveToFirst()) {
-                workoutName = wCursor.getString(1);
+                workoutName = wCursor.getString(WORKOUT_PLAN_TABLE.NAME);
             }
 
             wCursor.close();
@@ -458,7 +499,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                long exerciseId = cursor.getInt(2);
+                long exerciseId = cursor.getInt(WORKOUT_EXERCISE_TABLE.EXERCISEID);
                 exerciseIds.add(exerciseId);
             } while(cursor.moveToNext());
         }
@@ -478,7 +519,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                int exerciseId = cursor.getInt(2);
+                int exerciseId = cursor.getInt(WORKOUT_EXERCISE_TABLE.EXERCISEID);
 
                 Exercise exercise = readExerciseWithId(db, exerciseId);
                 try {
@@ -533,12 +574,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()) {
-            String exerciseName = cursor.getString(1);
+            String exerciseName = cursor.getString(EXERCISE_TABLE.NAME);
 
             Exercise exercise = new Exercise.Builder(exerciseName)
                     .exerciseId(exerciseId)
                     .exerciseSets(readExerciseSetsWithExerciseId(db, exerciseId))
-                    .oneRepMax(Double.parseDouble(cursor.getString(2)))
+                    .oneRepMax(Double.parseDouble(cursor.getString(EXERCISE_TABLE.ONEREPMAX)))
                     .build();
             cursor.close();
             return exercise;
@@ -570,7 +611,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                int setNumber = cursor.getInt(1);
+                int setNumber = cursor.getInt(EXERCISE_SET_TABLE.SETNUMBER);
                 ArrayList<ExerciseSet> exerciseSets = exercise.getExerciseSets();
                 values.clear();
                 ExerciseSet set = exerciseSets.get(setNumber - 1);
@@ -597,7 +638,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                int workoutExerciseId = cursor.getInt(0);
+                int workoutExerciseId = cursor.getInt(WORKOUT_EXERCISE_TABLE.ID);
                 db.delete(DBContract.ExerciseSetTable.TABLE_NAME,
                         DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " = ?",
                         new String[] { String.valueOf(workoutExerciseId) });
@@ -625,7 +666,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                int workoutExerciseId = cursor.getInt(0);
+                int workoutExerciseId = cursor.getInt(WORKOUT_EXERCISE_TABLE.ID);
                 db.delete(DBContract.ExerciseSetTable.TABLE_NAME,
                         DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " = ?",
                         new String[] { String.valueOf(workoutExerciseId) });
@@ -650,10 +691,10 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayMap<String, ArrayList<Exercise>> exerciseList = new ArrayMap<>();
         if(cursor.moveToFirst()) {
             do {
-                int exerciseId = cursor.getInt(3);
+                int exerciseId = cursor.getInt(WORKOUT_HISTORY_TABLE.EXERCISEID);
                 Exercise exercise = readExerciseWithId(db, exerciseId);
                 if(exercise != null) {
-                    Date date = new Date(cursor.getLong(1));
+                    Date date = new Date(cursor.getLong(WORKOUT_HISTORY_TABLE.DATE));
                     exercise.setExerciseDate(date);
                     String exerciseName = exercise.getExerciseName();
                     if (exerciseList.containsKey(exerciseName)) {
@@ -682,14 +723,14 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cCursor = db.rawQuery(cQuery, null);
         if (cCursor.moveToFirst()) {
             do {
-                int exerciseId = cCursor.getInt(3);
+                int exerciseId = cCursor.getInt(WORKOUT_HISTORY_TABLE.EXERCISEID);
                 Exercise e = readExerciseWithId(db, exerciseId);
 
                 double oneRepMax = 0;
                 if (e != null) {
                     oneRepMax = e.getOneRepMax();
                 }
-                Date date = new Date(cCursor.getLong(1));
+                Date date = new Date(cCursor.getLong(WORKOUT_HISTORY_TABLE.DATE));
                 exerciseGraphData.put(date, oneRepMax);
             } while (cCursor.moveToNext());
         }
@@ -726,11 +767,11 @@ public class DBHandler extends SQLiteOpenHelper {
             Cursor esCursor = db.rawQuery(esQuery, null);
             if(esCursor.moveToFirst()) {
                 do {
-                    ExerciseSet es = new ExerciseSet(   esCursor.getInt(0),
-                                                        esCursor.getInt(1),
-                                                        esCursor.getDouble(2),
-                                                        esCursor.getString(3),
-                                                        esCursor.getInt(4)  );
+                    ExerciseSet es = new ExerciseSet(   esCursor.getInt(EXERCISE_SET_TABLE.ID),
+                                                        esCursor.getInt(EXERCISE_SET_TABLE.SETNUMBER),
+                                                        esCursor.getDouble(EXERCISE_SET_TABLE.WEIGHT),
+                                                        esCursor.getString(EXERCISE_SET_TABLE.WEIGHTTYPE),
+                                                        esCursor.getInt(EXERCISE_SET_TABLE.REPS)  );
                     exerciseSets.add(es);
                 } while(esCursor.moveToNext());
             }
@@ -760,7 +801,7 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         long workoutExerciseId = 0;
         if(cursor.moveToFirst()) {
-            workoutExerciseId = cursor.getLong(0);
+            workoutExerciseId = cursor.getLong(WORKOUT_EXERCISE_TABLE.ID);
         }
         cursor.close();
         return workoutExerciseId;
@@ -800,7 +841,7 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         long workoutId = 0;
         if(cursor.moveToFirst()) {
-            workoutId = cursor.getInt(2);
+            workoutId = cursor.getInt(CALENDAR_TABLE.WORKOUTID);
         }
         cursor.close();
         db.close();
