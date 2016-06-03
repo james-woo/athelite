@@ -31,6 +31,7 @@ before_install:
 script:
 # build app and assemble APK, in debug mode
   - ./gradlew assemble
+  - ls app/build/outputs/apk/
   - ./gradlew test
   - ./gradlew signingReports
 
