@@ -1,9 +1,5 @@
 language: android
 jdk: oraclejdk7
-addons:
-  apt:
-    packages:
-    - python2.7
 env:
   global:
   - GRADLE_OPTS="-Xmx2048M -XX:MaxPermSize=2048M"
@@ -32,14 +28,12 @@ script:
   - ./gradlew assemble
   - ./gradlew test
 deploy:
-  - ls /app/build/outputs/apk
-  - provider: releases
-  - api_key: $GITHUB_ACCESS_TOKEN
-  - file:
-    - "/app/build/outputs/apk/app-dev-release.apk"
-  - skip_cleanup: true
-  - on:
-    - tags: true
+  provider: releases
+  api_key: $GITHUB_ACCESS_TOKEN
+  file: "/app/build/outputs/apk/app-dev-release.apk"
+  skip_cleanup: true
+  on:
+    tags: true
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
