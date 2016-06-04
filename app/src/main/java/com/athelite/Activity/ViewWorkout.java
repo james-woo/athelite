@@ -54,11 +54,13 @@ public class ViewWorkout extends AppCompatActivity {
         _workoutPlan = JsonSerializer.getWorkoutPlanFromJson(workoutPlanJson);
 
         _workoutName = (EditText) findViewById(R.id.view_workout_edit_name);
-        if(_workoutName != null) {
-            _workoutName.setSelectAllOnFocus(true);
-            _workoutName.setText(_workoutPlan.getWorkoutPlanName());
-        } else {
+        if (_workoutName != null) {
+            if (!_workoutName.getText().toString().isEmpty()) {
+                _workoutName.setSelectAllOnFocus(true);
+                _workoutName.setText(_workoutPlan.getWorkoutPlanName());
+            } else {
                 _workoutName.setText(R.string.new_workout);
+            }
         }
     }
 

@@ -27,9 +27,9 @@ import java.util.List;
 
 public class ViewGraph extends AppCompatActivity {
 
-    private GraphView _graph;
     private DBHandler _db;
     private Exercise _exercise;
+    private GraphView _graph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,31 +51,50 @@ public class ViewGraph extends AppCompatActivity {
 
     private void initInstances() {
         _graph = (GraphView) findViewById(R.id.graph_exercise);
-
-        _exercise = JsonSerializer.getExerciseFromJson(getIntent().getStringExtra("VIEW_GRAPH_EXERCISE"));
-        _graph.setTitle(_exercise.getExerciseName());
         _db = new DBHandler(this);
-        ArrayMap<Date, Double> graphData = _db.getExerciseHistory(_db.getWritableDatabase(), _exercise);
-        List<Date> keys = new ArrayList<Date>(graphData.keySet());
-        Collections.sort(keys);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
-
-        for(int i = 0; i < graphData.size(); i++) {
-            DataPoint dp = new DataPoint(keys.get(i), graphData.get(keys.get(i)));
-            series.appendData(dp, false, 100);
+        _exercise = JsonSerializer.getExerciseFromJson(getIntent().getStringExtra("VIEW_GRAPH_EXERCISE"));
+        if(_exercise != null && _graph != null) {
+            _graph.setTitle(_exercise.getExerciseName());
+            updateGraph();
         }
+    }
 
-        _graph.addSeries(series);
-        _graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
-        _graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(_graph != null) {
+            updateGraph();
+        }
+    }
 
-        // set manual x bounds to have nice steps
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.YEAR, -1);
-        _graph.getViewport().setMinX(c.getTimeInMillis());
-        c.add(Calendar.YEAR, 1);
-        _graph.getViewport().setMaxX(c.getTimeInMillis());
-        _graph.getViewport().setXAxisBoundsManual(true);
+    public void updateGraph() {
+        if(_db != null) {
+            ArrayMap<Date, Double> graphData = _db.getExerciseHistory(_db.getWritableDatabase(), _exercise);
+            List<Date> keys = new ArrayList<>(graphData.keySet());
+            Collections.sort(keys);
+            LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+
+            for (int i = 0; i < graphData.size(); i++) {
+                DataPoint dp = new DataPoint(keys.get(i), graphData.get(keys.get(i)));
+                series.appendData(dp, false, 100);
+            }
+
+            _graph.addSeries(series);
+            _graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
+            _graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
+
+            // set manual x bounds to have nice steps
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.YEAR, -1);
+            if(keys.get(0).getTime() > c.getTimeInMillis()) {
+                _graph.getViewport().setMinX(keys.get(0).getTime());
+            } else {
+                _graph.getViewport().setMinX(c.getTimeInMillis());
+            }
+            c.add(Calendar.YEAR, 1);
+            _graph.getViewport().setMaxX(c.getTimeInMillis());
+            _graph.getViewport().setXAxisBoundsManual(true);
+        }
     }
 
     @Override
