@@ -235,6 +235,24 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateWorkoutDay(WorkoutPlan workoutDay) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        String whereClause = DBContract.WorkoutHistory.COLUMN_WORKOUT_ID + " =  ? AND " +
+                                         DBContract.WorkoutHistory.COLUMN_EXERCISE_ID + " =  ? ";
+
+        ArrayList<Exercise> exercises = workoutDay.getWorkoutPlanExercises();
+        for( Exercise e : exercises ) {
+            values.clear();
+            values.put(DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME, e.getExerciseName());
+            db.update(DBContract.WorkoutHistory.TABLE_NAME, values, whereClause,
+                    new String[] { String.valueOf(workoutDay.getId()), String.valueOf(e.getId()) });
+        }
+
+        db.close();
+    }
+
     public boolean deleteWorkoutPlan(WorkoutPlan workoutPlan) {
         SQLiteDatabase db = this.getWritableDatabase();
         boolean result = false;

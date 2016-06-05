@@ -86,7 +86,7 @@ public class GraphTabFragment extends Fragment {
         for(int i = 0; i < _graphExerciseList.size(); i++) {
             String exerciseName = _graphExerciseList.keyAt(i);
             ArrayList<Exercise> exerciseArrayList = _graphExerciseList.get(exerciseName);
-            Exercise heaviestExercise = new Exercise.Builder("New Exercise").build();
+            Exercise heaviestExercise = new Exercise.Builder(exerciseName).build();
             for(Exercise e : exerciseArrayList) {
                 if(highestOneRepMax < e.getOneRepMax()) {
                     highestOneRepMax = e.getOneRepMax();
@@ -101,20 +101,4 @@ public class GraphTabFragment extends Fragment {
         if(_adapter != null)
             _adapter.notifyDataSetChanged();
     }
-
-    public void addExercises(ArrayList<Exercise> exercises) {
-        for(Exercise e : exercises) {
-            if(!_exercises.contains(e)) {
-                _exercises.add(e);
-            } else {
-                int index = _exercises.indexOf(e);
-                if(_exercises.get(index).getOneRepMax() < e.getOneRepMax()) {
-                    _exercises.get(index).setOneRepMax(e.getOneRepMax());
-                }
-            }
-        }
-        if(_adapter != null)
-            _adapter.notifyDataSetChanged();
-    }
-
 }

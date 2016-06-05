@@ -208,7 +208,6 @@ public class HomeTabFragment extends Fragment {
                     .smallIcon(R.drawable.ic_workout_icon_24dp)
                     .largeIcon(R.drawable.ic_workout_icon_24dp)
                     .flags(Notification.DEFAULT_ALL)
-                    .when(_todayWorkout.getDate().getTime())
                     .onlyAlertOnce(true)
                     .autoCancel(true)
                     .click(PendingIntent.getActivity(getContext(), 0, viewDay, PendingIntent.FLAG_UPDATE_CURRENT))

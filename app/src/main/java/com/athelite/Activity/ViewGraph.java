@@ -55,20 +55,6 @@ public class ViewGraph extends AppCompatActivity {
         _exercise = JsonSerializer.getExerciseFromJson(getIntent().getStringExtra("VIEW_GRAPH_EXERCISE"));
         if(_exercise != null && _graph != null) {
             _graph.setTitle(_exercise.getExerciseName());
-            updateGraph();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(_graph != null) {
-            updateGraph();
-        }
-    }
-
-    public void updateGraph() {
-        if(_db != null) {
             ArrayMap<Date, Double> graphData = _db.getExerciseHistory(_db.getWritableDatabase(), _exercise);
             List<Date> keys = new ArrayList<>(graphData.keySet());
             Collections.sort(keys);
@@ -86,7 +72,7 @@ public class ViewGraph extends AppCompatActivity {
             // set manual x bounds to have nice steps
             Calendar c = Calendar.getInstance();
             c.add(Calendar.YEAR, -1);
-            if(keys.get(0).getTime() > c.getTimeInMillis()) {
+            if(keys.size() > 0 && keys.get(0).getTime() > c.getTimeInMillis()) {
                 _graph.getViewport().setMinX(keys.get(0).getTime());
             } else {
                 _graph.getViewport().setMinX(c.getTimeInMillis());

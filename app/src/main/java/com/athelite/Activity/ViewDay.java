@@ -181,8 +181,10 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             _workoutDay.setExercises(_adapter.getExerciseList());
             _adapter.setWorkout(_workoutDay);
             _db.updateWorkoutPlan(_workoutDay);
+            _db.updateWorkoutDay(_workoutDay);
             CalendarTabFragment.getInstance().updateSelectedDate(new Date(_dateTime));
-            GraphTabFragment.getInstance().addExercises(_workoutDay.getWorkoutPlanExercises());
+            //GraphTabFragment.getInstance().addExercises(_workoutDay.getWorkoutPlanExercises());
+            GraphTabFragment.getInstance().updateExercises();
         }
     }
 
