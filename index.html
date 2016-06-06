@@ -45,7 +45,7 @@
             {
                 timeAgo = (dateDiff / oneDay).toFixed(1) + " days ago";
             }
-            var releaseInfo = "Athelite " + release.tag_name + " was updated " + timeAgo + " and downloaded " + downloadCount.toLocaleString() + " times.";
+            var releaseInfo = "Athelite " + release.tag_name + " was updated " + timeAgo;
             $(".athelite-download").attr("href", asset.browser_download_url);
             $(".release-info").text(releaseInfo);
             $(".release-info").fadeIn("slow");
