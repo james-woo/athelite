@@ -57,6 +57,7 @@ a {
   color: #fff;
   text-align: center;
   background-color: #F44336;
+}
 
 @media screen and (min-width: 64em) {
   .page-header {
