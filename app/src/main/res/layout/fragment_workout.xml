@@ -11,6 +11,14 @@
         android:src="@drawable/empty_list"
         android:contentDescription="@string/empty_list" />
 
+    <ImageView
+        android:id="@+id/workout_tab_background_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/workout_tab_background"
+        android:alpha="0.3"
+        android:contentDescription="@string/workout_background_image" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -42,7 +42,6 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(validateInformation()) {
-                    System.out.println("saving");
                     savePreferences();
                     onBackPressed();
                 } else {
