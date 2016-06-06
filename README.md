@@ -9,6 +9,8 @@ Athelite is a simple workout tracking android application. No ads, no added comp
 
 Athelite is free, open source, and will remain free forever!
 
+Issue Tracking: https://athelite.myjetbrains.com
+
 #Features
 - Create templates. Design your own custom workout templates that you can copy over to each daily workout
 - Edit your workouts. Reached an even higher goal? Track it, edit it!
