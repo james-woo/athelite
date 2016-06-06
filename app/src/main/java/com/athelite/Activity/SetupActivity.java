@@ -42,6 +42,7 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(validateInformation()) {
+                    System.out.println("saving");
                     savePreferences();
                     onBackPressed();
                 } else {
@@ -122,8 +123,6 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     private void savePreferences() {
-
-        assert _unitsRadioGroup != null;
         int id = _unitsRadioGroup.getCheckedRadioButtonId();
         RadioButton r = (RadioButton) findViewById(id);
         assert r != null;
@@ -131,8 +130,8 @@ public class SetupActivity extends AppCompatActivity {
         // Write to shared prefs
         SharedPreferences.Editor editor = _sp.edit();
         if(r.getText().toString().equals("Imperial")) {
-            editor.putString("units_setup", "lb");
-            editor.putString("units", "lb");
+            editor.putString("units_setup", "lbs");
+            editor.putString("units", "lbs");
         }
         else if(r.getText().toString().equals("Metric")) {
             editor.putString("units_setup", "kg");
