@@ -56,8 +56,7 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957); }
+  background-color: #F44336;
 
 @media screen and (min-width: 64em) {
   .page-header {
@@ -112,7 +111,7 @@ a {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: normal;
-  color: #159957; }
+  color: #333; }
 .main-content p {
   margin-bottom: 1em; }
 .main-content code {
@@ -127,7 +126,7 @@ a {
   margin-top: 0;
   margin-bottom: 1rem;
   font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  color: #567482;
+  color: #383e41;
   word-wrap: normal;
   background-color: #f3f6fa;
   border: solid 1px #dce6f0;
@@ -136,7 +135,7 @@ a {
     padding: 0;
     margin: 0;
     font-size: 0.9rem;
-    color: #567482;
+    color: #383e41;
     word-break: normal;
     white-space: pre;
     background: transparent;
@@ -169,7 +168,7 @@ a {
 .main-content blockquote {
   padding: 0 1rem;
   margin-left: 0;
-  color: #819198;
+  color: #383e41;
   border-left: 0.3rem solid #dce6f0; }
   .main-content blockquote > :first-child {
     margin-top: 0; }
