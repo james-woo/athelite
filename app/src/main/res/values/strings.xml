@@ -10,6 +10,10 @@
     <string name="main_next_workout">Next Workout</string>
     <string name="main_today_workout">Today\'s Workout</string>
     <string name="main_previous_workout">Last Workout</string>
+    <string name="home_background_image">Home Background Image</string>
+    <string name="workout_background_image">Workout Background Image</string>
+    <string name="calendar_background_image">Calendar Background Image</string>
+    <string name="graph_background_image">Graph Background Image</string>
 
     <!-- View Workout -->
     <string name="title_activity_view_workout">ViewWorkout</string>

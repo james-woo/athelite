@@ -23,6 +23,7 @@ public class WorkoutPlanTabFragment extends Fragment {
     private DBHandler _db;
     private ArrayList<WorkoutPlan> _workoutPlans;
     private ImageView _emptyList;
+    private ImageView _backgroundImage;
 
     private static WorkoutPlanTabFragment _wFragment = new WorkoutPlanTabFragment();
     /**
@@ -63,6 +64,7 @@ public class WorkoutPlanTabFragment extends Fragment {
         _workoutPlanAdapter = new WorkoutPlanAdapter(getContext(), _workoutPlans);
         _workoutPlanRecyclerView.setAdapter(_workoutPlanAdapter);
         _emptyList = (ImageView) rootView.findViewById(R.id.workout_tab_empty_list);
+        _backgroundImage = (ImageView) rootView.findViewById(R.id.workout_tab_background_image);
         checkEmptyList();
         return rootView;
     }
@@ -94,8 +96,10 @@ public class WorkoutPlanTabFragment extends Fragment {
     public void checkEmptyList() {
         if(_workoutPlanAdapter.getItemCount() < 1) {
             _emptyList.setVisibility(View.VISIBLE);
+            _backgroundImage.setVisibility(View.INVISIBLE);
         } else {
             _emptyList.setVisibility(View.INVISIBLE);
+            _backgroundImage.setVisibility(View.VISIBLE);
         }
     }
 

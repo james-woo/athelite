@@ -9,6 +9,13 @@
     tools:context=".Tabs.CalendarTabFragment"
     android:id="@+id/calendar_tab_layout">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/calendar_tab_background"
+        android:alpha="0.3"
+        android:contentDescription="@string/calendar_background_image"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
