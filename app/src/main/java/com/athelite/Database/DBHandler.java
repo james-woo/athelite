@@ -629,15 +629,25 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                int setNumber = cursor.getInt(EXERCISE_SET_TABLE.SETNUMBER);
+                long setID = cursor.getLong(EXERCISE_SET_TABLE.ID);
                 ArrayList<ExerciseSet> exerciseSets = exercise.getExerciseSets();
                 values.clear();
-                ExerciseSet set = exerciseSets.get(setNumber - 1);
+                ExerciseSet set = null;
+                for(ExerciseSet es : exerciseSets) {
+                    if(es.getId() == setID) {
+                        set = es;
+                    }
+                }
+                if(set == null) {
+                    Log.e("DATABASEHANDLER", "Could not update exercise");
+                    return;
+                }
+                values.put(DBContract.ExerciseSetTable.COLUMN_SET_NUMBER, set.getSetNumber());
                 values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, set.getSetWeight());
                 values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, set.getWeightType());
                 values.put(DBContract.ExerciseSetTable.COLUMN_REPS, set.getSetReps());
                 db.update(DBContract.ExerciseSetTable.TABLE_NAME, values, where,
-                        new String[]{String.valueOf(setNumber), String.valueOf(exercise.getId())});
+                        new String[]{String.valueOf(setID), String.valueOf(exercise.getId())});
             } while(cursor.moveToNext());
         }
         cursor.close();
