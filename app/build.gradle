@@ -1,6 +1,7 @@
 import com.android.ddmlib.DdmPreferences
 
 apply plugin: 'com.android.application'
+apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion 23
@@ -26,7 +27,7 @@ android {
                 storePassword signingProp.get("debug.storePassword")
                 keyAlias signingProp.get("debug.keyAlias")
                 keyPassword signingProp.get("debug.keyPassword")
-            } else if (System.getenv('DEBUG_KEYSTORE_BASE64') != null) {
+            } else if (System.getenv('DEBUG_KEYSTORE') != null) {
                 storeFile file(System.getenv('DEBUG_KEYSTORE'))
                 storePassword System.getenv('DEBUG_KEYSTORE_PASSWORD')
                 keyAlias System.getenv('DEBUG_KEYSTORE_KEY_ALIAS')
@@ -42,7 +43,7 @@ android {
                 storePassword signingProp.get("release.storePassword")
                 keyAlias signingProp.get("release.keyAlias")
                 keyPassword signingProp.get("release.keyPassword")
-            } else if (System.getenv('RELEASE_KEYSTORE_BASE64') != null) {
+            } else if (System.getenv('RELEASE_KEYSTORE') != null) {
                 storeFile file(System.getenv('RELEASE_KEYSTORE'))
                 storePassword System.getenv('RELEASE_KEYSTORE_PASSWORD')
                 keyAlias System.getenv('RELEASE_KEYSTORE_KEY_ALIAS')
@@ -90,15 +91,13 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    
+
     testCompile "junit:junit:$rootProject.ext.junitVersion"
     testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
     testCompile("org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito")
     testCompile("org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito")
 
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
-    
     androidTestCompile("com.android.support.test:runner:$rootProject.ext.runnerVersion") {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
@@ -126,7 +125,9 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    
+
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
+
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:cardview-v7:23.4.0'
@@ -155,21 +156,4 @@ afterEvaluate {
             task.dependsOn grantAnimationPermissions
         }
     }
-}
-
-def decodeKeyStoreFileFromBase64Env(String name) {
-    String keyStoreBase64 = System.getenv(name)
-    if (keyStoreBase64 == null) return null
-    File tempKeyStoreFile = File.createTempFile("tmp_ks_", ".jks", File.createTempDir())
-    FileOutputStream fos = null
-    try {
-        fos = new FileOutputStream(tempKeyStoreFile)
-        fos.write(keyStoreBase64.decodeBase64())
-        fos.flush()
-    } finally {
-        if (fos != null) {
-            fos.close()
-        }
-    }
-    return tempKeyStoreFile
 }

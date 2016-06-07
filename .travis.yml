@@ -28,6 +28,9 @@ script:
 # build app and assemble APK, in debug mode
   - ./gradlew assemble
   - ./gradlew test
+  - ./gradlew testDevDebugUnitTestCoverage
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 before_deploy:
   - ls app/build/outputs/apk/
 deploy:
