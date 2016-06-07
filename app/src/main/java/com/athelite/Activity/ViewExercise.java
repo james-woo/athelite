@@ -63,7 +63,7 @@ public class ViewExercise extends AppCompatActivity {
         if(_listView != null)
             _listView.setAdapter(_adapter);
 
-        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.view_exercise_fab_add);
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.view_exercise_fab);
         if(fabAdd != null)
             fabAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,22 +71,6 @@ public class ViewExercise extends AppCompatActivity {
                     Snackbar.make(view, "Added new set", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     addExerciseSet();
-                }
-            });
-
-        FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.view_exercise_fab_remove);
-        if(fabRemove != null)
-            fabRemove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Removed last set", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    if(_adapter.getExerciseSets().size() - 1 >= 0) {
-                        _db.deleteExerciseSet(_adapter.getExerciseSets().get(_adapter.getExerciseSets().size() - 1));
-                        _adapter.removeLastExerciseSet();
-                        updateSets();
-                        _adapter.notifyDataSetChanged();
-                    }
                 }
             });
     }
@@ -129,7 +113,7 @@ public class ViewExercise extends AppCompatActivity {
     }
 
     private void updateSets() {
-        for(int i = 0; i < _listView.getCount(); i++) {
+        for(int i = 0; i <= _listView.getLastVisiblePosition() - _listView.getFirstVisiblePosition(); i++) {
             View item  = _listView.getChildAt(i);
             EditText setWeight = (EditText) item.findViewById(R.id.view_exercise_set_weight);
             EditText setReps = (EditText) item.findViewById(R.id.view_exercise_set_reps);
