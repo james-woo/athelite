@@ -8,13 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Tabs.HomeTabFragment">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/graph_tab_background"
-        android:alpha="0.3"
-        android:contentDescription="@string/home_background_image"/>
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
