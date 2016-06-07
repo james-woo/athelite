@@ -30,7 +30,7 @@ script:
   - ./gradlew test
   - ./gradlew testDevDebugUnitTestCoverage
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash < codecov
 before_deploy:
   - ls app/build/outputs/apk/
 deploy:
