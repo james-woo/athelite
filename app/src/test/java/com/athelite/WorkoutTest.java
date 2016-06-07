@@ -2,6 +2,7 @@ package com.athelite;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -69,5 +70,20 @@ public class WorkoutTest {
             assertThat(es.getSetWeight(), is(100.00));
             assertThat(es.getWeightType(), is("lb"));
         }
+    }
+
+    @Test public void calculate_one_rep_max_test() {
+        ExerciseSet exerciseSet1 = new ExerciseSet(1L, 1, 315.00, "lb", 5);
+        ExerciseSet exerciseSet2 = new ExerciseSet(1L, 1, 285.00, "lb", 6);
+        ExerciseSet exerciseSet3 = new ExerciseSet(1L, 1, 255.00, "lb", 7);
+        Exercise exercise = new Exercise.Builder("One_Rep_Max_Test")
+                                        .build();
+        exercise.addExerciseSet(exerciseSet1);
+        exercise.addExerciseSet(exerciseSet2);
+        exercise.addExerciseSet(exerciseSet3);
+
+        exercise.calculateOneRepMax();
+
+        assertEquals(exercise.getOneRepMax(), 367.5, 0.1);
     }
 }
