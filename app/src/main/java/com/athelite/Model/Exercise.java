@@ -43,10 +43,6 @@ public class Exercise {
 
     public Date getExerciseDate() { return _exerciseDate; }
 
-    public String toString() {
-        return _exerciseName;
-    }
-
     public void setId(long id) {
         _id = id;
     }
@@ -78,7 +74,6 @@ public class Exercise {
     public static class Builder {
 
         private long bId;
-        private long bWorkoutPlanId;
         private String bExerciseName;
         private ArrayList<ExerciseSet> bExerciseSets = new ArrayList<>();
         private double bOneRepMax;
@@ -90,11 +85,6 @@ public class Exercise {
 
         public Builder exerciseId(long id) {
             this.bId = id;
-            return this;
-        }
-
-        public Builder workoutId(long id) {
-            this.bWorkoutPlanId = id;
             return this;
         }
 
