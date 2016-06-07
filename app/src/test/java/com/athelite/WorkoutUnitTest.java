@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WorkoutTest {
+public class WorkoutUnitTest {
     private WorkoutPlan _workoutPlan;
     private Date _date;
 

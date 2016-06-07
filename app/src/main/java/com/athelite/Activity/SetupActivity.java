@@ -51,7 +51,7 @@ public class SetupActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validateInformation() {
+    public boolean validateInformation() {
         double height, weight, age;
         if(_etHeight.getText().toString().equals("")) {
             return false;
