@@ -1,23 +1,16 @@
 package com.athelite;
 
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.widget.EditText;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.robolectric.Shadows.shadowOf;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
@@ -59,13 +52,39 @@ public class SetupActivityUnitTest {
         String age = _activity.getResources().getString(R.string.setup_age_text_string);
         assertThat(age, equalTo("Age"));
     }
-    /*
-    @Test
-    public void setup_fab_test() throws Exception {
-        FloatingActionButton fab = (FloatingActionButton) _mockSetupActivity.findViewById(R.id.setup_fab);
-        when(fab.performClick()).thenCallRealMethod();
 
-        verify(_mockSetupActivity, atLeastOnce()).validateInformation();
+    @Test
+    public void validate_information_valid_test() throws Exception {
+
+        EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
+        EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
+        EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
+        if(weight != null && height != null && age != null) {
+            height.setText("100");
+            weight.setText("100");
+            age.setText("100");
+        }
+
+        boolean valid = _activity.validateInformation();
+
+        assertThat(valid, is(true));
     }
-    */
+
+    @Test
+    public void validate_information_invalid_test() throws Exception {
+
+        EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
+        EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
+        EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
+        if(weight != null && height != null && age != null) {
+            height.setText("");
+            weight.setText("");
+            age.setText("");
+        }
+
+        boolean valid = _activity.validateInformation();
+
+        assertThat(valid, is(false));
+    }
+
 }

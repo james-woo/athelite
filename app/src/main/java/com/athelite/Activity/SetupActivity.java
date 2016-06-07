@@ -69,7 +69,7 @@ public class SetupActivity extends AppCompatActivity {
             age = Double.parseDouble(_etAge.getText().toString());
         }
 
-        return !(height > 300 || height < 0 || weight > 1000 || weight < 0 || age > 150 || age < 0);
+        return !((height > 300 || height < 0) || (weight > 1000 || weight < 0) || (age > 150 || age < 0));
     }
 
     private void initPreferences() {
