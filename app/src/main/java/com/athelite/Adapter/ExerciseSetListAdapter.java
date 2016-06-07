@@ -88,11 +88,6 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
         return _exerciseSetList;
     }
 
-    public void updateExerciseSetList(ArrayList<ExerciseSet> exerciseSetList) {
-        _exerciseSetList.clear();
-        _exerciseSetList.addAll(exerciseSetList);
-    }
-
     public void addExerciseSet(ExerciseSet es) {
         _exerciseSetList.add(es);
     }
@@ -103,8 +98,10 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
         _db.deleteExerciseSet(setToBeDeleted);
         _exerciseSetList.remove(position);
         for(int i = position; i < _exerciseSetList.size(); ++i) {
-            _exerciseSetList.get(i).setSetNumber(position+i);
+            _exerciseSetList.get(i).setSetNumber(i+1);
+            _db.updateExerciseSet(_exerciseSetList.get(i));
         }
+
         notifyDataSetChanged();
     }
 
