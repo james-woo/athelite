@@ -624,30 +624,20 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
 
-        String where = DBContract.ExerciseSetTable.COLUMN_ID + " =  ? AND " +
+        String where = DBContract.ExerciseSetTable.COLUMN_SET_NUMBER + " =  ? AND " +
                 DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " =  ? ";
 
         if(cursor.moveToFirst()) {
             do {
-                long setID = cursor.getLong(EXERCISE_SET_TABLE.ID);
+                int setNumber = cursor.getInt(EXERCISE_SET_TABLE.SETNUMBER);
                 ArrayList<ExerciseSet> exerciseSets = exercise.getExerciseSets();
                 values.clear();
-                ExerciseSet set = null;
-                for(ExerciseSet es : exerciseSets) {
-                    if(es.getId() == setID) {
-                        set = es;
-                    }
-                }
-                if(set == null) {
-                    Log.e("DATABASEHANDLER", "Could not update exercise");
-                    return;
-                }
-                values.put(DBContract.ExerciseSetTable.COLUMN_SET_NUMBER, set.getSetNumber());
+                ExerciseSet set = exerciseSets.get(setNumber - 1);
                 values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, set.getSetWeight());
                 values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, set.getWeightType());
                 values.put(DBContract.ExerciseSetTable.COLUMN_REPS, set.getSetReps());
                 db.update(DBContract.ExerciseSetTable.TABLE_NAME, values, where,
-                        new String[]{String.valueOf(setID), String.valueOf(exercise.getId())});
+                        new String[]{String.valueOf(setNumber), String.valueOf(exercise.getId())});
             } while(cursor.moveToNext());
         }
         cursor.close();
@@ -817,26 +807,6 @@ public class DBHandler extends SQLiteOpenHelper {
         int result = db.delete(DBContract.ExerciseSetTable.TABLE_NAME,
                 DBContract.WorkoutExerciseTable.COLUMN_ID + " = ?",
                 new String[] { String.valueOf(exerciseSetId) });
-
-        db.close();
-        return result > 0;
-    }
-
-    public boolean updateExerciseSet(ExerciseSet exerciseSet) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        long exerciseSetId = exerciseSet.getId();
-
-        ContentValues values = new ContentValues();
-        values.put(DBContract.ExerciseSetTable.COLUMN_SET_NUMBER, exerciseSet.getSetNumber());
-        values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, exerciseSet.getSetNumber());
-        values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, exerciseSet.getSetNumber());
-        values.put(DBContract.ExerciseSetTable.COLUMN_REPS, exerciseSet.getSetNumber());
-
-        String where = DBContract.ExerciseSetTable.COLUMN_ID + " =  ?";
-
-        int result = db.update(DBContract.ExerciseSetTable.TABLE_NAME, values, where,
-            new String[]{String.valueOf(exerciseSetId)});
 
         db.close();
         return result > 0;
