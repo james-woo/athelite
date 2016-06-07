@@ -121,7 +121,7 @@ public class SetupActivity extends AppCompatActivity {
         }
     }
 
-    private void savePreferences() {
+    public void savePreferences() {
         int id = _unitsRadioGroup.getCheckedRadioButtonId();
         RadioButton r = (RadioButton) findViewById(id);
         assert r != null;
