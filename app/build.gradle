@@ -57,7 +57,7 @@ android {
         File playstoreFile = rootProject.file('key.p12')
         if(playstoreFile.exists()) {
             serviceAccountEmail = 'athelite@api-5819277972381548267-533759.iam.gserviceaccount.com'
-            pk12File = file('key.p12')
+            pk12File = rootProject.file('key.p12')
         }
     }
 
