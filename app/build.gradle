@@ -150,7 +150,7 @@ task grantAnimationPermissions(type: Exec, dependsOn: 'installDevDebug') {
     description = 'Grant permissions for testing.'
 
     def absolutePath = file('..') // Get project absolute path
-    commandLine "$absolutePath/set_animation_permissions.sh com.athelite".split(" ")
+    commandLine "$absolutePath/ci/set_animation_permissions.sh com.athelite".split(" ")
 }
 
 // Source: http://stackoverflow.com/q/29908110/112705

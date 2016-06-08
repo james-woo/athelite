@@ -37,7 +37,8 @@ script:
   - ./gradlew clean assemble
   - ./gradlew testDevDebugUnitTestCoverage -Dpre-dex=false --continue --stacktrace
 after_success:
-  - bash < codecov
+  - bash < ci/codecov
+  - ci/deploy_all
 deploy:
   provider: releases
   api_key: $GITHUB_ACCESS_TOKEN

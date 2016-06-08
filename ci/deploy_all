@@ -1,0 +1,3 @@
+#!/bin/bash
+
+test "$TRAVIS_BRANCH" == "master" && ci/deploy_google_play
