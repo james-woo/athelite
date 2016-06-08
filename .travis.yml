@@ -19,6 +19,8 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   - sys-img-armeabi-v7a-android-23
+before_install:
+  - ci/decrypt_files
 before_script:
   - sudo service postgresql stop || true
   - sudo service mysql stop || true
@@ -34,7 +36,6 @@ script:
 # build app and assemble APK, in debug mode
   - ./gradlew clean assemble
   - ./gradlew testDevDebugUnitTestCoverage -Dpre-dex=false --continue --stacktrace
-  - ./gradlew publishProdRelease
 after_success:
   - bash < codecov
 deploy:

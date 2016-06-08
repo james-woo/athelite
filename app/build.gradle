@@ -1,9 +1,6 @@
 import com.android.ddmlib.DdmPreferences
 
-import java.util.regex.Pattern
-
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.triplet.play'
 apply from: '../jacoco.gradle'
 
 android {
@@ -26,12 +23,12 @@ android {
             if (signingPropFile.exists()) {
                 Properties signingProp = new Properties()
                 signingProp.load(signingPropFile.newDataInputStream())
-                storeFile file(signingProp.get("debug.storeFile"))
+                storeFile rootProject.file('ci/' + signingProp.get("debug.storeFile"))
                 storePassword signingProp.get("debug.storePassword")
                 keyAlias signingProp.get("debug.keyAlias")
                 keyPassword signingProp.get("debug.keyPassword")
             } else if (System.getenv('DEBUG_KEYSTORE') != null) {
-                storeFile file(System.getenv('DEBUG_KEYSTORE'))
+                storeFile rootProject.file(System.getenv('DEBUG_KEYSTORE'))
                 storePassword System.getenv('DEBUG_KEYSTORE_PASSWORD')
                 keyAlias System.getenv('DEBUG_KEYSTORE_KEY_ALIAS')
                 keyPassword System.getenv('DEBUG_KEYSTORE_KEY_PASSWORD')
@@ -42,12 +39,12 @@ android {
             if (signingPropFile.exists()) {
                 Properties signingProp = new Properties()
                 signingProp.load(signingPropFile.newDataInputStream())
-                storeFile file(signingProp.get("release.storeFile"))
+                storeFile rootProject.file(signingProp.get("release.storeFile"))
                 storePassword signingProp.get("release.storePassword")
                 keyAlias signingProp.get("release.keyAlias")
                 keyPassword signingProp.get("release.keyPassword")
             } else if (System.getenv('RELEASE_KEYSTORE') != null) {
-                storeFile file(System.getenv('RELEASE_KEYSTORE'))
+                storeFile rootProject.file('ci/' + System.getenv('RELEASE_KEYSTORE'))
                 storePassword System.getenv('RELEASE_KEYSTORE_PASSWORD')
                 keyAlias System.getenv('RELEASE_KEYSTORE_KEY_ALIAS')
                 keyPassword System.getenv('RELEASE_KEYSTORE_KEY_PASSWORD')
@@ -94,32 +91,6 @@ android {
             }
         }
     }
-}
-
-if (System.getenv("TRAVIS")) {
-    play {
-        serviceAccountEmail = System.getenv("SERVICE_EMAIL")
-        pk12File = rootProject.file('key.p12')
-        track = 'production' // or 'alpha' or 'beta' or 'production'
-    }
-
-    task incrementVersion << {
-        // Increment versioncode by 1
-        def matcher = Pattern.compile('versionCode=\"(\\d+)\"').
-                matcher(currentManifestFile.getText())
-        matcher.find()
-        def manifestContent = matcher.
-                replaceAll('versionCode=\"' + ++Integer.parseInt(matcher.group(1)) + '\"')
-        currentManifestFile.write(manifestContent)
-    }
-    incrementVersion.dependsOn 'testDevDebugUnitTestCoverage'
-
-    // release
-    task publish(dependsOn: ['publishApkProdRelease']) {
-        group = 'Athelite'
-        description = 'Publish to Google Play'
-    }
-    publish.dependsOn incrementVersion
 }
 
 dependencies {

@@ -22,4 +22,5 @@ local.properties
 .idea/vcs.xml
 .idea/libraries/android_android_23.xml
 signing.properties
-playstore.json
+key.p12
+keystore.jks
