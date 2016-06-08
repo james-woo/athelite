@@ -32,7 +32,7 @@ before_script:
   - sudo service x11-common stop || true
 script:
 # build app and assemble APK, in debug mode
-  - ./gradlew clean assemble test -Dpre-dex=false --stacktrace
+  - ./gradlew clean assemble test -Dpre-dex=false --continue --stacktrace
 after_success:
   - bash < codecov
 before_deploy:
