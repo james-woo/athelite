@@ -2,8 +2,7 @@
 
 
 [![Build Status](https://travis-ci.org/james-woo/athelite.svg?branch=master)](https://travis-ci.org/james-woo/athelite)
-[![GitHub version](https://badge.fury.io/gh/james-woo%2Fathelite.svg)](https://badge.fury.io/gh/james-woo%2Fathelite)
-[![Coverage](https://codecov.io/gh/james-woo/athelite/branch/master/graph/badge.svg)](https://codecov.io/gh/james-woo/athelite)
+[![GitHub version](https://badge.fury.io/gh/james-woo%2Fathelite.svg)](https://badge.fury.io/gh/james-woo%2Fathelite) [![Coverage](https://codecov.io/gh/james-woo/athelite/branch/master/graph/badge.svg)](https://codecov.io/gh/james-woo/athelite)
 
 
 
