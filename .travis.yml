@@ -37,7 +37,7 @@ script:
   - ./gradlew clean assemble
   - ./gradlew testDevDebugUnitTestCoverage -Dpre-dex=false --continue --stacktrace
 after_success:
-  - bash < ci/codecov -B $TRAVIS_BRANCH
+  - ci/codecov -B "$TRAVIS_BRANCH"
   - ci/deploy_all
 deploy:
   provider: releases
