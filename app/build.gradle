@@ -53,6 +53,16 @@ android {
         }
     }
 
+    play {
+        File playstoreFile = rootProject.file('playstore.json')
+        if(playstoreFile.exists()) {
+            jsonFile = file('playstore.json')
+        } else if (System.getenv('PLAYSTORE_JSON') != null) {
+            jsonFile = file('PLAYSTORE_JSON')
+        }
+
+    }
+
     // Always show the result of every unit test, even if it passes.
     testOptions.unitTests.all {
         testLogging {

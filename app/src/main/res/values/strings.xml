@@ -146,7 +146,7 @@
     <string name="setup_metric">Metric</string>
     <string name="setup_select_units_string">Select the units you wish to use.</string>
     <string name="setup_height_string">Height</string>
-    <string name="setup_height_units_string">cm</string>
+    <string name="setup_height_units_string">in</string>
     <string name="setup_weight_string">Weight</string>
     <string name="setup_weight_text_string">lb</string>
     <string name="setup_age_units_string">years</string>

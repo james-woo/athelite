@@ -21,3 +21,5 @@ local.properties
 .DS_Store
 .idea/vcs.xml
 .idea/libraries/android_android_23.xml
+signing.properties
+playstore.json
