@@ -22,7 +22,6 @@ android:
 before_script:
   - sudo service postgresql stop || true
   - sudo service mysql stop || true
-  - sudo service memcached stop || true
   - sudo service bootlogd stop || true
   - sudo service elasticsearch stop || true
   - sudo service mongodb stop || true

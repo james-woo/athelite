@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowCompoundButton;
 import org.robolectric.shadows.ShadowImageView;
 import org.robolectric.shadows.ShadowTextView;
 import org.robolectric.shadows.ShadowToast;
