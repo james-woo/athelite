@@ -62,4 +62,11 @@ public final class DBContract {
         public static final String COLUMN_EXERCISE_ID = "exerciseId";
         public static final String COLUMN_EXERCISE_NAME = "exerciseName";
     }
+
+    public static abstract class ExerciseProperties implements BaseColumns {
+        public static final String TABLE_NAME = "exerciseProperties";
+        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_NUMBER_SETS = "numberSets";
+        public static final String COLUMN_NUMBER_REPS = "numberReps";
+    }
 }

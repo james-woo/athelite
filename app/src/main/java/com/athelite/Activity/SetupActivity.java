@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.athelite.Database.DBHandler;
 import com.athelite.R;
 import com.athelite.Util.TextValidator;
 
@@ -111,6 +112,10 @@ public class SetupActivity extends AppCompatActivity {
 
         // Age
         _etAge = (EditText) findViewById(R.id.setup_edit_age);
+
+        DBHandler db = new DBHandler(this);
+        db.setTargetSets(db.getWritableDatabase(), Integer.parseInt(_sp.getString("target_sets", "3")));
+        db.setTargetReps(db.getWritableDatabase(), Integer.parseInt(_sp.getString("target_reps", "5")));
     }
 
     private void initToolbar() {

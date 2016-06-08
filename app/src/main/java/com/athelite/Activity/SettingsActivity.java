@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.widget.Toast;
 
+import com.athelite.Database.DBHandler;
 import com.athelite.R;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                 : null);
 
             } else {
+                DBHandler db = new DBHandler(preference.getContext());
                 switch(preference.getKey()) {
                     case "user_name":
                         if(value.toString().equals("")) {
@@ -115,6 +117,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             Toast.makeText(settingsActivity, "Invalid target sets", Toast.LENGTH_SHORT).show();
                             return false;
                         }
+                        db.updateTargetSets(db.getWritableDatabase(), Integer.parseInt(value.toString()));
                         break;
                     case "target_reps":
                         if(value.toString().equals("")) {
@@ -124,6 +127,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             Toast.makeText(settingsActivity, "Invalid target reps", Toast.LENGTH_SHORT).show();
                             return false;
                         }
+                        db.updateTargetReps(db.getWritableDatabase(), Integer.parseInt(value.toString()));
                         break;
                 }
                 // For all other preferences, set the summary to the value's

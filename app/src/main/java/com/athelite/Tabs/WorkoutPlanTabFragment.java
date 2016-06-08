@@ -95,10 +95,8 @@ public class WorkoutPlanTabFragment extends Fragment {
     public void checkEmptyList() {
         if(_workoutPlanAdapter.getItemCount() < 1) {
             _emptyList.setVisibility(View.VISIBLE);
-            _backgroundImage.setVisibility(View.INVISIBLE);
         } else {
             _emptyList.setVisibility(View.INVISIBLE);
-            _backgroundImage.setVisibility(View.VISIBLE);
         }
     }
 
