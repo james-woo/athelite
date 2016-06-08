@@ -1,4 +1,4 @@
 #!/bin/bash
 
-openssl aes-256-cbc -d -k "$DECRYPTION_KEY" -in ci/keystore.jks.enc -out ci/keystore.jks
-openssl aes-256-cbc -d -k "$DECRYPTION_KEY" -in ci/key.p12.enc -out key.p12
+openssl aes-256-cbc -d -a -k "$DECRYPTION_KEY" -in ci/keystore.jks.enc -out ci/keystore.jks
+openssl aes-256-cbc -d -a -k "$DECRYPTION_KEY" -in ci/key.p12.enc -out key.p12
