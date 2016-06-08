@@ -54,13 +54,11 @@ android {
     }
 
     play {
-        File playstoreFile = rootProject.file('playstore.json')
+        File playstoreFile = rootProject.file('key.p12')
         if(playstoreFile.exists()) {
-            jsonFile = file('playstore.json')
-        } else if (System.getenv('PLAYSTORE_JSON') != null) {
-            jsonFile = file('PLAYSTORE_JSON')
+            serviceAccountEmail = 'athelite@api-5819277972381548267-533759.iam.gserviceaccount.com'
+            pk12File = file('key.p12')
         }
-
     }
 
     // Always show the result of every unit test, even if it passes.
