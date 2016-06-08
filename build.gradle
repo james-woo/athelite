@@ -35,7 +35,7 @@ ext {
     runnerVersion = '0.4.1'
     rulesVersion = '0.4.1'
     espressoVersion = '2.2.1'
-    roboelectric = '3.1'
+    roboelectric = '3.2-SNAPSHOT'
 }
 
 task clean(type: Delete) {
