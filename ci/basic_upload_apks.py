@@ -1,6 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
-# Copyright 2014 Google Inc. All Rights Reserved.
+# Copyright 2014 Marta Rodriguez.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License");
 # you may not use this file except in compliance with the License.
@@ -16,76 +16,71 @@
 
 """Uploads an apk to the beta track."""
 
+import sys
+#required on OSX to prevent the default 'six' library from interfering with the needed newer package,
+#as of the 1.4.1 google-api library
+sys.path.insert(1, '/Library/Python/2.7/site-packages')
+
 import argparse
 import httplib2
+import json
+
+from oauth2client.service_account import ServiceAccountCredentials
+from oauth2client.client import AccessTokenRefreshError
 from apiclient.discovery import build
-from oauth2client import client
 
-TRACK = 'beta'  # Can be 'alpha', beta', 'production' or 'rollout'
+def upload(package, service, apk, track):
 
-SERVICE_ACCOUNT_EMAIL = (
-    'athelite@api-5819277972381548267-533759.iam.gserviceaccount.com')
+  # Create an httplib2.Http object to handle our HTTP requests and authorize it
+  # with the Credentials. Note that the first parameter, service_account_name,
+  # is the Email address created for the Service account. It must be the email
+  # address associated with the key that was created.
+  credentials = ServiceAccountCredentials.from_json_keyfile_name(
+      service, ['https://www.googleapis.com/auth/androidpublisher'])
 
-# Declare command-line flags.
-argparser = argparse.ArgumentParser(add_help=False)
-argparser.add_argument('package_name',
-                       help='The package name. Example: com.android.sample')
-argparser.add_argument('apk_file',
-                       nargs='?',
-                       default='test.apk',
-                       help='The path to the APK file to upload.')
-
-
-def main():
-
-  f = file('key.p12', 'rb')
-  key = f.read()
-  f.close()
-
-  # Authenticate and construct service.
-  credentials = client.SignedJwtAssertionCredentials(
-      SERVICE_ACCOUNT_EMAIL,
-      key,
-      scope='https://www.googleapis.com/auth/androidpublisher')
-  http = httplib2.Http()
-  http = credentials.authorize(http)
-
-  service = build('androidpublisher', 'v2', http=http)
-
-  # Process flags and read their values.
-  flags = argparser.parse_args()
-  package_name = flags.package_name
-  apk_file = flags.apk_file
+  http_auth = credentials.authorize(http=httplib2.Http())
+  service = build('androidpublisher', 'v2', http=http_auth)
 
   try:
-    edit_request = service.edits().insert(body={}, packageName=package_name)
+    edit_request = service.edits().insert(body={}, packageName=package)
     result = edit_request.execute()
     edit_id = result['id']
 
     apk_response = service.edits().apks().upload(
         editId=edit_id,
-        packageName=package_name,
-        media_body=apk_file).execute()
+        packageName=package,
+        media_body=apk).execute()
 
     print 'Version code %d has been uploaded' % apk_response['versionCode']
 
     track_response = service.edits().tracks().update(
         editId=edit_id,
-        track=TRACK,
-        packageName=package_name,
+        track=track,
+        packageName=package,
         body={u'versionCodes': [apk_response['versionCode']]}).execute()
 
     print 'Track %s is set for version code(s) %s' % (
         track_response['track'], str(track_response['versionCodes']))
 
     commit_request = service.edits().commit(
-        editId=edit_id, packageName=package_name).execute()
+        editId=edit_id, packageName=package).execute()
 
     print 'Edit "%s" has been committed' % (commit_request['id'])
 
-  except client.AccessTokenRefreshError:
+  except AccessTokenRefreshError, e:
     print ('The credentials have been revoked or expired, please re-run the '
            'application to re-authorize')
+    raise e
 
-if __name__ == '__main__':
+def main():
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-p', '--package', required=True, help='The package name. Example: com.android.sample')
+  parser.add_argument('-s', '--service', required=True, help='The service account json file.')
+  parser.add_argument('-a', '--apk', required=True, help='The path to the APK file to upload.')
+  parser.add_argument('-t', '--track', choices=['alpha', 'beta', 'production','rollout'], default='beta')
+  args = parser.parse_args()
+
+  upload(args.package, args.service, args.apk, args.track)
+
+if __name__ == "__main__":
   main()

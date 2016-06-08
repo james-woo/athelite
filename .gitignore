@@ -24,3 +24,4 @@ local.properties
 signing.properties
 key.p12
 keystore.jks
+service_account.json

@@ -28,7 +28,7 @@ android {
                 keyAlias signingProp.get("debug.keyAlias")
                 keyPassword signingProp.get("debug.keyPassword")
             } else if (System.getenv('DEBUG_KEYSTORE') != null) {
-                storeFile rootProject.file('ci/' + System.getenv('DEBUG_KEYSTORE'))
+                storeFile rootProject.file(System.getenv('DEBUG_KEYSTORE'))
                 storePassword System.getenv('DEBUG_KEYSTORE_PASSWORD')
                 keyAlias System.getenv('DEBUG_KEYSTORE_KEY_ALIAS')
                 keyPassword System.getenv('DEBUG_KEYSTORE_KEY_PASSWORD')
@@ -44,7 +44,7 @@ android {
                 keyAlias signingProp.get("release.keyAlias")
                 keyPassword signingProp.get("release.keyPassword")
             } else if (System.getenv('RELEASE_KEYSTORE') != null) {
-                storeFile rootProject.file('ci/' + System.getenv('RELEASE_KEYSTORE'))
+                storeFile rootProject.file(System.getenv('RELEASE_KEYSTORE'))
                 storePassword System.getenv('RELEASE_KEYSTORE_PASSWORD')
                 keyAlias System.getenv('RELEASE_KEYSTORE_KEY_ALIAS')
                 keyPassword System.getenv('RELEASE_KEYSTORE_KEY_PASSWORD')

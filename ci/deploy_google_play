@@ -5,4 +5,4 @@ DIR=$(dirname $0)
 sudo apt-get install python-openssl
 sudo pip install google-api-python-client
 
-python $DIR/basic_upload_apks.py com.athelite $DIR/../app/build/outputs/apk/app-production-release.apk
+python $DIR/basic_upload_apks.py -p com.athelite -a $DIR/../app/build/outputs/apk/app-production-release.apk -s $DIR/service_account.json
