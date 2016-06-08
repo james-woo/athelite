@@ -34,7 +34,7 @@ script:
 # build app and assemble APK, in debug mode
   - ./gradlew clean assemble
   - ./gradlew testDevDebugUnitTestCoverage -Dpre-dex=false --continue --stacktrace
-  - ./graldew publishProdRelease
+  - ./gradlew publishProdRelease
 after_success:
   - bash < codecov
 before_deploy:
