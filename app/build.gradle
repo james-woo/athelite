@@ -1,5 +1,7 @@
 import com.android.ddmlib.DdmPreferences
 
+import java.util.regex.Pattern
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
 apply from: '../jacoco.gradle'
@@ -53,14 +55,6 @@ android {
         }
     }
 
-    play {
-        File playstoreFile = rootProject.file('key.p12')
-        if(playstoreFile.exists()) {
-            serviceAccountEmail = 'athelite@api-5819277972381548267-533759.iam.gserviceaccount.com'
-            pk12File = rootProject.file('key.p12')
-        }
-    }
-
     // Always show the result of every unit test, even if it passes.
     testOptions.unitTests.all {
         testLogging {
@@ -100,6 +94,32 @@ android {
             }
         }
     }
+}
+
+if (System.getenv("TRAVIS")) {
+    play {
+        serviceAccountEmail = System.getenv("SERVICE_EMAIL")
+        pk12File = rootProject.file('key.p12')
+        track = 'production' // or 'alpha' or 'beta' or 'production'
+    }
+
+    task incrementVersion << {
+        // Increment versioncode by 1
+        def matcher = Pattern.compile('versionCode=\"(\\d+)\"').
+                matcher(currentManifestFile.getText())
+        matcher.find()
+        def manifestContent = matcher.
+                replaceAll('versionCode=\"' + ++Integer.parseInt(matcher.group(1)) + '\"')
+        currentManifestFile.write(manifestContent)
+    }
+    incrementVersion.dependsOn 'testDevDebugUnitTestCoverage'
+
+    // release
+    task publish(dependsOn: ['publishApkProdRelease']) {
+        group = 'Athelite'
+        description = 'Publish to Google Play'
+    }
+    publish.dependsOn incrementVersion
 }
 
 dependencies {
