@@ -115,7 +115,7 @@ public class SetupActivity extends AppCompatActivity {
 
         DBHandler db = new DBHandler(this);
         db.setTargetSets(db.getWritableDatabase(), Integer.parseInt(_sp.getString("target_sets", "3")));
-        db.setTargetReps(db.getWritableDatabase(), Integer.parseInt(_sp.getString("target_reps", "5")));
+        db.setTargetReps(db.getWritableDatabase(), Integer.parseInt(_sp.getString("target_reps", "0")));
     }
 
     private void initToolbar() {

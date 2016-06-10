@@ -105,9 +105,9 @@ public class ViewExercise extends AppCompatActivity {
     }
 
     private void addExerciseSet() {
-        ExerciseSet newSet = _db.createExerciseSetForExercise(_db.getWritableDatabase(), _exercise, getNextSetNumber());
+        //ExerciseSet newSet = _db.createExerciseSetForExercise(_db.getWritableDatabase(), _exercise, getNextSetNumber());
+        ExerciseSet newSet = new ExerciseSet(_exercise.getId(), getNextSetNumber(), 0.0, "lb", 0);
         _adapter.addExerciseSet(newSet);
-        updateSets();
         _adapter.notifyDataSetChanged();
         _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
     }
@@ -131,9 +131,9 @@ public class ViewExercise extends AppCompatActivity {
         if(_exerciseName.getText().toString().equals("")) {
             _exerciseName.setText(R.string.new_exercise);
         }
-        _exercise.calculateOneRepMax();
         _exercise.setExerciseName(_exerciseName.getText().toString());
         _exercise.setExerciseSets(_adapter.getExerciseSets());
+        _exercise.calculateOneRepMax();
         _db.updateExercise(_exercise);
         _dbe.createExercise(_exerciseName.getText().toString());
     }

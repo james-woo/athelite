@@ -179,7 +179,7 @@ public class DBHandler extends SQLiteOpenHelper {
         long id = db.insert(DBContract.WorkoutPlanTable.TABLE_NAME, null, values);
         newWorkout.setId(id);
 
-        Exercise newExercise = createExerciseForWorkoutPlan(db, newWorkout);
+        Exercise newExercise = createExerciseForWorkoutPlanId(db, newWorkout.getId());
         newWorkout.addExercise(newExercise);
 
         db.close();
@@ -248,7 +248,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(workoutPlan.getId()) });
 
         db.close();
-        return id > 0;
+        return id >= 0;
     }
 
     public boolean updateWorkoutDay(WorkoutPlan workoutDay) {
@@ -268,7 +268,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
 
         db.close();
-        return id > 0;
+        return id >= 0;
     }
 
     public boolean deleteWorkoutPlan(WorkoutPlan workoutPlan) {
@@ -497,23 +497,23 @@ public class DBHandler extends SQLiteOpenHelper {
 
     /****************************************EXERCISE**********************************************/
 
-    public Exercise createExerciseForWorkoutPlan(SQLiteDatabase db, WorkoutPlan workoutPlan) {
-        long workoutPlanId = workoutPlan.getId();
-
+    public Exercise createExerciseForWorkoutPlanId(SQLiteDatabase db, long workoutPlanId) {
+        // Create New Exercise
         Exercise newExercise = new Exercise.Builder("New Exercise").build();
-
         ContentValues values = new ContentValues();
         values.put(DBContract.ExerciseTable.COLUMN_NAME, newExercise.getExerciseName());
         values.put(DBContract.ExerciseTable.COLUMN_ONEREPMAX, "0.0");
         long id = db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
         newExercise.setId(id);
+
+        // Create New WorkoutExercise
         values.clear();
         values.put(DBContract.WorkoutExerciseTable.COLUMN_WORKOUT_ID, workoutPlanId);
         values.put(DBContract.WorkoutExerciseTable.COLUMN_EXERCISE_ID, id);
         db.insert(DBContract.WorkoutExerciseTable.TABLE_NAME, null, values);
 
+        // Create New ExerciseSet
         ArrayList<ExerciseSet> exerciseSets = new ArrayList<>();
-
         String query = "SELECT * FROM " + DBContract.ExerciseProperties.TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
         int numSets = 0;
@@ -523,7 +523,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
 
         for(int i = 1; i <= numSets; ++i) {
-            exerciseSets.add(createExerciseSetForExercise(db, newExercise, i));
+            exerciseSets.add(createExerciseSetForExerciseId(db, newExercise.getId(), i));
         }
 
         newExercise.setOneRepMax(0.0);
@@ -644,41 +644,39 @@ public class DBHandler extends SQLiteOpenHelper {
         String whereClauseExerciseTable = DBContract.ExerciseTable.COLUMN_ID + " =  ?";
         db.update(DBContract.ExerciseTable.TABLE_NAME, values, whereClauseExerciseTable,
                 new String[] { String.valueOf(exercise.getId()) });
+        values.clear();
 
-        String query = "SELECT * FROM " + DBContract.ExerciseSetTable.TABLE_NAME +
-                " WHERE " + DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID +
-                " =  \"" + exercise.getId() + "\"";
+        // Update or create sets
+        for(ExerciseSet es : exercise.getExerciseSets()) {
+            String query = "SELECT * FROM " + DBContract.ExerciseSetTable.TABLE_NAME +
+                    " WHERE " + DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID +
+                    " =  \"" + exercise.getId() + "\"" +
+                    " AND " + DBContract.ExerciseSetTable.COLUMN_SET_NUMBER +
+                    " =  \"" + es.getSetNumber() + "\"";
+            Cursor cursor = db.rawQuery(query, null);
 
-        Cursor cursor = db.rawQuery(query, null);
+            String where = DBContract.ExerciseSetTable.COLUMN_ID + " =  ? AND " +
+                    DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " =  ? ";
 
-        String where = DBContract.ExerciseSetTable.COLUMN_ID + " =  ? AND " +
-                DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " =  ? ";
+            values.put(DBContract.ExerciseSetTable.COLUMN_SET_NUMBER, es.getSetNumber());
+            values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, es.getSetWeight());
+            values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, es.getWeightType());
+            values.put(DBContract.ExerciseSetTable.COLUMN_REPS, es.getSetReps());
+            values.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, exercise.getId());
 
-        if(cursor.moveToFirst()) {
-            do {
-                long setID = cursor.getLong(EXERCISE_SET_TABLE.ID);
-                ArrayList<ExerciseSet> exerciseSets = exercise.getExerciseSets();
-                values.clear();
-                ExerciseSet set = null;
-                for(ExerciseSet es : exerciseSets) {
-                    if(es.getId() == setID) {
-                        set = es;
-                    }
-                }
-                if(set == null) {
-                    Log.e("DATABASEHANDLER", "Could not update exercise");
-                    return false;
-                }
-                values.put(DBContract.ExerciseSetTable.COLUMN_SET_NUMBER, set.getSetNumber());
-                values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, set.getSetWeight());
-                values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, set.getWeightType());
-                values.put(DBContract.ExerciseSetTable.COLUMN_REPS, set.getSetReps());
+            if(cursor.moveToFirst()) {
+                // update existing set
                 db.update(DBContract.ExerciseSetTable.TABLE_NAME, values, where,
-                        new String[]{String.valueOf(setID), String.valueOf(exercise.getId())});
-            } while(cursor.moveToNext());
+                        new String[]{String.valueOf(es.getId()), String.valueOf(exercise.getId())});
+            } else {
+                // create new set
+                long id = db.insert(DBContract.ExerciseSetTable.TABLE_NAME, null, values);
+            }
+
+            cursor.close();
             result = true;
         }
-        cursor.close();
+
         db.close();
         return result;
     }
@@ -802,7 +800,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     /***************************************EXERCISESET********************************************/
 
-    public ExerciseSet createExerciseSetForExercise(SQLiteDatabase db, Exercise exercise, int setNumber) {
+    public ExerciseSet createExerciseSetForExerciseId(SQLiteDatabase db, long exerciseId, int setNumber) {
         String query = "SELECT * FROM " + DBContract.ExerciseProperties.TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
         int numReps = 0;
@@ -816,7 +814,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT, 0.0);
         values.put(DBContract.ExerciseSetTable.COLUMN_WEIGHT_TYPE, "lb");
         values.put(DBContract.ExerciseSetTable.COLUMN_REPS, numReps);
-        values.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, exercise.getId());
+        values.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, exerciseId);
         long id = db.insert(DBContract.ExerciseSetTable.TABLE_NAME, null, values);
         return new ExerciseSet(id, setNumber, 0.0, "lb", numReps);
     }
@@ -860,7 +858,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(exerciseSetId) });
 
         db.close();
-        return result > 0;
+        return result >= 0;
     }
 
     public boolean updateExerciseSet(ExerciseSet exerciseSet) {
@@ -880,7 +878,7 @@ public class DBHandler extends SQLiteOpenHelper {
             new String[]{String.valueOf(exerciseSetId)});
 
         db.close();
-        return result > 0;
+        return result >= 0;
     }
 
     /*****************************************CALENDAR*********************************************/
@@ -906,7 +904,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
 
         db.close();
-        return id > 0;
+        return id >= 0;
     }
 
     public WorkoutPlan readWorkoutForDateTime(long dateTime) {
@@ -970,14 +968,14 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(DBContract.ExerciseProperties.COLUMN_NUMBER_SETS, targetSets);
         long id = db.insert(DBContract.ExerciseProperties.TABLE_NAME, null, values);
-        return id > 0;
+        return id >= 0;
     }
 
     public boolean setTargetReps(SQLiteDatabase db, int targetReps) {
         ContentValues values = new ContentValues();
         values.put(DBContract.ExerciseProperties.COLUMN_NUMBER_REPS, targetReps);
         long id = db.insert(DBContract.ExerciseProperties.TABLE_NAME, null, values);
-        return id > 0;
+        return id >= 0;
     }
 
     public boolean updateTargetSets(SQLiteDatabase db, int targetSets) {
@@ -987,7 +985,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 values,
                 DBContract.ExerciseProperties.COLUMN_ID + " = ?",
                 new String[] { String.valueOf(1) });
-        return id > 0;
+        return id >= 0;
     }
 
     public boolean updateTargetReps(SQLiteDatabase db, int targetReps) {
@@ -997,6 +995,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 values,
                 DBContract.ExerciseProperties.COLUMN_ID + " = ?",
                 new String[] { String.valueOf(1) });
-        return id > 0;
+        return id >= 0;
     }
 }
