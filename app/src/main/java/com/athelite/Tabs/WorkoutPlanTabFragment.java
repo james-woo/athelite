@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.athelite.Database.DBHandler;
+import com.athelite.Dialog.ErrorDialog;
 import com.athelite.R;
 import com.athelite.Model.WorkoutPlan;
 import com.athelite.Adapter.WorkoutPlanAdapter;
@@ -18,12 +20,11 @@ import java.util.ArrayList;
 
 public class WorkoutPlanTabFragment extends Fragment {
     private RecyclerView _workoutPlanRecyclerView;
-    private RecyclerView.LayoutManager _workoutPlanLayoutManager;
     private WorkoutPlanAdapter _workoutPlanAdapter;
     private DBHandler _db;
     private ArrayList<WorkoutPlan> _workoutPlans;
-    private ImageView _emptyList;
-    private ImageView _backgroundImage;
+    //private ImageView _emptyList;
+    private TextView _emptyList;
 
     private static WorkoutPlanTabFragment _wFragment = new WorkoutPlanTabFragment();
     /**
@@ -59,44 +60,59 @@ public class WorkoutPlanTabFragment extends Fragment {
         _db = new DBHandler(getContext());
         _workoutPlans = _db.getWorkoutPlans();
         _workoutPlanRecyclerView = (RecyclerView) rootView.findViewById(R.id.workout_recycler_view);
-        _workoutPlanLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager _workoutPlanLayoutManager = new LinearLayoutManager(getContext());
         _workoutPlanRecyclerView.setLayoutManager(_workoutPlanLayoutManager);
         _workoutPlanAdapter = new WorkoutPlanAdapter(getContext(), _workoutPlans);
         _workoutPlanRecyclerView.setAdapter(_workoutPlanAdapter);
-        _emptyList = (ImageView) rootView.findViewById(R.id.workout_tab_empty_list);
+        _emptyList = (TextView) rootView.findViewById(R.id.workout_tab_empty_list_text);
         checkEmptyList();
         return rootView;
     }
 
     public void updateWorkoutPlanAdapter() {
-        _workoutPlans.clear();
-        _workoutPlans = _db.getWorkoutPlans();
-        if(!_workoutPlans.isEmpty() && _workoutPlans != null) {
-            _workoutPlanAdapter.updateWorkoutPlans(_workoutPlans);
-            _workoutPlanAdapter.notifyDataSetChanged();
+        try {
+            _workoutPlans.clear();
+            _workoutPlans = _db.getWorkoutPlans();
+            if (!_workoutPlans.isEmpty() && _workoutPlans != null) {
+                _workoutPlanAdapter.updateWorkoutPlans(_workoutPlans);
+                _workoutPlanAdapter.notifyDataSetChanged();
+            }
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), getContext());
         }
         checkEmptyList();
     }
 
     public void createNewWorkout() {
-        //_workoutPlans.add(_db.createWorkoutPlan());
-        _workoutPlanAdapter.addWorkoutPlan(_db.createWorkoutPlan());
-        _workoutPlanAdapter.notifyDataSetChanged();
-        checkEmptyList();
-        _workoutPlanRecyclerView.smoothScrollToPosition(_workoutPlanAdapter.getItemCount());
+        try {
+            _workoutPlanAdapter.addWorkoutPlan(_db.createWorkoutPlan());
+            _workoutPlanAdapter.notifyDataSetChanged();
+            checkEmptyList();
+            _workoutPlanRecyclerView.smoothScrollToPosition(_workoutPlanAdapter.getItemCount());
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), getContext());
+        }
     }
 
     public void deleteWorkout(WorkoutPlan workoutPlan) {
-        _workoutPlanAdapter.removeWorkoutPlan(workoutPlan);
-        _workoutPlanAdapter.notifyItemRangeRemoved(0, _workoutPlanAdapter.getItemCount());
-        checkEmptyList();
+        try {
+            _workoutPlanAdapter.removeWorkoutPlan(workoutPlan);
+            _workoutPlanAdapter.notifyItemRangeRemoved(0, _workoutPlanAdapter.getItemCount());
+            checkEmptyList();
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), getContext());
+        }
     }
 
     public void checkEmptyList() {
-        if(_workoutPlanAdapter.getItemCount() < 1) {
-            _emptyList.setVisibility(View.VISIBLE);
-        } else {
-            _emptyList.setVisibility(View.INVISIBLE);
+        try {
+            if (_workoutPlanAdapter.getItemCount() < 1) {
+                _emptyList.setVisibility(View.VISIBLE);
+            } else {
+                _emptyList.setVisibility(View.INVISIBLE);
+            }
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), getContext());
         }
     }
 

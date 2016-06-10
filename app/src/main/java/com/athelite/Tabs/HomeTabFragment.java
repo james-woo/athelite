@@ -166,7 +166,7 @@ public class HomeTabFragment extends Fragment {
         else
             return text;
     }
-    //TODO: Bug - workouts appearing even when deleted from calendar
+
     private void startViewDayActivity(long time) {
         Intent intent = new Intent(getContext(), ViewDay.class);
         intent.putExtra("VIEW_DAY_PARENT", "Home");
@@ -179,13 +179,6 @@ public class HomeTabFragment extends Fragment {
         intent.putExtra("VIEW_DAY_PARENT", "Home");
         intent.putExtra("VIEW_DAY_DATETIME", time);
         startActivity(intent);
-    }
-
-    private void startViewWorkoutActivity(WorkoutPlan workoutPlan) {
-        Intent intent = new Intent(getContext(), ViewWorkout.class);
-        intent.putExtra("VIEW_WORKOUT_PARENT", "Home");
-        intent.putExtra(WorkoutPlanAdapter.WORKOUT_PLAN, JsonSerializer.workoutPlanToJson(workoutPlan));
-        getContext().startActivity(intent);
     }
 
     private void setNotification() {
@@ -205,8 +198,8 @@ public class HomeTabFragment extends Fragment {
                     .load()
                     .title("Today's Workout")
                     .message("Tap to see your workout for today")
-                    .smallIcon(R.drawable.ic_workout_icon_24dp)
-                    .largeIcon(R.drawable.ic_workout_icon_24dp)
+                    .smallIcon(R.drawable.ic_workout_icon_white_24dp)
+                    .largeIcon(R.drawable.ic_workout_icon_white_24dp)
                     .flags(Notification.DEFAULT_ALL)
                     .onlyAlertOnce(true)
                     .autoCancel(true)

@@ -15,6 +15,11 @@
     <string name="calendar_background_image">Calendar Background Image</string>
     <string name="graph_background_image">Graph Background Image</string>
 
+    <string name="workout_tab_empty_list">
+        You don\'t have any templates!\n
+        Add one by tapping the plus.
+    </string>
+
     <!-- View Workout -->
     <string name="title_activity_view_workout">ViewWorkout</string>
     <string name="action_delete_workout">Delete Workout</string>
@@ -44,7 +49,8 @@
         \n\nFrom there, you can customize your template by adding custom or built in exercises.
         To create an exercise, simply change the name and the new exercise will be automatically saved.
         \n\nFinally, you can customize your exercises by adding the appropriate number of sets, reps,
-        and weight.</string>
+        and weight.
+    </string>
 
     <!-- Dialogs -->
     <string name="alert_dialog_ok">OK</string>

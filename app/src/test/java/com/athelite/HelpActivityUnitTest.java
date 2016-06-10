@@ -21,7 +21,7 @@ public class HelpActivityUnitTest {
     private HelpActivity _activity;
 
     @Before
-    public void setup()  {
+    public void help_activity_setup()  {
         _activity = Robolectric.buildActivity(HelpActivity.class).create().get();
     }
 
@@ -31,14 +31,14 @@ public class HelpActivityUnitTest {
     }
 
     @Test
-    public void toolbar_not_null_test() throws Exception {
+    public void help_activity_toolbar_not_null_test() throws Exception {
         Toolbar toolbar = (Toolbar) _activity.findViewById(R.id.help_toolbar);
         assertNotNull(toolbar);
         assertNotNull(_activity.getSupportActionBar());
     }
 
     @Test
-    public void toolbar_is_null_test() throws Exception {
+    public void help_activity_toolbar_is_null_test() throws Exception {
         _activity.setSupportActionBar(null);
         assertNull(_activity.getSupportActionBar());
 

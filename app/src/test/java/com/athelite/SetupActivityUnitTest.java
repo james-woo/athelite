@@ -33,7 +33,7 @@ public class SetupActivityUnitTest {
 
 
     @Before
-    public void setup()  {
+    public void setup_activity_setup()  {
         _activity = Robolectric.buildActivity(SetupActivity.class).create().get();
     }
 
@@ -43,26 +43,26 @@ public class SetupActivityUnitTest {
     }
 
     @Test
-    public void setup_weight_text_test() throws Exception {
+    public void setup_activity_weight_text_test() throws Exception {
         String weight = _activity.getResources().getString(R.string.setup_weight_string);
         assertThat(weight, equalTo("Weight"));
     }
 
     @Test
-    public void setup_height_text_test() throws Exception {
+    public void setup_activity_height_text_test() throws Exception {
         String height = _activity.getResources().getString(R.string.setup_height_string);
         assertThat(height, equalTo("Height"));
     }
 
     @Test
-    public void setup_age_text_test() throws Exception {
+    public void setup_activity_age_text_test() throws Exception {
         String age = _activity.getResources().getString(R.string.setup_age_text_string);
         assertThat(age, equalTo("Age"));
     }
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void validate_information_valid_test() throws Exception {
+    public void setup_activity_validate_information_valid_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
@@ -78,7 +78,7 @@ public class SetupActivityUnitTest {
     }
 
     @Test
-    public void validate_information_invalid_test() throws Exception {
+    public void setup_activity_validate_information_invalid_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
@@ -95,7 +95,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void validate_information_invalid_height_test() throws Exception {
+    public void setup_activity_validate_information_invalid_height_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
@@ -112,7 +112,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void validate_information_invalid_weight_test() throws Exception {
+    public void setup_activity_validate_information_invalid_weight_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
@@ -129,7 +129,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void validate_information_invalid_age_test() throws Exception {
+    public void setup_activity_validate_information_invalid_age_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
@@ -146,7 +146,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void save_preferences_test() throws Exception {
+    public void setup_activity_save_preferences_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
@@ -177,7 +177,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_weight_valid_test() throws Exception {
+    public void setup_activity_change_weight_valid_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         if (weight != null) {
             weight.setText("150");
@@ -189,7 +189,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_height_valid_test() throws Exception {
+    public void setup_activity_change_height_valid_test() throws Exception {
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         if (height != null) {
             height.setText("150");
@@ -201,7 +201,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_age_valid_test() throws Exception {
+    public void setup_activity_change_age_valid_test() throws Exception {
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
         if (age != null) {
             age.setText("50");
@@ -213,7 +213,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_weight_invalid_test() throws Exception {
+    public void setup_activity_change_weight_invalid_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         if (weight != null) {
             weight.setText("1500");
@@ -225,7 +225,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_height_invalid_test() throws Exception {
+    public void setup_activity_change_height_invalid_test() throws Exception {
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         if (height != null) {
             height.setText("1500");
@@ -237,7 +237,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_age_invalid_test() throws Exception {
+    public void setup_activity_change_age_invalid_test() throws Exception {
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
         if (age != null) {
             age.setText("1500");
@@ -249,7 +249,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_weight_exception_test() throws Exception {
+    public void setup_activity_change_weight_exception_test() throws Exception {
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         if (weight != null) {
             weight.setText(" ");
@@ -264,7 +264,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_height_exception_test() throws Exception {
+    public void setup_activity_change_height_exception_test() throws Exception {
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
         if (height != null) {
             height.setText(" ");
@@ -279,7 +279,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void change_age_exception_test() throws Exception {
+    public void setup_activity_change_age_exception_test() throws Exception {
         EditText age = (EditText)_activity.findViewById(R.id.setup_edit_age);
         if (age != null) {
             age.setText(" ");
@@ -293,7 +293,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void valid_information_test() throws Exception {
+    public void setup_activity_valid_information_test() throws Exception {
         FloatingActionButton fab = (FloatingActionButton) _activity.findViewById(R.id.setup_fab);
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);
@@ -314,7 +314,7 @@ public class SetupActivityUnitTest {
 
     @SuppressLint("SetTextI18n")
     @Test
-    public void invalid_information_toast_test() throws Exception {
+    public void setup_activity_invalid_information_toast_test() throws Exception {
         FloatingActionButton fab = (FloatingActionButton) _activity.findViewById(R.id.setup_fab);
         EditText weight = (EditText)_activity.findViewById(R.id.setup_edit_weight);
         EditText height = (EditText)_activity.findViewById(R.id.setup_edit_height);

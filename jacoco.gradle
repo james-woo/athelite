@@ -36,7 +36,9 @@ project.afterEvaluate {
                                    '**/*$ViewBinder*.*',
                                    '**/BuildConfig.*',
                                    '**/Manifest*.*',
-                                   '**/AppCompatPreferenceActivity.*']
+                                   '**/AppCompatPreferenceActivity.*',
+                                   '**/SettingsActivity.*',
+                                   '**/MainActivity.*']
                 )
 
                 def coverageSourceDirs = [

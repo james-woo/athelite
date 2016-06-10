@@ -98,8 +98,8 @@ public class MainActivityTest {
                 .perform(click());
         onView(withId(R.id.workout_tab_layout))
                 .check(matches(withId(R.id.workout_tab_layout)));
-        onView(withId(R.id.workout_tab_empty_list))
-                .check(matches(withId(R.id.workout_tab_empty_list)));
+        onView(withId(R.id.workout_tab_empty_list_text))
+                .check(matches(withId(R.id.workout_tab_empty_list_text)));
 
         // Calendar tab
         onView(withText("CALENDAR"))

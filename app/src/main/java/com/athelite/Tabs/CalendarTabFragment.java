@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.athelite.Database.DBHandler;
+import com.athelite.Dialog.ErrorDialog;
 import com.athelite.Model.WorkoutPlan;
 import com.athelite.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -79,16 +80,23 @@ public class CalendarTabFragment extends Fragment {
     }
 
     public void unSetSelectedDate(Date selectedDate) {
-        if (_calendar != null) {
-            _calendar.setDateSelected(selectedDate, false);
+        try {
+            if (_calendar != null) {
+                _calendar.setDateSelected(selectedDate, false);
+            }
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
         }
     }
 
     public void setSelectedDate(Date selectedDate) {
-        if (_calendar != null) {
-            _calendar.setDateSelected(selectedDate, true);
+        try {
+            if (_calendar != null) {
+                _calendar.setDateSelected(selectedDate, true);
+            }
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
         }
-
     }
 
     private void setSelectedDates(CalendarDay selectedDate) {
@@ -100,29 +108,42 @@ public class CalendarTabFragment extends Fragment {
     }
 
     private void updateSelectedDate() {
-        DateFormat df = DateFormat.getDateInstance();
-        WorkoutPlan workoutPlan = _db.getWorkoutForDay(_dateTime.getTime());
-        if(workoutPlan != null) {
-            _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
-        } else {
-            _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
-        }
-    }
-
-    public void updateSelectedDate(Date selectedDate) {
-        DateFormat df = DateFormat.getDateInstance();
-        if(_db != null) {
-            WorkoutPlan workoutPlan = _db.getWorkoutForDay(selectedDate);
-            if(workoutPlan != null) {
+        try {
+            DateFormat df = DateFormat.getDateInstance();
+            WorkoutPlan workoutPlan = _db.getWorkoutForDay(_dateTime.getTime());
+            if (workoutPlan != null) {
                 _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
             } else {
                 _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
             }
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
+        }
+    }
+
+    public void updateSelectedDate(Date selectedDate) {
+        try {
+            DateFormat df = DateFormat.getDateInstance();
+            if (_db != null) {
+                WorkoutPlan workoutPlan = _db.getWorkoutForDay(selectedDate);
+                if (workoutPlan != null) {
+                    _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
+                } else {
+                    _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
+                }
+            }
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
         }
     }
 
 
     public long getDateTimeInMilliseconds() {
-        return _dateTime.getTimeInMillis();
+        try {
+            return _dateTime.getTimeInMillis();
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
+        }
+        return CalendarDay.today().getDate().getTime();
     }
 }

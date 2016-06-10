@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.athelite.Adapter.ExerciseListAdapter;
 import com.athelite.Database.DBHandler;
 import com.athelite.Dialog.EmptyTemplatesDialog;
+import com.athelite.Dialog.ErrorDialog;
 import com.athelite.Dialog.PickWorkout;
 import com.athelite.Model.Exercise;
 import com.athelite.Model.WorkoutPlan;
@@ -161,11 +162,15 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
     @Override
     public void onRestart() {
         super.onRestart();
-        if(_workoutDay != null) {
-            _workoutDay.setExercises(_db.getExercisesForWorkoutPlan(_workoutDay));
-            _adapter.updateExerciseList(_workoutDay.getWorkoutPlanExercises());
-            _adapter.setWorkout(_workoutDay);
-            _adapter.notifyDataSetChanged();
+        try {
+            if (_workoutDay != null) {
+                _workoutDay.setExercises(_db.getExercisesForWorkoutPlan(_workoutDay));
+                _adapter.updateExerciseList(_workoutDay.getWorkoutPlanExercises());
+                _adapter.setWorkout(_workoutDay);
+                _adapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Viewing Day", e.getMessage(), this);
         }
     }
 

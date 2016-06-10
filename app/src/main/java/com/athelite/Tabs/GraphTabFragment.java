@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.athelite.Adapter.GraphExerciseListAdapter;
 import com.athelite.Database.DBHandler;
+import com.athelite.Dialog.ErrorDialog;
 import com.athelite.Model.Exercise;
 import com.athelite.R;
 
@@ -72,33 +73,37 @@ public class GraphTabFragment extends Fragment {
     }
 
     public void updateExercises() {
-        if(_exercises != null) {
-            _exercises.clear();
-        }
-        if(_graphExerciseList != null) {
-            _graphExerciseList.clear();
-        }
-        if(_db == null) {
-            _db = new DBHandler(getActivity());
-        }
-        _graphExerciseList = _db.getCompletedExercises(_db.getWritableDatabase());
-        Double highestOneRepMax = 0.0;
-        for(int i = 0; i < _graphExerciseList.size(); i++) {
-            String exerciseName = _graphExerciseList.keyAt(i);
-            ArrayList<Exercise> exerciseArrayList = _graphExerciseList.get(exerciseName);
-            Exercise heaviestExercise = new Exercise.Builder(exerciseName).build();
-            for(Exercise e : exerciseArrayList) {
-                if(highestOneRepMax < e.getOneRepMax()) {
-                    highestOneRepMax = e.getOneRepMax();
-                    heaviestExercise.setExerciseName(e.getExerciseName());
-                    heaviestExercise.setExerciseSets(e.getExerciseSets());
-                    heaviestExercise.setId(e.getId());
-                    heaviestExercise.setOneRepMax(highestOneRepMax);
-                }
+        try {
+            if (_exercises != null) {
+                _exercises.clear();
             }
-            _exercises.add(heaviestExercise);
+            if (_graphExerciseList != null) {
+                _graphExerciseList.clear();
+            }
+            if (_db == null) {
+                _db = new DBHandler(getActivity());
+            }
+            _graphExerciseList = _db.getCompletedExercises(_db.getWritableDatabase());
+            Double highestOneRepMax = 0.0;
+            for (int i = 0; i < _graphExerciseList.size(); i++) {
+                String exerciseName = _graphExerciseList.keyAt(i);
+                ArrayList<Exercise> exerciseArrayList = _graphExerciseList.get(exerciseName);
+                Exercise heaviestExercise = new Exercise.Builder(exerciseName).build();
+                for (Exercise e : exerciseArrayList) {
+                    if (highestOneRepMax < e.getOneRepMax()) {
+                        highestOneRepMax = e.getOneRepMax();
+                        heaviestExercise.setExerciseName(e.getExerciseName());
+                        heaviestExercise.setExerciseSets(e.getExerciseSets());
+                        heaviestExercise.setId(e.getId());
+                        heaviestExercise.setOneRepMax(highestOneRepMax);
+                    }
+                }
+                _exercises.add(heaviestExercise);
+            }
+            if (_adapter != null)
+                _adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Updating Graph", e.getMessage(), getContext());
         }
-        if(_adapter != null)
-            _adapter.notifyDataSetChanged();
     }
 }

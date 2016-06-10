@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.athelite.Adapter.ExerciseListAdapter;
 import com.athelite.Adapter.WorkoutPlanAdapter;
 import com.athelite.Database.DBHandler;
+import com.athelite.Dialog.ErrorDialog;
 import com.athelite.Model.Exercise;
 import com.athelite.Model.WorkoutPlan;
 import com.athelite.R;
@@ -106,11 +107,15 @@ public class ViewWorkout extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if(_workoutPlan != null) {
-            _workoutPlan.setExercises(_db.getExercisesForWorkoutPlan(_workoutPlan));
-            _adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
-            _adapter.setWorkout(_workoutPlan);
-            _adapter.notifyDataSetChanged();
+        try {
+            if (_workoutPlan != null) {
+                _workoutPlan.setExercises(_db.getExercisesForWorkoutPlan(_workoutPlan));
+                _adapter.updateExerciseList(_workoutPlan.getWorkoutPlanExercises());
+                _adapter.setWorkout(_workoutPlan);
+                _adapter.notifyDataSetChanged();
+            }
+        } catch(Exception e) {
+            ErrorDialog.messageBox("Error Viewing Workout", e.getMessage(), this);
         }
     }
 

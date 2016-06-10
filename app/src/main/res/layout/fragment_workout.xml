@@ -3,13 +3,21 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:id="@+id/workout_tab_layout">
-
+    <!--
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/workout_tab_empty_list"
         android:src="@drawable/empty_list"
-        android:contentDescription="@string/empty_list" />
+        android:contentDescription="@string/empty_list" />-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/workout_tab_empty_list_text"
+        android:text="@string/workout_tab_empty_list"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical|center_horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"

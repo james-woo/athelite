@@ -21,6 +21,7 @@ import android.view.View;
 
 import com.athelite.Database.DBExerciseList;
 import com.athelite.Database.DBHandler;
+import com.athelite.Dialog.ErrorDialog;
 import com.athelite.R;
 import com.athelite.Tabs.CalendarTabFragment;
 import com.athelite.Tabs.GraphTabFragment;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             ed.apply();
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.view_exercise_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         setFAB();
         setViewPager();
@@ -108,8 +109,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRestart() {
         super.onRestart();
-        _workoutPlanTabFragment.updateWorkoutPlanAdapter();
-        _homeTabFragment.updateHomePage();
+        try {
+            _workoutPlanTabFragment.updateWorkoutPlanAdapter();
+            _homeTabFragment.updateHomePage();
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), this);
+        }
     }
 
     public void setFAB() {
