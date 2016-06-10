@@ -3,7 +3,6 @@ package com.athelite;
 import android.content.Intent;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import static org.junit.Assert.assertNotNull;
@@ -136,6 +135,6 @@ public class ViewGraphActivityUnitTest {
         MenuItem menuItem = new RoboMenuItem(R.id.action_settings);
         _activity.onOptionsItemSelected(menuItem);
         ShadowActivity shadowActivity = Shadows.shadowOf(_activity);
-        assertTrue(shadowActivity.isFinishing());
+        assertTrue(shadowActivity.peekNextStartedActivity() != null);
     }
 }

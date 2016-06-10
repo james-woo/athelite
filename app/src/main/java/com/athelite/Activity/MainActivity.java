@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.graph
     };
 
+
     private void showSetUp(){
         Intent setUpIntent = new Intent(getBaseContext(), SetupActivity.class);
         startActivity(setUpIntent);
