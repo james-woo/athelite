@@ -12,16 +12,18 @@
 
 # generated files
 bin/
+build/generated/*
+build/intermediates/*
 gen/
+app/app.iml
 
 # Local configuration file (sdk path, etc)
 local.properties
-.idea/workspace.xml
+.idea/*
 .gradle
 .DS_Store
-.idea/vcs.xml
-.idea/libraries/android_android_23.xml
 signing.properties
 key.p12
 keystore.jks
 service_account.json
+

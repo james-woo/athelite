@@ -117,11 +117,12 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         String exerciseOneReps = "";
         DecimalFormat oneRepDF = new DecimalFormat("#####.##");
 
-        if(!workoutPlanExercises.isEmpty() && workoutPlanExercises != null)
-        for(Exercise e : workoutPlanExercises) {
-            if(e == null) break;
-            exerciseNames = exerciseNames + e.getExerciseName() + "\n";
-            exerciseOneReps = exerciseOneReps + " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
+        if(!workoutPlanExercises.isEmpty()) {
+            for (Exercise e : workoutPlanExercises) {
+                if (e == null) break;
+                exerciseNames = exerciseNames + e.getExerciseName() + "\n";
+                exerciseOneReps = exerciseOneReps + " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
+            }
         }
         holder.vWorkoutPlanExerciseNames.setText(exerciseNames);
         holder.vWorkoutPlanExerciseOneReps.setText(exerciseOneReps);

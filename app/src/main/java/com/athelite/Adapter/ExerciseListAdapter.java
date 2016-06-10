@@ -87,7 +87,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                         Toast.makeText(getContext(), "Exercise Deleted", Toast.LENGTH_SHORT).show();
                         if(_exerciseList.isEmpty()) {
                             Toast.makeText(getContext(), "Exercise Deleted, Default Exercise Added", Toast.LENGTH_SHORT).show();
-                            _exerciseList.add(_db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan));
+                            _exerciseList.add(_db.createExerciseForWorkoutPlanId(_db.getWritableDatabase(), _workoutPlan.getId()));
                         }
 
                         notifyDataSetChanged();

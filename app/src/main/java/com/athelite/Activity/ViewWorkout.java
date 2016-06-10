@@ -2,7 +2,9 @@ package com.athelite.Activity;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import com.athelite.Adapter.ExerciseListAdapter;
 import com.athelite.Adapter.WorkoutPlanAdapter;
 import com.athelite.Database.DBHandler;
 import com.athelite.Model.Exercise;
+import com.athelite.Model.ExerciseSet;
 import com.athelite.Model.WorkoutPlan;
 import com.athelite.R;
 import com.athelite.Tabs.WorkoutPlanTabFragment;
@@ -84,9 +87,8 @@ public class ViewWorkout extends AppCompatActivity {
     }
 
     private void addExercise() {
-        Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutPlan);
+        Exercise newExercise = _db.createExerciseForWorkoutPlanId(_db.getWritableDatabase(), _workoutPlan.getId());
         _adapter.addExercise(newExercise);
-        _adapter.setWorkout(_workoutPlan);
         _adapter.notifyDataSetChanged();
         _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
     }

@@ -151,7 +151,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
 
     private void addExercise() {
         if(_workoutDay != null) {
-            Exercise newExercise = _db.createExerciseForWorkoutPlan(_db.getWritableDatabase(), _workoutDay);
+            Exercise newExercise = _db.createExerciseForWorkoutPlanId(_db.getWritableDatabase(), _workoutDay.getId());
             _adapter.addExercise(newExercise);
             _adapter.notifyDataSetChanged();
             _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);

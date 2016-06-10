@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         boolean setupSeen = sp.getBoolean("setupSeen", false); //will return false if there is no shared preference
-        if(!setupSeen){
+        if(setupSeen){
             showSetUp();
             SharedPreferences.Editor ed = sp.edit();
             ed.putBoolean("setupSeen", true);
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             throw new Error(sqle.getMessage());
         }
 
-        //_db.deleteDB();
+        _db.deleteDB();
     }
 
     @Override
