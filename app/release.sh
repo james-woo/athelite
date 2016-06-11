@@ -14,6 +14,5 @@ sed -i \
 	$DIR/build.gradle
 
 git tag $VERSION_NAME
-git checkout develop
 git push
 git push --tags
