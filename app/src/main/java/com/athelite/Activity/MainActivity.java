@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private CalendarTabFragment _calendarTabFragment;
     private GraphTabFragment _graphTabFragment;
 
-    private DBHandler _db;
+    //private DBHandler _db;
 
     private final int[] ICONS = new int[]{
             R.drawable.home,
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         setViewPager();
         setupTabIcons();
 
-        _db = new DBHandler(this);
+        //_db = new DBHandler(this);
         DBExerciseList dbe = new DBExerciseList(this);
         try {
             dbe.createDataBase();
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             throw new Error(sqle.getMessage());
         }
 
-        _db.deleteDB();
+        //_db.deleteDB();
     }
 
     @Override
