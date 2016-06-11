@@ -80,8 +80,8 @@ public class GraphTabFragment extends Fragment {
             if (_graphExerciseList != null) {
                 _graphExerciseList.clear();
             }
-            if (_db == null) {
-                _db = new DBHandler(getActivity());
+            if (_db == null && getContext() != null) {
+                _db = new DBHandler(getContext());
             }
             _graphExerciseList = _db.getCompletedExercises(_db.getWritableDatabase());
             Double highestOneRepMax = 0.0;
@@ -103,7 +103,7 @@ public class GraphTabFragment extends Fragment {
             if (_adapter != null)
                 _adapter.notifyDataSetChanged();
         } catch (Exception e) {
-            ErrorDialog.messageBox("Error Updating Graph", e.getMessage(), getContext());
+            ErrorDialog.logError("Error Updating Graph", e.getMessage());
         }
     }
 }

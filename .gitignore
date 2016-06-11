@@ -12,8 +12,8 @@
 
 # generated files
 bin/
-build/generated/*
-build/intermediates/*
+build/generated/**
+build/intermediates/**
 gen/
 app/app.iml
 

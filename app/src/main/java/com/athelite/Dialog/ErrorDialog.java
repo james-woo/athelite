@@ -19,4 +19,9 @@ public class ErrorDialog {
         Toast.makeText(context, method + ": " + message, Toast.LENGTH_SHORT).show();
         Crashlytics.log(1, method, message);
     }
+
+    public static void logError(String method, String message)
+    {
+        Log.d("EXCEPTION: " + method,  message);
+    }
 }

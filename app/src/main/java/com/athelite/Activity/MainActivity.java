@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.athelite.BuildConfig;
 import com.athelite.Database.DBExerciseList;
 import com.athelite.Database.DBHandler;
 import com.athelite.Dialog.ErrorDialog;
@@ -29,6 +30,7 @@ import com.athelite.Tabs.HomeTabFragment;
 import com.athelite.Tabs.WorkoutPlanTabFragment;
 
 import com.crashlytics.android.Crashlytics;
+
 import io.fabric.sdk.android.Fabric;
 import java.io.IOException;
 
@@ -56,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private CalendarTabFragment _calendarTabFragment;
     private GraphTabFragment _graphTabFragment;
 
-    //private DBHandler _db;
-
     private final int[] ICONS = new int[]{
             R.drawable.home,
             R.drawable.workout,
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.graph
     };
 
+    private static final boolean DEBUG_MODE = "debug".equals(BuildConfig.BUILD_TYPE);
 
     private void showSetUp(){
         Intent setUpIntent = new Intent(getBaseContext(), SetupActivity.class);
@@ -79,7 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         boolean setupSeen = sp.getBoolean("setupSeen", false); //will return false if there is no shared preference
-        if(setupSeen){
+        if(DEBUG_MODE) {
+            setupSeen = false;
+        }
+        if(!setupSeen){
             showSetUp();
             SharedPreferences.Editor ed = sp.edit();
             ed.putBoolean("setupSeen", true);
@@ -92,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         setViewPager();
         setupTabIcons();
 
-        //_db = new DBHandler(this);
         DBExerciseList dbe = new DBExerciseList(this);
         try {
             dbe.createDataBase();
@@ -108,7 +111,10 @@ public class MainActivity extends AppCompatActivity {
             throw new Error(sqle.getMessage());
         }
 
-        //_db.deleteDB();
+        if(DEBUG_MODE) {
+            DBHandler db = new DBHandler(this);
+            db.deleteDB();
+        }
     }
 
     @Override
@@ -257,6 +263,10 @@ public class MainActivity extends AppCompatActivity {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            _homeTabFragment = HomeTabFragment.newInstance(0);
+            _workoutPlanTabFragment = WorkoutPlanTabFragment.newInstance(1);
+            _calendarTabFragment = CalendarTabFragment.newInstance(2);
+            _graphTabFragment = GraphTabFragment.newInstance(3);
         }
 
         @Override
@@ -265,16 +275,12 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    _homeTabFragment = HomeTabFragment.newInstance(0);
                     return _homeTabFragment;
                 case 1:
-                    _workoutPlanTabFragment = WorkoutPlanTabFragment.newInstance(1);
                     return _workoutPlanTabFragment;
                 case 2:
-                    _calendarTabFragment = CalendarTabFragment.newInstance(2);
                     return _calendarTabFragment;
                 case 3:
-                    _graphTabFragment = GraphTabFragment.newInstance(3);
                     return _graphTabFragment;
                 default:
                     return null;

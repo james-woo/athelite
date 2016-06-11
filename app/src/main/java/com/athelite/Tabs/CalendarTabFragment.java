@@ -73,9 +73,13 @@ public class CalendarTabFragment extends Fragment {
     }
 
     public void updateCalendar() {
-        ArrayList<Date> workoutDays = _db.getWorkoutDays();
-        for (Date day : workoutDays) {
-            _calendar.setDateSelected(day, true);
+        try {
+            ArrayList<Date> workoutDays = _db.getWorkoutDays();
+            for (Date day : workoutDays) {
+                _calendar.setDateSelected(day, true);
+            }
+        } catch(Exception e) {
+            ErrorDialog.logError("Error Updating Day", e.getMessage());
         }
     }
 
@@ -85,7 +89,7 @@ public class CalendarTabFragment extends Fragment {
                 _calendar.setDateSelected(selectedDate, false);
             }
         } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
+            ErrorDialog.logError("Error Updating Day", e.getMessage());
         }
     }
 
@@ -95,15 +99,19 @@ public class CalendarTabFragment extends Fragment {
                 _calendar.setDateSelected(selectedDate, true);
             }
         } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
+            ErrorDialog.logError("Error Updating Day", e.getMessage());
         }
     }
 
     private void setSelectedDates(CalendarDay selectedDate) {
-        if (_calendar != null) {
-            updateCalendar();
-            _calendar.setDateSelected(selectedDate, true);
-            updateSelectedDate();
+        try {
+            if (_calendar != null) {
+                updateCalendar();
+                _calendar.setDateSelected(selectedDate, true);
+                updateSelectedDate();
+            }
+        } catch(Exception e) {
+            ErrorDialog.logError("Error Updating Day", e.getMessage());
         }
     }
 
@@ -117,7 +125,7 @@ public class CalendarTabFragment extends Fragment {
                 _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
             }
         } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
+            ErrorDialog.logError("Error Updating Day", e.getMessage());
         }
     }
 
@@ -133,7 +141,7 @@ public class CalendarTabFragment extends Fragment {
                 }
             }
         } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
+            ErrorDialog.logError("Error Updating Day", e.getMessage());
         }
     }
 
@@ -142,7 +150,7 @@ public class CalendarTabFragment extends Fragment {
         try {
             return _dateTime.getTimeInMillis();
         } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), getContext());
+            ErrorDialog.logError("Error Updating Day", e.getMessage());
         }
         return CalendarDay.today().getDate().getTime();
     }
