@@ -113,6 +113,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.athelite.Activity.MainActivity" />
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="9defcc654243add6afe05055832f20115a432e60" />
     </application>
 
 </manifest>

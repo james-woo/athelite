@@ -28,6 +28,8 @@ import com.athelite.Tabs.GraphTabFragment;
 import com.athelite.Tabs.HomeTabFragment;
 import com.athelite.Tabs.WorkoutPlanTabFragment;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -94,12 +97,14 @@ public class MainActivity extends AppCompatActivity {
         try {
             dbe.createDataBase();
         } catch (IOException ioe) {
+            Crashlytics.log(1, "ATHELITE_MAIN", "Unable to create database");
             throw new Error("Unable to create database");
         }
 
         try {
             dbe.openDataBase();
         }catch(SQLException sqle){
+            Crashlytics.log(1, "ATHELITE_MAIN", sqle.getMessage());
             throw new Error(sqle.getMessage());
         }
 

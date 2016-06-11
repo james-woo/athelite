@@ -3,3 +3,5 @@
 openssl aes-256-cbc -d -a -k "$DECRYPTION_KEY" -in ci/keystore.jks.enc -out keystore.jks
 openssl aes-256-cbc -d -a -k "$DECRYPTION_KEY" -in ci/key.p12.enc -out key.p12
 openssl aes-256-cbc -d -a -k "$DECRYPTION_KEY" -in ci/service_account.json.enc -out ci/service_account.json
+openssl aes-256-cbc -d -a -k "$DECRYPTION_KEY" -in ci/google-services.json.enc -out app/google-services.json
+openssl aes-256-cbc -d -a -k "$DECRYPTION_KEY" -in ci/fabric.properties.enc -out app/fabric.properties

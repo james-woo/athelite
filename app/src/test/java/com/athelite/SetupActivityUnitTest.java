@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
@@ -44,20 +45,23 @@ public class SetupActivityUnitTest {
 
     @Test
     public void setup_activity_weight_text_test() throws Exception {
-        String weight = _activity.getResources().getString(R.string.setup_weight_string);
-        assertThat(weight, equalTo("Weight"));
+        TextView weight = (TextView)_activity.findViewById(R.id.setup_weight_text);
+        assert weight != null;
+        assertThat(weight.getText().toString(), equalTo("Weight"));
     }
 
     @Test
     public void setup_activity_height_text_test() throws Exception {
-        String height = _activity.getResources().getString(R.string.setup_height_string);
-        assertThat(height, equalTo("Height"));
+        TextView height = (TextView)_activity.findViewById(R.id.setup_height_text);
+        assert height != null;
+        assertThat(height.getText().toString(), equalTo("Height"));
     }
 
     @Test
     public void setup_activity_age_text_test() throws Exception {
-        String age = _activity.getResources().getString(R.string.setup_age_text_string);
-        assertThat(age, equalTo("Age"));
+        TextView age = (TextView)_activity.findViewById(R.id.setup_age_text);
+        assert age != null;
+        assertThat(age.getText().toString(), equalTo("Age"));
     }
 
     @SuppressLint("SetTextI18n")

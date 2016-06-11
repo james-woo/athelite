@@ -26,4 +26,4 @@ signing.properties
 key.p12
 keystore.jks
 service_account.json
-
+app/fabric.properties

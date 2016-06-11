@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.athelite.Activity.MainActivity;
 import com.athelite.Database.DBHandler;
 import com.athelite.Dialog.ErrorDialog;
 import com.athelite.R;
