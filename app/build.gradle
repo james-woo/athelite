@@ -26,8 +26,8 @@ android {
         applicationId "com.athelite"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 1000005
-        versionName "1.0.5"
+        versionCode 1000006
+        versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         DdmPreferences.setTimeOut(60000)
     }
