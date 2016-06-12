@@ -72,7 +72,7 @@ public class GraphTabFragment extends Fragment {
         _db = new DBHandler(getContext());
     }
 
-    public void updateExercises() {
+    public void updateExercises() throws NullPointerException{
         try {
             if (_exercises != null) {
                 _exercises.clear();

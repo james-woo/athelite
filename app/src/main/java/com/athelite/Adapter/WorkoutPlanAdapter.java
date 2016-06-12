@@ -120,7 +120,12 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         if(!workoutPlanExercises.isEmpty()) {
             for (Exercise e : workoutPlanExercises) {
                 if (e == null) break;
-                exerciseNames = exerciseNames + e.getExerciseName() + "\n";
+                if (e.getExerciseName().length() > 15) {
+                    String shortenedName = e.getExerciseName().substring(0,15);
+                    exerciseNames = exerciseNames + shortenedName + "..." + "\n";
+                } else {
+                    exerciseNames = exerciseNames + e.getExerciseName() + "\n";
+                }
                 exerciseOneReps = exerciseOneReps + " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
             }
         }

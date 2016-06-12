@@ -17,6 +17,7 @@ import com.athelite.Activity.ViewDay;
 import com.athelite.Activity.ViewWorkout;
 import com.athelite.Adapter.WorkoutPlanAdapter;
 import com.athelite.Database.DBHandler;
+import com.athelite.Dialog.ErrorDialog;
 import com.athelite.Model.WorkoutPlan;
 import com.athelite.R;
 import com.athelite.Util.JsonSerializer;
@@ -91,13 +92,17 @@ public class HomeTabFragment extends Fragment {
 
         _dateTime.setTime(CalendarDay.today().getDate());
         _sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        updateHomePage();
+        try {
+            updateHomePage();
+        } catch (Exception e) {
+            ErrorDialog.logError("Error Viewing Day", e.getMessage());
+        }
 
         _todayWorkoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(_todayWorkout != null) {
-                    startViewWorkoutActivity(_todayWorkout, _dateTime.getTimeInMillis());
+                    startViewWorkoutActivity(_dateTime.getTimeInMillis());
                 } else {
                     startViewDayActivity(_dateTime.getTimeInMillis());
                 }
@@ -108,7 +113,7 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_nextWorkout != null) {
-                    startViewWorkoutActivity(_nextWorkout, _nextWorkout.getDate().getTime());
+                    startViewWorkoutActivity(_nextWorkout.getDate().getTime());
                 } else {
                     startViewDayActivity(_dateTime.getTimeInMillis() + DAY_IN_MILLISECONDS);
                 }
@@ -119,17 +124,21 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(_prevWorkout != null) {
-                    startViewWorkoutActivity(_prevWorkout, _prevWorkout.getDate().getTime());
+                    startViewWorkoutActivity(_prevWorkout.getDate().getTime());
                 } else {
                     startViewDayActivity(_dateTime.getTimeInMillis() - DAY_IN_MILLISECONDS);
                 }
             }
         });
-        setNotification();
+        try {
+            setNotification();
+        } catch (Exception e) {
+            ErrorDialog.logError("Error Viewing Day", e.getMessage());
+        }
         return rootView;
     }
 
-    public void updateHomePage() {
+    public void updateHomePage() throws NullPointerException{
         DateFormat df = DateFormat.getDateInstance();
         _todayWorkout = _db.getWorkoutForDay(CalendarDay.today().getDate());
         if(_todayWorkout != null) {
@@ -174,14 +183,14 @@ public class HomeTabFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void startViewWorkoutActivity(WorkoutPlan workoutPlan, long time) {
+    private void startViewWorkoutActivity(long time) {
         Intent intent = new Intent(getContext(), ViewDay.class);
         intent.putExtra("VIEW_DAY_PARENT", "Home");
         intent.putExtra("VIEW_DAY_DATETIME", time);
         startActivity(intent);
     }
 
-    private void setNotification() {
+    private void setNotification() throws NullPointerException {
         _dateTime.setTime(CalendarDay.today().getDate());
         if(!sentNotification
                 && _todayWorkout != null

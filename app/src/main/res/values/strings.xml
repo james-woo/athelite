@@ -15,10 +15,8 @@
     <string name="calendar_background_image">Calendar Background Image</string>
     <string name="graph_background_image">Graph Background Image</string>
 
-    <string name="workout_tab_empty_list">
-        You don\'t have any templates!\n
-        Add one by tapping the plus.
-    </string>
+    <string name="workout_tab_empty_list">Add A Template</string>
+    <string name="workout_tab_empty_list_tap_plus">Tap The Plus</string>
 
     <!-- View Workout -->
     <string name="title_activity_view_workout">ViewWorkout</string>

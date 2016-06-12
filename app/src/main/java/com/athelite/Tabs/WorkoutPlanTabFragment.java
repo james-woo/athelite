@@ -26,6 +26,7 @@ public class WorkoutPlanTabFragment extends Fragment {
     private ArrayList<WorkoutPlan> _workoutPlans;
     //private ImageView _emptyList;
     private TextView _emptyList;
+    private TextView _emptyListHelp;
 
     private static WorkoutPlanTabFragment _wFragment = new WorkoutPlanTabFragment();
     /**
@@ -66,54 +67,41 @@ public class WorkoutPlanTabFragment extends Fragment {
         _workoutPlanAdapter = new WorkoutPlanAdapter(getContext(), _workoutPlans);
         _workoutPlanRecyclerView.setAdapter(_workoutPlanAdapter);
         _emptyList = (TextView) rootView.findViewById(R.id.workout_tab_empty_list_text);
+        _emptyListHelp = (TextView) rootView.findViewById(R.id.workout_tab_tap_empty_list_text);
         checkEmptyList();
         return rootView;
     }
 
-    public void updateWorkoutPlanAdapter() {
-        try {
-            _workoutPlans.clear();
-            _workoutPlans = _db.getWorkoutPlans();
-            if (!_workoutPlans.isEmpty() && _workoutPlans != null) {
-                _workoutPlanAdapter.updateWorkoutPlans(_workoutPlans);
-                _workoutPlanAdapter.notifyDataSetChanged();
-            }
-        } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), getContext());
+    public void updateWorkoutPlanAdapter() throws NullPointerException{
+        _workoutPlans.clear();
+        _workoutPlans = _db.getWorkoutPlans();
+        if (!_workoutPlans.isEmpty() && _workoutPlans != null) {
+            _workoutPlanAdapter.updateWorkoutPlans(_workoutPlans);
+            _workoutPlanAdapter.notifyDataSetChanged();
         }
         checkEmptyList();
     }
 
-    public void createNewWorkout() {
-        try {
-            _workoutPlanAdapter.addWorkoutPlan(_db.createWorkoutPlan());
-            _workoutPlanAdapter.notifyDataSetChanged();
-            checkEmptyList();
-            _workoutPlanRecyclerView.smoothScrollToPosition(_workoutPlanAdapter.getItemCount());
-        } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), getContext());
-        }
+    public void createNewWorkout() throws NullPointerException{
+        _workoutPlanAdapter.addWorkoutPlan(_db.createWorkoutPlan());
+        _workoutPlanAdapter.notifyDataSetChanged();
+        checkEmptyList();
+        _workoutPlanRecyclerView.smoothScrollToPosition(_workoutPlanAdapter.getItemCount());
     }
 
-    public void deleteWorkout(WorkoutPlan workoutPlan) {
-        try {
-            _workoutPlanAdapter.removeWorkoutPlan(workoutPlan);
-            _workoutPlanAdapter.notifyItemRangeRemoved(0, _workoutPlanAdapter.getItemCount());
-            checkEmptyList();
-        } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), getContext());
-        }
+    public void deleteWorkout(WorkoutPlan workoutPlan) throws NullPointerException{
+        _workoutPlanAdapter.removeWorkoutPlan(workoutPlan);
+        _workoutPlanAdapter.notifyItemRangeRemoved(0, _workoutPlanAdapter.getItemCount());
+        checkEmptyList();
     }
 
-    public void checkEmptyList() {
-        try {
-            if (_workoutPlanAdapter.getItemCount() < 1) {
-                _emptyList.setVisibility(View.VISIBLE);
-            } else {
-                _emptyList.setVisibility(View.INVISIBLE);
-            }
-        } catch(Exception e) {
-            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), getContext());
+    public void checkEmptyList() throws NullPointerException{
+        if (_workoutPlanAdapter.getItemCount() < 1) {
+            _emptyList.setVisibility(View.VISIBLE);
+            _emptyListHelp.setVisibility(View.VISIBLE);
+        } else {
+            _emptyList.setVisibility(View.INVISIBLE);
+            _emptyListHelp.setVisibility(View.INVISIBLE);
         }
     }
 

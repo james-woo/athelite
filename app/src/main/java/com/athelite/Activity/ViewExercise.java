@@ -141,7 +141,9 @@ public class ViewExercise extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
-        updateExercise();
+        if(_exercise != null && _db != null && _dbe != null) {
+            updateExercise();
+        }
 
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();

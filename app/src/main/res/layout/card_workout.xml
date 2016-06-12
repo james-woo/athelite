@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="15dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textColor="#424242"
                     android:id="@+id/card_workout_plan_exercise_names"
                     android:layout_weight="0.65" />
@@ -45,7 +45,7 @@
                     android:layout_width="61dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textColor="#424242"
                     android:id="@+id/card_workout_plan_exercise_one_rep_max"
                     android:layout_weight="0.35"

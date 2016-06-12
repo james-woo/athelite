@@ -12,12 +12,22 @@
         android:contentDescription="@string/empty_list" />-->
 
     <TextView
+        android:textSize="32sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/workout_tab_empty_list_text"
         android:text="@string/workout_tab_empty_list"
         android:layout_centerInParent="true"
         android:gravity="center_vertical|center_horizontal" />
+    <TextView
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/workout_tab_tap_empty_list_text"
+        android:text="@string/workout_tab_empty_list_tap_plus"
+        android:gravity="center"
+        android:layout_below="@+id/workout_tab_empty_list_text"
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:layout_width="match_parent"

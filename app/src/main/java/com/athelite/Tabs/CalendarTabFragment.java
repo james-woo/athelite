@@ -72,7 +72,7 @@ public class CalendarTabFragment extends Fragment {
         return rootView;
     }
 
-    public void updateCalendar() {
+    public void updateCalendar() throws NullPointerException {
         try {
             ArrayList<Date> workoutDays = _db.getWorkoutDays();
             for (Date day : workoutDays) {
@@ -83,7 +83,7 @@ public class CalendarTabFragment extends Fragment {
         }
     }
 
-    public void unSetSelectedDate(Date selectedDate) {
+    public void unSetSelectedDate(Date selectedDate) throws NullPointerException {
         try {
             if (_calendar != null) {
                 _calendar.setDateSelected(selectedDate, false);
@@ -93,7 +93,7 @@ public class CalendarTabFragment extends Fragment {
         }
     }
 
-    public void setSelectedDate(Date selectedDate) {
+    public void setSelectedDate(Date selectedDate) throws NullPointerException {
         try {
             if (_calendar != null) {
                 _calendar.setDateSelected(selectedDate, true);
@@ -103,7 +103,7 @@ public class CalendarTabFragment extends Fragment {
         }
     }
 
-    private void setSelectedDates(CalendarDay selectedDate) {
+    private void setSelectedDates(CalendarDay selectedDate) throws NullPointerException {
         try {
             if (_calendar != null) {
                 updateCalendar();
@@ -115,7 +115,7 @@ public class CalendarTabFragment extends Fragment {
         }
     }
 
-    private void updateSelectedDate() {
+    private void updateSelectedDate() throws NullPointerException {
         try {
             DateFormat df = DateFormat.getDateInstance();
             WorkoutPlan workoutPlan = _db.getWorkoutForDay(_dateTime.getTime());
@@ -129,7 +129,7 @@ public class CalendarTabFragment extends Fragment {
         }
     }
 
-    public void updateSelectedDate(Date selectedDate) {
+    public void updateSelectedDate(Date selectedDate) throws NullPointerException {
         try {
             DateFormat df = DateFormat.getDateInstance();
             if (_db != null) {
@@ -146,7 +146,7 @@ public class CalendarTabFragment extends Fragment {
     }
 
 
-    public long getDateTimeInMilliseconds() {
+    public long getDateTimeInMilliseconds() throws NullPointerException {
         try {
             return _dateTime.getTimeInMillis();
         } catch(Exception e) {

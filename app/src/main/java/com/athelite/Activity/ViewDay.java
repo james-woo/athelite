@@ -116,46 +116,58 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             public void onClick(View v) {
                 Snackbar.make(v, "Added new exercise", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                addExercise();
+                try {
+                    addExercise();
+                } catch (Exception e) {
+                    ErrorDialog.logError("Error Updating Day", e.getMessage());
+                }
             }
         });
     }
 
-    void updateDay() {
-        if(_workoutDay != null) {
-            setFabAddNewExercise();
-            DateFormat df = DateFormat.getDateInstance();
-            _calendarTitle.setText(new StringBuilder()
-                    .append(df.format(new Date(_dateTime)))
-            );
-            _workoutName.setText(_workoutDay.getWorkoutPlanName());
-            _workoutName.setFocusable(true);
-            _workoutName.setFocusableInTouchMode(true);
-            _workoutName.setSelectAllOnFocus(true);
-            _workoutDay.setExercises(_db.getExercisesForWorkoutPlan(_workoutDay));
-            _workoutDayExercises = _workoutDay.getWorkoutPlanExercises();
-            _adapter.updateExerciseList(_workoutDayExercises);
-            _adapter.setWorkout(_workoutDay);
-            _adapter.notifyDataSetChanged();
-            _addAWorkoutTextView.setVisibility(View.INVISIBLE);
-            _addAWorkoutTextViewHelp.setVisibility(View.INVISIBLE);
-        } else {
-            setFabPickWorkout();
-            DateFormat df = DateFormat.getDateInstance();
-            _calendarTitle.setText(df.format(new Date(_dateTime)));
-            _workoutName.setText(R.string.no_workout_selected);
-            _workoutName.setFocusable(false);
-            _addAWorkoutTextView.setVisibility(View.VISIBLE);
-            _addAWorkoutTextViewHelp.setVisibility(View.VISIBLE);
+    void updateDay() throws NullPointerException{
+        try {
+            if (_workoutDay != null) {
+                setFabAddNewExercise();
+                DateFormat df = DateFormat.getDateInstance();
+                _calendarTitle.setText(new StringBuilder()
+                        .append(df.format(new Date(_dateTime)))
+                );
+                _workoutName.setText(_workoutDay.getWorkoutPlanName());
+                _workoutName.setFocusable(true);
+                _workoutName.setFocusableInTouchMode(true);
+                _workoutName.setSelectAllOnFocus(true);
+                _workoutDay.setExercises(_db.getExercisesForWorkoutPlan(_workoutDay));
+                _workoutDayExercises = _workoutDay.getWorkoutPlanExercises();
+                _adapter.updateExerciseList(_workoutDayExercises);
+                _adapter.setWorkout(_workoutDay);
+                _adapter.notifyDataSetChanged();
+                _addAWorkoutTextView.setVisibility(View.INVISIBLE);
+                _addAWorkoutTextViewHelp.setVisibility(View.INVISIBLE);
+            } else {
+                setFabPickWorkout();
+                DateFormat df = DateFormat.getDateInstance();
+                _calendarTitle.setText(df.format(new Date(_dateTime)));
+                _workoutName.setText(R.string.no_workout_selected);
+                _workoutName.setFocusable(false);
+                _addAWorkoutTextView.setVisibility(View.VISIBLE);
+                _addAWorkoutTextViewHelp.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), this);
         }
     }
 
-    private void addExercise() {
-        if(_workoutDay != null) {
-            Exercise newExercise = _db.createExerciseForWorkoutPlanId(_db.getWritableDatabase(), _workoutDay.getId());
-            _adapter.addExercise(newExercise);
-            _adapter.notifyDataSetChanged();
-            _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
+    private void addExercise() throws NullPointerException {
+        try {
+            if (_workoutDay != null) {
+                Exercise newExercise = _db.createExerciseForWorkoutPlanId(_db.getWritableDatabase(), _workoutDay.getId());
+                _adapter.addExercise(newExercise);
+                _adapter.notifyDataSetChanged();
+                _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
+            }
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Adding Exercise", e.getMessage(), this);
         }
     }
 
@@ -176,26 +188,39 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
 
     @Override
     public void onDismiss(final DialogInterface dialog) {
-        _workoutDay = _db.readWorkoutForDateTime(_dateTime);
-        updateDay();
+        try {
+            _workoutDay = _db.readWorkoutForDateTime(_dateTime);
+            updateDay();
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), this);
+        }
     }
 
     public void updateWorkoutPlan() {
-        if(_workoutDay != null) {
-            _workoutDay.setWorkoutPlanName(_workoutName.getText().toString());
-            _workoutDay.setExercises(_adapter.getExerciseList());
-            _adapter.setWorkout(_workoutDay);
-            _db.updateWorkoutPlan(_workoutDay);
-            _db.updateWorkoutDay(_workoutDay);
-            CalendarTabFragment.getInstance().updateSelectedDate(new Date(_dateTime));
-            GraphTabFragment.getInstance().updateExercises();
+        try {
+            if(_workoutDay != null) {
+                _workoutDay.setWorkoutPlanName(_workoutName.getText().toString());
+                _workoutDay.setExercises(_adapter.getExerciseList());
+                _adapter.setWorkout(_workoutDay);
+                _db.updateWorkoutPlan(_workoutDay);
+                _db.updateWorkoutDay(_workoutDay);
+
+                CalendarTabFragment.getInstance().updateSelectedDate(new Date(_dateTime));
+                GraphTabFragment.getInstance().updateExercises();
+            }
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), this);
         }
     }
 
     @Override
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
-        updateWorkoutPlan();
+        try {
+            updateWorkoutPlan();
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), this);
+        }
 
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
