@@ -59,12 +59,8 @@ public class ViewWorkout extends AppCompatActivity {
 
         _workoutName = (EditText) findViewById(R.id.view_workout_edit_name);
         if (_workoutName != null) {
-            if (!_workoutName.getText().toString().isEmpty()) {
-                _workoutName.setSelectAllOnFocus(true);
-                _workoutName.setText(_workoutPlan.getWorkoutPlanName());
-            } else {
-                _workoutName.setText(R.string.new_workout);
-            }
+            _workoutName.setSelectAllOnFocus(true);
+            _workoutName.setText(_workoutPlan.getWorkoutPlanName());
         }
     }
 
@@ -145,7 +141,6 @@ public class ViewWorkout extends AppCompatActivity {
                 break;
             case R.id.action_delete_workout:
                 _db.deleteWorkoutPlan(_workoutPlan);
-                WorkoutPlanTabFragment.getInstance().deleteWorkout(_workoutPlan);
                 _workoutPlan = null;
                 onBackPressed();
                 break;

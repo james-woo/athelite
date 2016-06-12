@@ -204,9 +204,6 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 _adapter.setWorkout(_workoutDay);
                 _db.updateWorkoutPlan(_workoutDay);
                 _db.updateWorkoutDay(_workoutDay);
-
-                CalendarTabFragment.getInstance().updateSelectedDate(new Date(_dateTime));
-                GraphTabFragment.getInstance().updateExercises();
             }
         } catch (Exception e) {
             ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), this);
@@ -241,8 +238,6 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 break;
             case R.id.action_delete_workout:
                 _db.deleteWorkoutDay(_workoutDay);
-                CalendarTabFragment.getInstance().unSetSelectedDate(new Date(_dateTime));
-                CalendarTabFragment.getInstance().setSelectedDate(CalendarDay.today().getDate());
                 _adapter.clear();
                 _workoutDayExercises.clear();
                 _adapter.setWorkout(null);

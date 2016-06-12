@@ -72,7 +72,7 @@ public class WorkoutPlanTabFragment extends Fragment {
         return rootView;
     }
 
-    public void updateWorkoutPlanAdapter() throws NullPointerException{
+    public void updateWorkoutPlans() throws NullPointerException{
         _workoutPlans.clear();
         _workoutPlans = _db.getWorkoutPlans();
         if (!_workoutPlans.isEmpty() && _workoutPlans != null) {

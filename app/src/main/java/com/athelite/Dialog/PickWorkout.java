@@ -65,12 +65,6 @@ public class PickWorkout extends DialogFragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _db.createWorkoutPlanForDateTime(_workoutPlans.get(position), _dateTime);
-                try {
-                    HomeTabFragment.getInstance().updateHomePage();
-                    CalendarTabFragment.getInstance().setSelectedDate(new Date(_dateTime));
-                } catch (Exception e) {
-                    ErrorDialog.logError("Error Updating Workout", e.getMessage());
-                }
                 dismiss();
             }
         });

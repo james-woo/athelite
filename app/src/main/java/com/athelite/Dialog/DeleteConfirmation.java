@@ -44,7 +44,6 @@ public class DeleteConfirmation extends DialogFragment{
                                                 JsonSerializer.getWorkoutPlanFromJson(getArguments()
                                                         .getString("DeleteConfirmation.workout"));
                                         _db.deleteWorkoutPlan(workout);
-                                        WorkoutPlanTabFragment.getInstance().deleteWorkout(workout);
                                         getActivity().onBackPressed();
                                         break;
                                     case "Delete WorkoutDay":
@@ -52,8 +51,6 @@ public class DeleteConfirmation extends DialogFragment{
                                                 JsonSerializer.getWorkoutPlanFromJson(getArguments()
                                                         .getString("DeleteConfirmation.workout"));
                                         _db.deleteWorkoutDay(workoutDay);
-                                        long dateTime = getArguments().getLong("DeleteConfirmation.date");
-                                        CalendarTabFragment.getInstance().unSetSelectedDate(new Date(dateTime));
                                         getActivity().onBackPressed();
                                         break;
                                 }

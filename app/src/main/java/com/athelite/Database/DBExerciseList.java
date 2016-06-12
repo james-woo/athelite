@@ -26,7 +26,6 @@ public class DBExerciseList  extends SQLiteOpenHelper {
     private final Context myContext;
 
     public DBExerciseList(Context context) {
-
         super(context, DB_NAME, null, 1);
         this.myContext = context;
     }
@@ -46,6 +45,8 @@ public class DBExerciseList  extends SQLiteOpenHelper {
             } catch (IOException e) {
                 this.close();
                 throw new Error("Error copying database: " + e);
+            } finally {
+                this.close();
             }
         }
 
@@ -62,11 +63,9 @@ public class DBExerciseList  extends SQLiteOpenHelper {
         try{
             String myPath = DB_PATH + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+            checkDB.close();
         }catch(SQLiteException e){
             //database does't exist yet.
-        }
-        if(checkDB != null){
-            checkDB.close();
         }
         return checkDB != null;
     }
@@ -98,7 +97,6 @@ public class DBExerciseList  extends SQLiteOpenHelper {
         myOutput.flush();
         myOutput.close();
         myInput.close();
-
     }
 
     public void openDataBase() throws SQLException{
@@ -124,9 +122,8 @@ public class DBExerciseList  extends SQLiteOpenHelper {
 
     }
 
-    public boolean checkIfExerciseExists(String exerciseName) {
+    public boolean checkIfExerciseExists(SQLiteDatabase db, String exerciseName) {
         boolean recordExists = false;
-        SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * " +
                     " FROM " + DBContract.ExerciseListTable.TABLE_NAME +
@@ -140,7 +137,6 @@ public class DBExerciseList  extends SQLiteOpenHelper {
         }
 
         cursor.close();
-        db.close();
 
         return recordExists;
     }
@@ -170,17 +166,13 @@ public class DBExerciseList  extends SQLiteOpenHelper {
 
     public boolean createExercise (String exerciseName) {
         boolean createSuccessful = false;
-
-        if(!checkIfExerciseExists(exerciseName)){
-
-            SQLiteDatabase db = this.getWritableDatabase();
-
+        SQLiteDatabase db = this.getWritableDatabase();
+        if(!checkIfExerciseExists(db, exerciseName)){
             ContentValues values = new ContentValues();
             values.put(DBContract.ExerciseListTable.COLUMN_NAME, exerciseName);
             createSuccessful = db.insert(DBContract.ExerciseListTable.TABLE_NAME, null, values) > 0;
-
-            db.close();
         }
+        db.close();
         return createSuccessful;
     }
 }

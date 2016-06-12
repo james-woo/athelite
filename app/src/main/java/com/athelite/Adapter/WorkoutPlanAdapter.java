@@ -126,7 +126,12 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
                 } else {
                     exerciseNames = exerciseNames + e.getExerciseName() + "\n";
                 }
-                exerciseOneReps = exerciseOneReps + " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
+                if (oneRepDF.format(e.getOneRepMax()).length() > 5) {
+                    String shortenedOneRep = oneRepDF.format(e.getOneRepMax()).substring(0,5);
+                    exerciseOneReps = exerciseOneReps + " 1 RM: " + shortenedOneRep + "..." + " " + _sp.getString("units", "lb") + "\n";
+                } else {
+                    exerciseOneReps = exerciseOneReps + " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
+                }
             }
         }
         holder.vWorkoutPlanExerciseNames.setText(exerciseNames);

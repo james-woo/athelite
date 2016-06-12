@@ -118,11 +118,13 @@ public class CalendarTabFragment extends Fragment {
     private void updateSelectedDate() throws NullPointerException {
         try {
             DateFormat df = DateFormat.getDateInstance();
-            WorkoutPlan workoutPlan = _db.getWorkoutForDay(_dateTime.getTime());
-            if (workoutPlan != null) {
-                _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
-            } else {
-                _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
+            if(_db != null) {
+                WorkoutPlan workoutPlan = _db.getWorkoutForDay(_dateTime.getTime());
+                if (workoutPlan != null) {
+                    _currentlySelectedDate.setText(String.format("%s %s", df.format(_dateTime.getTimeInMillis()), workoutPlan.getWorkoutPlanName()));
+                } else {
+                    _currentlySelectedDate.setText(String.format("Selected %s", df.format(_dateTime.getTimeInMillis())));
+                }
             }
         } catch(Exception e) {
             ErrorDialog.logError("Error Updating Day", e.getMessage());

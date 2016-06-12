@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(DEBUG_MODE) {
+            System.out.println("IN DEBUG MODE");
             DBHandler db = new DBHandler(this);
             db.deleteDB();
         }
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         try {
-            _workoutPlanTabFragment.updateWorkoutPlanAdapter();
+            _workoutPlanTabFragment.updateWorkoutPlans();
             _homeTabFragment.updateHomePage();
         } catch (Exception e) {
             ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), this);
@@ -192,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                             getActionBar().setTitle("Home");
                         _currentPage = "Home";
                         _fab.hide();
+                        HomeTabFragment.getInstance().updateHomePage();
                         break;
                     case 1:
                         if(getActionBar() != null)
@@ -199,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
                         _currentPage = "Workout";
                         _fab.setImageResource(android.R.drawable.ic_input_add);
                         _fab.show();
+                        WorkoutPlanTabFragment.getInstance().updateWorkoutPlans();
                         break;
                     case 2:
                         if(getActionBar() != null)
@@ -206,12 +209,14 @@ public class MainActivity extends AppCompatActivity {
                         _currentPage = "Calendar";
                         _fab.setImageResource(android.R.drawable.ic_menu_edit);
                         _fab.show();
+                        CalendarTabFragment.getInstance().updateCalendar();
                         break;
                     case 3:
                         if(getActionBar() != null)
                             getActionBar().setTitle("Graph");
                         _currentPage = "Graph";
                         _fab.hide();
+                        GraphTabFragment.getInstance().updateExercises();
                     default:
                         break;
                 }

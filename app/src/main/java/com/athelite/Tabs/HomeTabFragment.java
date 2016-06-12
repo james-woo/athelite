@@ -139,29 +139,31 @@ public class HomeTabFragment extends Fragment {
     }
 
     public void updateHomePage() throws NullPointerException{
-        DateFormat df = DateFormat.getDateInstance();
-        _todayWorkout = _db.getWorkoutForDay(CalendarDay.today().getDate());
-        if(_todayWorkout != null) {
-            _todayWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
-                    setTextViewText(_todayWorkout.getWorkoutPlanName(), -1), df.format(_todayWorkout.getDate().getTime())));
-        } else {
-            _todayWorkoutTextView.setText(setTextViewText("Add a workout to",  new Date().getTime()));
-        }
+        if (_db != null) {
+            DateFormat df = DateFormat.getDateInstance();
+            _todayWorkout = _db.getWorkoutForDay(CalendarDay.today().getDate());
+            if (_todayWorkout != null) {
+                _todayWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
+                        setTextViewText(_todayWorkout.getWorkoutPlanName(), -1), df.format(_todayWorkout.getDate().getTime())));
+            } else {
+                _todayWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime()));
+            }
 
-        _nextWorkout = _db.getNextWorkoutAfterDay(CalendarDay.today().getDate());
-        if(_nextWorkout != null) {
-            _nextWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
-                    setTextViewText(_nextWorkout.getWorkoutPlanName(), -1), df.format(_nextWorkout.getDate().getTime())));
-        } else {
-            _nextWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime() + DAY_IN_MILLISECONDS));
-        }
+            _nextWorkout = _db.getNextWorkoutAfterDay(CalendarDay.today().getDate());
+            if (_nextWorkout != null) {
+                _nextWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
+                        setTextViewText(_nextWorkout.getWorkoutPlanName(), -1), df.format(_nextWorkout.getDate().getTime())));
+            } else {
+                _nextWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime() + DAY_IN_MILLISECONDS));
+            }
 
-        _prevWorkout = _db.getPreviousWorkoutBeforeDay(CalendarDay.today().getDate());
-        if(_prevWorkout != null) {
-            _prevWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
-                    setTextViewText(_prevWorkout.getWorkoutPlanName(), -1), df.format(_prevWorkout.getDate().getTime())));
-        } else {
-            _prevWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime() - DAY_IN_MILLISECONDS));
+            _prevWorkout = _db.getPreviousWorkoutBeforeDay(CalendarDay.today().getDate());
+            if (_prevWorkout != null) {
+                _prevWorkoutTextView.setText(String.format(Locale.US, "%s on %s",
+                        setTextViewText(_prevWorkout.getWorkoutPlanName(), -1), df.format(_prevWorkout.getDate().getTime())));
+            } else {
+                _prevWorkoutTextView.setText(setTextViewText("Add a workout to", new Date().getTime() - DAY_IN_MILLISECONDS));
+            }
         }
     }
 
@@ -177,23 +179,28 @@ public class HomeTabFragment extends Fragment {
     }
 
     private void startViewDayActivity(long time) {
-        Intent intent = new Intent(getContext(), ViewDay.class);
-        intent.putExtra("VIEW_DAY_PARENT", "Home");
-        intent.putExtra("VIEW_DAY_DATETIME", time);
-        startActivity(intent);
+        if(getContext() != null) {
+            Intent intent = new Intent(getContext(), ViewDay.class);
+            intent.putExtra("VIEW_DAY_PARENT", "Home");
+            intent.putExtra("VIEW_DAY_DATETIME", time);
+            startActivity(intent);
+        }
     }
 
     private void startViewWorkoutActivity(long time) {
-        Intent intent = new Intent(getContext(), ViewDay.class);
-        intent.putExtra("VIEW_DAY_PARENT", "Home");
-        intent.putExtra("VIEW_DAY_DATETIME", time);
-        startActivity(intent);
+        if(getContext() != null) {
+            Intent intent = new Intent(getContext(), ViewDay.class);
+            intent.putExtra("VIEW_DAY_PARENT", "Home");
+            intent.putExtra("VIEW_DAY_DATETIME", time);
+            startActivity(intent);
+        }
     }
 
     private void setNotification() throws NullPointerException {
         _dateTime.setTime(CalendarDay.today().getDate());
         if(!sentNotification
                 && _todayWorkout != null
+                && getContext() != null
                 && lastSentNotification.getTime() < _dateTime.getTimeInMillis()
                 && _sp.getBoolean("receive_notifications", true)
         ){
