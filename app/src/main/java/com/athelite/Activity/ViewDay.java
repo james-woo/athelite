@@ -1,6 +1,7 @@
 package com.athelite.Activity;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,7 +35,6 @@ import java.util.ArrayList;
 
 public class ViewDay extends AppCompatActivity implements DialogInterface.OnDismissListener{
 
-    //private Calendar _calendar = new GregorianCalendar();
     private FloatingActionButton _fab;
     private TextView _addAWorkoutTextView;
     private TextView _addAWorkoutTextViewHelp;
@@ -217,6 +218,12 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             updateWorkoutPlan();
         } catch (Exception e) {
             ErrorDialog.messageBox("Error Updating Day", e.getMessage(), this);
+        }
+
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
         if (fm.getBackStackEntryCount() > 0) {

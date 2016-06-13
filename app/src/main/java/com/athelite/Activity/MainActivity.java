@@ -1,5 +1,6 @@
 package com.athelite.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
@@ -18,6 +19,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.athelite.BuildConfig;
 import com.athelite.Database.DBExerciseList;
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             dbe.openDataBase();
+            dbe.close();
         }catch(SQLException sqle){
             Crashlytics.log(1, "ATHELITE_MAIN", sqle.getMessage());
             throw new Error(sqle.getMessage());
@@ -116,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             DBHandler db = new DBHandler(this);
             db.deleteDB();
         }
+
     }
 
     @Override

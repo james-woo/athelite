@@ -1,9 +1,11 @@
 package com.athelite.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.athelite.Activity.ViewWorkout;
 import com.athelite.Database.DBHandler;
+import com.athelite.Dialog.DeleteConfirmation;
 import com.athelite.Model.Exercise;
 import com.athelite.Model.WorkoutPlan;
 import com.athelite.R;
@@ -120,14 +123,14 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
         if(!workoutPlanExercises.isEmpty()) {
             for (Exercise e : workoutPlanExercises) {
                 if (e == null) break;
-                if (e.getExerciseName().length() > 15) {
-                    String shortenedName = e.getExerciseName().substring(0,15);
+                if (e.getExerciseName().length() > 25) {
+                    String shortenedName = e.getExerciseName().substring(0,25);
                     exerciseNames = exerciseNames + shortenedName + "..." + "\n";
                 } else {
                     exerciseNames = exerciseNames + e.getExerciseName() + "\n";
                 }
-                if (oneRepDF.format(e.getOneRepMax()).length() > 5) {
-                    String shortenedOneRep = oneRepDF.format(e.getOneRepMax()).substring(0,5);
+                if (oneRepDF.format(e.getOneRepMax()).length() > 6) {
+                    String shortenedOneRep = oneRepDF.format(e.getOneRepMax()).substring(0,6);
                     exerciseOneReps = exerciseOneReps + " 1 RM: " + shortenedOneRep + "..." + " " + _sp.getString("units", "lb") + "\n";
                 } else {
                     exerciseOneReps = exerciseOneReps + " 1 RM: " + oneRepDF.format(e.getOneRepMax()) + " " + _sp.getString("units", "lb") + "\n";
