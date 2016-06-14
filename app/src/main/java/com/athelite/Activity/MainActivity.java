@@ -199,7 +199,11 @@ public class MainActivity extends AppCompatActivity {
                             getActionBar().setTitle("Home");
                         _currentPage = "Home";
                         _fab.hide();
-                        HomeTabFragment.getInstance().updateHomePage();
+                        try {
+                            HomeTabFragment.getInstance().updateHomePage();
+                        } catch (NullPointerException e) {
+                            ErrorDialog.logError("Error: Updating Home Page", e.getMessage());
+                        }
                         break;
                     case 1:
                         if(getActionBar() != null)
@@ -207,7 +211,11 @@ public class MainActivity extends AppCompatActivity {
                         _currentPage = "Workout";
                         _fab.setImageResource(android.R.drawable.ic_input_add);
                         _fab.show();
-                        WorkoutPlanTabFragment.getInstance().updateWorkoutPlans();
+                        try {
+                            WorkoutPlanTabFragment.getInstance().updateWorkoutPlans();
+                        } catch (NullPointerException e) {
+                            ErrorDialog.logError("Error: Updating WorkoutPlans", e.getMessage());
+                        }
                         break;
                     case 2:
                         if(getActionBar() != null)
@@ -215,14 +223,22 @@ public class MainActivity extends AppCompatActivity {
                         _currentPage = "Calendar";
                         _fab.setImageResource(android.R.drawable.ic_menu_edit);
                         _fab.show();
-                        CalendarTabFragment.getInstance().updateCalendar();
+                        try {
+                            CalendarTabFragment.getInstance().updateCalendar();
+                        } catch (NullPointerException e) {
+                            ErrorDialog.logError("Error: Updating Calendar Page", e.getMessage());
+                        }
                         break;
                     case 3:
                         if(getActionBar() != null)
                             getActionBar().setTitle("Graph");
                         _currentPage = "Graph";
                         _fab.hide();
-                        GraphTabFragment.getInstance().updateExercises();
+                        try {
+                            GraphTabFragment.getInstance().updateExercises();
+                        } catch (NullPointerException e) {
+                            ErrorDialog.logError("Error: Updating Graph Page", e.getMessage());
+                        }
                     default:
                         break;
                 }
