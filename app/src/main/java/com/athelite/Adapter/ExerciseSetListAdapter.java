@@ -44,10 +44,11 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
         TextView setWeightType = (TextView) convertView.findViewById(R.id.view_exercise_set_weight_type);
         EditText setReps = (EditText) convertView.findViewById(R.id.view_exercise_set_reps);
         ImageView removeSetButton = (ImageView) convertView.findViewById(R.id.view_exercise_remove_set_button);
-
+        final ViewGroup p = parent;
         removeSetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateSets(p);
                 removeExerciseSetAtPosition(position);
             }
         });
@@ -105,7 +106,22 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
         notifyDataSetChanged();
     }
 
-    public void removeLastExerciseSet() {
-        _exerciseSetList.remove(_exerciseSetList.size() - 1);
+    private void updateSets(ViewGroup parent) {
+        for(int i = 0; i < this.getCount(); i++) {
+            View item = parent.getChildAt(i);
+            EditText setWeightET = (EditText) item.findViewById(R.id.view_exercise_set_weight);
+            EditText setRepsET = (EditText) item.findViewById(R.id.view_exercise_set_reps);
+            try {
+                _exerciseSetList.get(i).setSetWeight(Double.valueOf(setWeightET.getText().toString()));
+            } catch (Exception e) {
+                _exerciseSetList.get(i).setSetWeight(0.0);
+            }
+            try {
+                _exerciseSetList.get(i).setSetReps(Integer.valueOf(setRepsET.getText().toString()));
+            } catch (Exception e) {
+                _exerciseSetList.get(i).setSetReps(0);
+            }
+        }
     }
+
 }

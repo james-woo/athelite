@@ -117,10 +117,18 @@ public class ViewExercise extends AppCompatActivity {
     private void updateSets() {
         for(int i = 0; i <= _listView.getLastVisiblePosition() - _listView.getFirstVisiblePosition(); i++) {
             View item  = _listView.getChildAt(i);
-            EditText setWeight = (EditText) item.findViewById(R.id.view_exercise_set_weight);
-            EditText setReps = (EditText) item.findViewById(R.id.view_exercise_set_reps);
-            _adapter.getItem(i).setSetWeight(Double.valueOf(setWeight.getText().toString()));
-            _adapter.getItem(i).setSetReps(Integer.valueOf(setReps.getText().toString()));
+            EditText setWeightET = (EditText) item.findViewById(R.id.view_exercise_set_weight);
+            EditText setRepsET = (EditText) item.findViewById(R.id.view_exercise_set_reps);
+            try {
+                _adapter.getItem(i).setSetWeight(Double.valueOf(setWeightET.getText().toString()));
+            } catch (Exception e) {
+                _adapter.getItem(i).setSetWeight(0.0);
+            }
+            try {
+                _adapter.getItem(i).setSetReps(Integer.valueOf(setRepsET.getText().toString()));
+            } catch (Exception e) {
+                _adapter.getItem(i).setSetReps(0);
+            }
         }
     }
 

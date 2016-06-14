@@ -66,6 +66,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             } else {
                 DBHandler db = new DBHandler(preference.getContext());
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
                 switch(preference.getKey()) {
                     case "user_name":
                         if(value.toString().equals("")) {
@@ -81,6 +82,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             Toast.makeText(settingsActivity, "Invalid height", Toast.LENGTH_SHORT).show();
                             return false;
                         }
+                        if(sp.getString("units", "lb").equals("lb")) {
+                            stringValue = value + " cm";
+                        } else {
+                            stringValue = value + " in";
+                        }
                         break;
                     case "user_weight":
                         if(value.toString().equals("")) {
@@ -89,6 +95,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         } else if(Double.parseDouble(value.toString()) < 0 || Double.parseDouble(value.toString()) > 1000 ) {
                             Toast.makeText(settingsActivity, "Invalid weight", Toast.LENGTH_SHORT).show();
                             return false;
+                        }
+                        if(sp.getString("units", "lb").equals("lb")) {
+                            stringValue = value + " lb";
+                        } else {
+                            stringValue = value + " kg";
                         }
                         break;
                     case "user_age":
@@ -99,6 +110,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             Toast.makeText(settingsActivity, "Invalid age", Toast.LENGTH_SHORT).show();
                             return false;
                         }
+                        stringValue = value + " years";
                         break;
                     case "user_bf":
                         if(value.toString().equals("")) {
@@ -108,6 +120,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             Toast.makeText(settingsActivity, "Invalid body fat percentage", Toast.LENGTH_SHORT).show();
                             return false;
                         }
+                        stringValue = value + "%";
                         break;
                     case "target_sets":
                         if(value.toString().equals("")) {
