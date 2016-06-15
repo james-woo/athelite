@@ -54,8 +54,6 @@ public class HomeTabFragment extends Fragment {
     private SharedPreferences _sp;
 
     private Calendar _dateTime = Calendar.getInstance();
-    private Date lastSentNotification = new Date(0);
-    private boolean sentNotification = false;
 
     private final long DAY_IN_MILLISECONDS = 86400000;
 
@@ -189,36 +187,6 @@ public class HomeTabFragment extends Fragment {
             intent.putExtra("VIEW_DAY_PARENT", "Home");
             intent.putExtra("VIEW_DAY_DATETIME", time);
             startActivity(intent);
-        }
-    }
-
-    private void setNotification() throws NullPointerException {
-        _dateTime.setTime(CalendarDay.today().getDate());
-        if(!sentNotification
-                && _todayWorkout != null
-                && getContext() != null
-                && lastSentNotification.getTime() < _dateTime.getTimeInMillis()
-                && _sp.getBoolean("receive_notifications", true)
-        ){
-            lastSentNotification.setTime(_dateTime.getTimeInMillis());
-
-            Intent viewDay = new Intent(getContext(), ViewDay.class);
-            viewDay.putExtra("VIEW_DAY_DATETIME", _dateTime.getTimeInMillis());
-            viewDay.putExtra("VIEW_DAY_PARENT", "Home");
-
-            PugNotification.with(getContext())
-                    .load()
-                    .title("Today's Workout")
-                    .message("Tap to see your workout for today")
-                    .smallIcon(R.drawable.ic_workout_icon_white_24dp)
-                    .largeIcon(R.drawable.ic_workout_icon_white_24dp)
-                    .flags(Notification.DEFAULT_ALL)
-                    .onlyAlertOnce(true)
-                    .autoCancel(true)
-                    .click(PendingIntent.getActivity(getContext(), 0, viewDay, PendingIntent.FLAG_UPDATE_CURRENT))
-                    .simple()
-                    .build();
-            sentNotification = true;
         }
     }
 }

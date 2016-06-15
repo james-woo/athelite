@@ -19,6 +19,7 @@ import android.support.v4.app.NavUtils;
 import android.widget.Toast;
 
 import com.athelite.Database.DBHandler;
+import com.athelite.Dialog.TimePreference;
 import com.athelite.R;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 editor.putBoolean("switched_units", true);
                 editor.apply();
             }
-            if (preference instanceof ListPreference) {
+            else if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
@@ -142,6 +143,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         }
                         db.updateTargetReps(db.getWritableDatabase(), Integer.parseInt(value.toString()));
                         break;
+                    case "notification_time":
+
+                        if(value.toString().equals("")) {
+                            Toast.makeText(settingsActivity, "Invalid time", Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if (TimePreference.getMinute(value.toString()) < 10) {
+                            stringValue = String.valueOf(TimePreference.getHour(value.toString())) + ":0" + String.valueOf(TimePreference.getMinute(value.toString()));
+                        }
                 }
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
