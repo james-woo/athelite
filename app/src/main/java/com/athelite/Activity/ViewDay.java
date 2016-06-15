@@ -1,13 +1,20 @@
 package com.athelite.Activity;
 
+import android.app.AlarmManager;
 import android.app.FragmentManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,16 +29,21 @@ import com.athelite.Database.DBHandler;
 import com.athelite.Dialog.EmptyTemplatesDialog;
 import com.athelite.Dialog.ErrorDialog;
 import com.athelite.Dialog.PickWorkout;
+import com.athelite.Dialog.TimePreference;
 import com.athelite.Model.Exercise;
 import com.athelite.Model.WorkoutPlan;
 import com.athelite.R;
 import com.athelite.Tabs.CalendarTabFragment;
 import com.athelite.Tabs.GraphTabFragment;
+import com.athelite.Util.AlarmReceiver;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.sql.Date;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import br.com.goncalves.pugnotification.notification.PugNotification;
 
 public class ViewDay extends AppCompatActivity implements DialogInterface.OnDismissListener{
 
@@ -46,6 +58,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
     private EditText _workoutName;
     private long _dateTime;
     private ListView _listView;
+    private SharedPreferences _sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +96,8 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         _listView = (ListView) findViewById(R.id.view_day_exercise_list_view);
         if(_listView != null)
             _listView.setAdapter(_adapter);
+
+        _sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         setFabPickWorkout();
 
@@ -211,11 +226,26 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         }
     }
 
+    public void setNotification() {
+        if(_dateTime > System.currentTimeMillis()) {
+            AlarmManager alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmMgr.set(AlarmManager.RTC, System.currentTimeMillis() + 2000, alarmIntent);
+        }
+    }
+
     @Override
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
         try {
             updateWorkoutPlan();
+        } catch (Exception e) {
+            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), this);
+        }
+
+        try {
+            setNotification();
         } catch (Exception e) {
             ErrorDialog.messageBox("Error Updating Day", e.getMessage(), this);
         }

@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
+        <item name="android:timePickerDialogTheme">@style/TimePickerDialogTheme</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -27,6 +28,20 @@
 
     <style name="CustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:timePickerStyle">@style/TimePickerDialogStyle</item>
+    </style>
+
+    <style name="TimePickerDialogStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:timePickerMode">clock</item>
+        <item name="android:headerBackground">@color/colorAccent</item>
+        <item name="android:numbersTextColor">#FFFFFF</item>
+        <item name="android:numbersSelectorColor">@color/colorAccent</item>
+        <item name="android:numbersBackgroundColor">#ffdddddd</item>
     </style>
 
 </resources>
