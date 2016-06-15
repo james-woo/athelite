@@ -130,11 +130,7 @@ public class HomeTabFragment extends Fragment {
                 }
             }
         });
-        try {
-            setNotification();
-        } catch (Exception e) {
-            ErrorDialog.logError("Error Viewing Day", e.getMessage());
-        }
+
         return rootView;
     }
 
