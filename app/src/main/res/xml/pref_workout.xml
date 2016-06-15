@@ -29,12 +29,14 @@
     <EditTextPreference
         android:title="@string/settings_title_target_sets"
         android:defaultValue="3"
-        android:key="@string/settings_key_target_sets" />
+        android:key="@string/settings_key_target_sets"
+        android:inputType="number" />
 
     <EditTextPreference
         android:title="@string/settings_title_target_reps"
         android:defaultValue="0"
-        android:key="@string/settings_key_target_reps" />
+        android:key="@string/settings_key_target_reps"
+        android:inputType="number" />
 
     <PreferenceCategory android:title="Notifications"/>
 

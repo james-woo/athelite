@@ -23,7 +23,6 @@ import com.athelite.Dialog.TimePreference;
 import com.athelite.R;
 
 import java.util.List;
-import java.util.logging.Handler;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
