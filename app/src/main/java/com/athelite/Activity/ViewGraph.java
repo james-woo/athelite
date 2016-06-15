@@ -80,8 +80,7 @@ public class ViewGraph extends AppCompatActivity {
             } else {
                 _graph.getViewport().setMinX(c.getTimeInMillis());
             }
-            c.add(Calendar.YEAR, 1);
-            _graph.getViewport().setMaxX(c.getTimeInMillis());
+            _graph.getViewport().setMaxX(System.currentTimeMillis());
             _graph.getViewport().setXAxisBoundsManual(true);
         }
     }
