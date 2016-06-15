@@ -119,7 +119,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 try {
                     addExercise();
                 } catch (Exception e) {
-                    ErrorDialog.logError("Error Updating Day", e.getMessage());
+                    ErrorDialog.logError("Error: ViewDay setFabAddNewExercise", e.getMessage());
                 }
             }
         });
@@ -154,7 +154,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 _addAWorkoutTextViewHelp.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
-            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), this);
+            ErrorDialog.logError("Error: ViewDay updateDay", e.getMessage());
         }
     }
 
@@ -167,7 +167,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
             }
         } catch (Exception e) {
-            ErrorDialog.messageBox("Error Adding Exercise", e.getMessage(), this);
+            ErrorDialog.logError("Error: ViewDay addExercise", e.getMessage());
         }
     }
 
@@ -182,7 +182,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 _adapter.notifyDataSetChanged();
             }
         } catch (Exception e) {
-            ErrorDialog.messageBox("Error Viewing Day", e.getMessage(), this);
+            ErrorDialog.logError("Error: ViewDay onRestart", e.getMessage());
         }
     }
 
@@ -192,7 +192,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
             _workoutDay = _db.readWorkoutForDateTime(_dateTime);
             updateDay();
         } catch (Exception e) {
-            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), this);
+            ErrorDialog.logError("Error: ViewDay onDismiss", e.getMessage());
         }
     }
 
@@ -206,7 +206,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 _db.updateWorkoutDay(_workoutDay);
             }
         } catch (Exception e) {
-            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), this);
+            ErrorDialog.logError("Error: ViewDay updateWorkoutPlan", e.getMessage());
         }
     }
 
@@ -216,7 +216,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         try {
             updateWorkoutPlan();
         } catch (Exception e) {
-            ErrorDialog.messageBox("Error Updating Day", e.getMessage(), this);
+            ErrorDialog.logError("Error: ViewDay onBackPressed", e.getMessage());
         }
 
         View view = this.getCurrentFocus();

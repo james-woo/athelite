@@ -263,8 +263,24 @@ public class DBHandler extends SQLiteOpenHelper {
         for( Exercise e : exercises ) {
             values.clear();
             values.put(DBContract.WorkoutHistory.COLUMN_EXERCISE_NAME, e.getExerciseName());
-            id = db.update(DBContract.WorkoutHistory.TABLE_NAME, values, whereClause,
-                    new String[] { String.valueOf(workoutDay.getId()), String.valueOf(e.getId()) });
+
+            String query = "SELECT * FROM " + DBContract.WorkoutHistory.TABLE_NAME +
+                    " WHERE " + DBContract.WorkoutHistory.COLUMN_EXERCISE_ID +
+                    " =  \"" + e.getId() + "\"";
+            Cursor cursor = db.rawQuery(query, null);
+            if(cursor.moveToFirst()) {
+                // update
+                id = db.update(DBContract.WorkoutHistory.TABLE_NAME, values, whereClause,
+                        new String[] { String.valueOf(workoutDay.getId()), String.valueOf(e.getId()) });
+            } else {
+                // create new exercise
+                values.put(DBContract.WorkoutHistory.COLUMN_DATE, workoutDay.getDate().getTime());
+                values.put(DBContract.WorkoutHistory.COLUMN_EXERCISE_ID, e.getId());
+                values.put(DBContract.WorkoutHistory.COLUMN_WORKOUT_ID, workoutDay.getId());
+                id = db.insert(DBContract.WorkoutHistory.TABLE_NAME, null, values);
+                System.out.println("Added new exercise: " + id + " " + e.getExerciseName());
+            }
+            cursor.close();
         }
 
         db.close();
@@ -920,7 +936,9 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-        return readWorkout(workoutId);
+        WorkoutPlan workoutPlan = readWorkout(workoutId);
+        workoutPlan.setDate(new Date(dateTime));
+        return workoutPlan;
     }
 
     public boolean deleteWorkoutDay(WorkoutPlan workoutPlan) {

@@ -79,7 +79,7 @@ public class CalendarTabFragment extends Fragment {
                 _calendar.setDateSelected(day, true);
             }
         } catch(Exception e) {
-            ErrorDialog.logError("Error Updating Day", e.getMessage());
+            ErrorDialog.logError("Error: updateCalendar", e.getMessage());
         }
     }
 
@@ -89,7 +89,7 @@ public class CalendarTabFragment extends Fragment {
                 _calendar.setDateSelected(selectedDate, false);
             }
         } catch(Exception e) {
-            ErrorDialog.logError("Error Updating Day", e.getMessage());
+            ErrorDialog.logError("Error: unSetSelectedDate", e.getMessage());
         }
     }
 
@@ -99,7 +99,7 @@ public class CalendarTabFragment extends Fragment {
                 _calendar.setDateSelected(selectedDate, true);
             }
         } catch(Exception e) {
-            ErrorDialog.logError("Error Updating Day", e.getMessage());
+            ErrorDialog.logError("Error: setSelectedDate", e.getMessage());
         }
     }
 
@@ -111,7 +111,7 @@ public class CalendarTabFragment extends Fragment {
                 updateSelectedDate();
             }
         } catch(Exception e) {
-            ErrorDialog.logError("Error Updating Day", e.getMessage());
+            ErrorDialog.logError("Error: setSelectedDates", e.getMessage());
         }
     }
 
@@ -127,7 +127,7 @@ public class CalendarTabFragment extends Fragment {
                 }
             }
         } catch(Exception e) {
-            ErrorDialog.logError("Error Updating Day", e.getMessage());
+            ErrorDialog.logError("Error: updateSelectedDate", e.getMessage());
         }
     }
 
@@ -143,7 +143,7 @@ public class CalendarTabFragment extends Fragment {
                 }
             }
         } catch(Exception e) {
-            ErrorDialog.logError("Error Updating Day", e.getMessage());
+            ErrorDialog.logError("Error: updateSelectedDate", e.getMessage());
         }
     }
 
@@ -152,7 +152,7 @@ public class CalendarTabFragment extends Fragment {
         try {
             return _dateTime.getTimeInMillis();
         } catch(Exception e) {
-            ErrorDialog.logError("Error Updating Day", e.getMessage());
+            ErrorDialog.logError("Error: getDateTimeInMilliseconds", e.getMessage());
         }
         return CalendarDay.today().getDate().getTime();
     }

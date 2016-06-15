@@ -84,8 +84,8 @@ public class GraphTabFragment extends Fragment {
                 _db = new DBHandler(getContext());
             }
             _graphExerciseList = _db.getCompletedExercises(_db.getWritableDatabase());
-            Double highestOneRepMax = 0.0;
             for (int i = 0; i < _graphExerciseList.size(); i++) {
+                Double highestOneRepMax = 0.0;
                 String exerciseName = _graphExerciseList.keyAt(i);
                 ArrayList<Exercise> exerciseArrayList = _graphExerciseList.get(exerciseName);
                 Exercise heaviestExercise = new Exercise.Builder(exerciseName).build();
@@ -96,9 +96,13 @@ public class GraphTabFragment extends Fragment {
                         heaviestExercise.setExerciseSets(e.getExerciseSets());
                         heaviestExercise.setId(e.getId());
                         heaviestExercise.setOneRepMax(highestOneRepMax);
+                        heaviestExercise.setExerciseDate(e.getExerciseDate());
                     }
                 }
-                _exercises.add(heaviestExercise);
+                if(heaviestExercise.getOneRepMax() != 0.0 &&
+                        heaviestExercise.getExerciseDate().getTime() < System.currentTimeMillis()) {
+                    _exercises.add(heaviestExercise);
+                }
             }
             if (_adapter != null)
                 _adapter.notifyDataSetChanged();
