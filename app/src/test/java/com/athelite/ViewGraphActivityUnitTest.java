@@ -130,11 +130,4 @@ public class ViewGraphActivityUnitTest {
         assertTrue(shadowActivity.isFinishing());
     }
 
-    @Test
-    public void view_graph_on_options_item_settings_selected_test() throws Exception {
-        MenuItem menuItem = new RoboMenuItem(R.id.action_settings);
-        _activity.onOptionsItemSelected(menuItem);
-        ShadowActivity shadowActivity = Shadows.shadowOf(_activity);
-        assertTrue(shadowActivity.peekNextStartedActivity() != null);
-    }
 }
