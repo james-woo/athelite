@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             _workoutPlanTabFragment.updateWorkoutPlans();
             _homeTabFragment.updateHomePage();
         } catch (Exception e) {
-            ErrorDialog.messageBox("Error Updating Workout", e.getMessage(), this);
+            ErrorDialog.logError("Error: MainActivity onRestart", e.getMessage());
         }
     }
 

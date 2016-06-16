@@ -6,7 +6,9 @@ import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.athelite.Adapter.GraphExerciseListAdapter;
 import com.athelite.Database.DBHandler;
@@ -14,8 +16,14 @@ import com.athelite.Dialog.ErrorDialog;
 import com.athelite.Model.Exercise;
 import com.athelite.R;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GraphTabFragment extends Fragment {
 
@@ -64,7 +72,6 @@ public class GraphTabFragment extends Fragment {
         if(_listView != null)
             _listView.setAdapter(_adapter);
 
-
         return rootView;
     }
 
@@ -84,8 +91,8 @@ public class GraphTabFragment extends Fragment {
                 _db = new DBHandler(getContext());
             }
             _graphExerciseList = _db.getCompletedExercises(_db.getWritableDatabase());
-            Double highestOneRepMax = 0.0;
             for (int i = 0; i < _graphExerciseList.size(); i++) {
+                Double highestOneRepMax = 0.0;
                 String exerciseName = _graphExerciseList.keyAt(i);
                 ArrayList<Exercise> exerciseArrayList = _graphExerciseList.get(exerciseName);
                 Exercise heaviestExercise = new Exercise.Builder(exerciseName).build();
@@ -96,10 +103,17 @@ public class GraphTabFragment extends Fragment {
                         heaviestExercise.setExerciseSets(e.getExerciseSets());
                         heaviestExercise.setId(e.getId());
                         heaviestExercise.setOneRepMax(highestOneRepMax);
+                        heaviestExercise.setExerciseDate(e.getExerciseDate());
                     }
                 }
-                _exercises.add(heaviestExercise);
+                if(heaviestExercise.getOneRepMax() != 0.0 &&
+                        heaviestExercise.getExerciseDate().getTime() < System.currentTimeMillis()) {
+                    _exercises.add(heaviestExercise);
+                }
             }
+
+            Collections.sort(_exercises, Exercise.Comparators.NAME);
+
             if (_adapter != null)
                 _adapter.notifyDataSetChanged();
         } catch (Exception e) {

@@ -37,8 +37,14 @@ project.afterEvaluate {
                                    '**/BuildConfig.*',
                                    '**/Manifest*.*',
                                    '**/AppCompatPreferenceActivity.*',
-                                   '**/SettingsActivity.*',
-                                   '**/MainActivity.*']
+                                   'com/athelite/Activity/SettingsActivity.**',
+                                   'com/athelite/Activity/SettingsActivity.',
+                                   'com/athelite/Activity/MainActivity.**',
+                                   'com/athelite/Database/**',
+                                   'com/athelite/Tabs/**',
+                                   'com/athelite/Adapter/**',
+                                   'com/athelite/Dialog/**',
+                                   'com/athelite/AutoComplete']
                 )
 
                 def coverageSourceDirs = [

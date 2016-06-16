@@ -86,21 +86,29 @@ public class ViewWorkout extends AppCompatActivity {
     }
 
     private void addExercise() {
-        Exercise newExercise = _db.createExerciseForWorkoutPlanId(_db.getWritableDatabase(), _workoutPlan.getId());
-        _adapter.addExercise(newExercise);
-        _adapter.notifyDataSetChanged();
-        _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
+        try {
+            Exercise newExercise = _db.createExerciseForWorkoutPlanId(_workoutPlan.getId());
+            _adapter.addExercise(newExercise);
+            _adapter.notifyDataSetChanged();
+            _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
+        } catch(Exception e) {
+            ErrorDialog.logError("Error: ViewWorkout addExercise", e.getMessage());
+        }
     }
 
     public void updateWorkoutPlan() {
-        if(_workoutPlan != null) {
-            if (_workoutName.getText().toString().equals("")) {
-                _workoutName.setText(R.string.new_workout);
+        try {
+            if (_workoutPlan != null) {
+                if (_workoutName.getText().toString().equals("")) {
+                    _workoutName.setText(R.string.new_workout);
+                }
+                _workoutPlan.setWorkoutPlanName(_workoutName.getText().toString());
+                _workoutPlan.setExercises(_adapter.getExerciseList());
+                _adapter.setWorkout(_workoutPlan);
+                _db.updateWorkoutPlan(_workoutPlan);
             }
-            _workoutPlan.setWorkoutPlanName(_workoutName.getText().toString());
-            _workoutPlan.setExercises(_adapter.getExerciseList());
-            _adapter.setWorkout(_workoutPlan);
-            _db.updateWorkoutPlan(_workoutPlan);
+        } catch(Exception e) {
+            ErrorDialog.logError("Error: ViewWorkout updateWorkoutPlan", e.getMessage());
         }
     }
 
@@ -115,7 +123,7 @@ public class ViewWorkout extends AppCompatActivity {
                 _adapter.notifyDataSetChanged();
             }
         } catch(Exception e) {
-            ErrorDialog.messageBox("Error Viewing Workout", e.getMessage(), this);
+            ErrorDialog.logError("Error: ViewWorkout onResume", e.getMessage());
         }
     }
 
