@@ -1,9 +1,10 @@
 package com.athelite.Model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
-public class Exercise {
+public class Exercise implements Comparable<Exercise> {
 
     private long _id;
     private String _exerciseName;
@@ -69,6 +70,20 @@ public class Exercise {
             }
         }
         _oneRepMax = maxWeight * (1 + (maxReps / 30.0));
+    }
+
+    @Override
+    public int compareTo(Exercise another) {
+        return Comparators.NAME.compare(this, another);
+    }
+
+    public static class Comparators {
+        public static Comparator<Exercise> NAME = new Comparator<Exercise>() {
+            @Override
+            public int compare(Exercise lhs, Exercise rhs) {
+                return lhs.getExerciseName().compareTo(rhs.getExerciseName());
+            }
+        };
     }
 
     public static class Builder {

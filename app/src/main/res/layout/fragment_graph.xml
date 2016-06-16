@@ -19,7 +19,18 @@
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"/>
+            android:divider="@null"
+            android:layout_weight="1"
+            android:paddingEnd="5dp" />
+
+        <LinearLayout
+            android:id="@+id/graph_side_index"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:background="#c3c3c3"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>
