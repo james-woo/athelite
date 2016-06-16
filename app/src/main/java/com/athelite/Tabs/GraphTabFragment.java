@@ -1,7 +1,9 @@
 package com.athelite.Tabs;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentContainer;
 import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,9 @@ public class GraphTabFragment extends Fragment {
     private ArrayList<Exercise> _exercises = new ArrayList<>();
     private ListView _listView;
     private GraphExerciseListAdapter _adapter;
+    private Map<String, Integer> _mapIndex;
+    private LinearLayout _indexLayout;
+    private LayoutInflater _inflater;
 
     private static GraphTabFragment _gFragment = new GraphTabFragment();
     /**
@@ -65,6 +70,8 @@ public class GraphTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_graph, container, false);
 
+        _inflater = inflater;
+
         initInstances();
         updateExercises();
         _adapter = new GraphExerciseListAdapter(getContext(), _exercises);
@@ -72,7 +79,49 @@ public class GraphTabFragment extends Fragment {
         if(_listView != null)
             _listView.setAdapter(_adapter);
 
+        _indexLayout = (LinearLayout) rootView.findViewById(R.id.graph_side_index);
+
         return rootView;
+    }
+
+    private void getIndexList() {
+        _mapIndex = new LinkedHashMap<>();
+        for (int i = 0; i < _exercises.size(); i++) {
+            String exercise = _exercises.get(i).getExerciseName();
+            String index;
+            if(exercise.length() < 2) {
+                index = exercise;
+            } else {
+                index = exercise.substring(0, 1);
+            }
+
+            if (_mapIndex.get(index) == null) {
+                _mapIndex.put(index, i);
+            }
+        }
+    }
+
+    @SuppressLint("InflateParams")
+    private void displayIndex() {
+        if(_indexLayout.getChildCount() > 0) {
+            _indexLayout.removeAllViews();
+        }
+        TextView textView;
+        List<String> indexList = new ArrayList<>(_mapIndex.keySet());
+        Collections.sort(indexList);
+        for (String index : indexList) {
+            textView = (TextView) _inflater.inflate(R.layout.side_index_item, null);
+            textView.setText(index);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @SuppressWarnings("SuspiciousMethodCalls")
+                @Override
+                public void onClick(View v) {
+                    TextView index = (TextView) v;
+                    _listView.setSelection(_mapIndex.get(index.getText()));
+                }
+            });
+            _indexLayout.addView(textView);
+        }
     }
 
     private void initInstances() {
@@ -113,7 +162,8 @@ public class GraphTabFragment extends Fragment {
             }
 
             Collections.sort(_exercises, Exercise.Comparators.NAME);
-
+            getIndexList();
+            displayIndex();
             if (_adapter != null)
                 _adapter.notifyDataSetChanged();
         } catch (Exception e) {

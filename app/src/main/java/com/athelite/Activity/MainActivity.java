@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         boolean setupSeen = sp.getBoolean("setupSeen", false); //will return false if there is no shared preference
         if(DEBUG_MODE) {
-            setupSeen = false;
+            //setupSeen = false;
         }
         if(!setupSeen){
             showSetUp();
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         if(DEBUG_MODE) {
             System.out.println("IN DEBUG MODE");
             DBHandler db = new DBHandler(this);
-            db.deleteDB();
+            //db.deleteDB();
         }
 
     }

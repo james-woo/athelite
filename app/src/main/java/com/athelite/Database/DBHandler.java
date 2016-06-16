@@ -278,7 +278,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 values.put(DBContract.WorkoutHistory.COLUMN_EXERCISE_ID, e.getId());
                 values.put(DBContract.WorkoutHistory.COLUMN_WORKOUT_ID, workoutDay.getId());
                 id = db.insert(DBContract.WorkoutHistory.TABLE_NAME, null, values);
-                System.out.println("Added new exercise: " + id + " " + e.getExerciseName());
             }
             cursor.close();
         }

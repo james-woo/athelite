@@ -9,23 +9,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         tools:context=".Tabs.WorkoutPlanTabFragment"
         android:orientation="horizontal">
 
         <ListView
             android:id="@+id/graph_exercise_list"
             android:scrollbars="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:divider="@null"
             android:layout_weight="1"
-            android:paddingEnd="5dp" />
+            android:paddingEnd="5dp"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            />
 
         <LinearLayout
             android:id="@+id/graph_side_index"
-            android:layout_width="50dp"
+            android:layout_width="20dp"
             android:layout_height="fill_parent"
             android:background="#c3c3c3"
             android:gravity="center_horizontal"
