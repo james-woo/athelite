@@ -161,7 +161,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
     private void addExercise() throws NullPointerException {
         try {
             if (_workoutDay != null) {
-                Exercise newExercise = _db.createExerciseForWorkoutPlanId(_db.getWritableDatabase(), _workoutDay.getId());
+                Exercise newExercise = _db.createExerciseForWorkoutPlanId(_workoutDay.getId());
                 _adapter.addExercise(newExercise);
                 _adapter.notifyDataSetChanged();
                 _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);

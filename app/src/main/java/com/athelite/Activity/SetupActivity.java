@@ -117,8 +117,8 @@ public class SetupActivity extends AppCompatActivity {
         _etAge = (EditText) findViewById(R.id.setup_edit_age);
 
         DBHandler db = new DBHandler(this);
-        db.setTargetSets(db.getWritableDatabase(), Integer.parseInt(_sp.getString("target_sets", "3")));
-        db.setTargetReps(db.getWritableDatabase(), Integer.parseInt(_sp.getString("target_reps", "0")));
+        db.setTargetSets(Integer.parseInt(_sp.getString("target_sets", "3")));
+        db.setTargetReps(Integer.parseInt(_sp.getString("target_reps", "0")));
     }
 
     private void initToolbar() {

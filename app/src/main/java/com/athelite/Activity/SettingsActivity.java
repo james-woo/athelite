@@ -52,7 +52,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 editor.putBoolean("switched_units", true);
                 editor.apply();
             }
-            else if (preference instanceof ListPreference) {
+            if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
@@ -129,8 +129,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         } else if(Double.parseDouble(value.toString()) < 0) {
                             Toast.makeText(settingsActivity, "Invalid target sets", Toast.LENGTH_SHORT).show();
                             return false;
+                        } else if(!value.toString().matches("\\d+(?:\\.\\d+)?")) {
+                            Toast.makeText(settingsActivity, "Invalid target sets", Toast.LENGTH_SHORT).show();
+                            return false;
                         }
-                        db.updateTargetSets(db.getWritableDatabase(), Integer.parseInt(value.toString()));
+                        db.updateTargetSets(Integer.parseInt(value.toString()));
                         break;
                     case "target_reps":
                         if(value.toString().equals("")) {
@@ -139,8 +142,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         } else if(Double.parseDouble(value.toString()) < 0) {
                             Toast.makeText(settingsActivity, "Invalid target reps", Toast.LENGTH_SHORT).show();
                             return false;
+                        } else if(!value.toString().matches("\\d+(?:\\.\\d+)?")) {
+                            Toast.makeText(settingsActivity, "Invalid target sets", Toast.LENGTH_SHORT).show();
+                            return false;
                         }
-                        db.updateTargetReps(db.getWritableDatabase(), Integer.parseInt(value.toString()));
+                        db.updateTargetReps(Integer.parseInt(value.toString()));
                         break;
                     case "notification_time":
 
