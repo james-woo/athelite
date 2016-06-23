@@ -64,16 +64,16 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                 switch(menuItem.getItemId()) {
                     case R.id.action_move_exercise_up:
                         if(_exerciseList.size() < 1 || position < 1) break;
-                        Pair<Exercise, Exercise> swappedUp = _db.swapExercises(_exerciseList.get(position), _exerciseList.get(position - 1));
-                        _exerciseList.get(position).setId(swappedUp.first.getId());
-                        _exerciseList.get(position - 1).setId(swappedUp.second.getId());
+                        Pair<Long, Long> swappedUp = _db.swapExercises(_exerciseList.get(position), _exerciseList.get(position - 1));
+                        _exerciseList.get(position).setId(swappedUp.first);
+                        _exerciseList.get(position - 1).setId(swappedUp.second);
                         Collections.swap(_exerciseList, position, position - 1);
                         break;
                     case R.id.action_move_exercise_down:
                         if(_exerciseList.size() < 1 || position >= _exerciseList.size() - 1) break;
-                        Pair<Exercise, Exercise> swappedDown = _db.swapExercises(_exerciseList.get(position), _exerciseList.get(position + 1));
-                        _exerciseList.get(position).setId(swappedDown.first.getId());
-                        _exerciseList.get(position + 1).setId(swappedDown.second.getId());
+                        Pair<Long, Long> swappedDown = _db.swapExercises(_exerciseList.get(position), _exerciseList.get(position + 1));
+                        _exerciseList.get(position).setId(swappedDown.first);
+                        _exerciseList.get(position + 1).setId(swappedDown.second);
                         Collections.swap(_exerciseList, position, position + 1);
                         break;
                     case R.id.action_delete_exercise:

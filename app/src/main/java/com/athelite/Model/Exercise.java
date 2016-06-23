@@ -82,6 +82,14 @@ public class Exercise implements Comparable<Exercise> {
         return result;
     }
 
+    public void copy(Exercise exercise) {
+        this._exerciseSets = exercise.getExerciseSets();
+        this._exerciseDate = exercise.getExerciseDate();
+        this._exerciseName = exercise.getExerciseName();
+        this._id = exercise.getId();
+        this._oneRepMax = exercise.getOneRepMax();
+    }
+
     @Override
     public int compareTo(Exercise another) {
         return Comparators.NAME.compare(this, another);

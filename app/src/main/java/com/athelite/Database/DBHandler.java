@@ -18,6 +18,7 @@ import com.athelite.Model.WorkoutPlan;
 import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -684,11 +685,12 @@ public class DBHandler extends SQLiteOpenHelper {
         return null;
     }
 
-    public Pair<Exercise, Exercise> swapExercises(Exercise exercise1, Exercise exercise2) {
+    public Pair<Long, Long> swapExercises(Exercise exercise1, Exercise exercise2) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values1 = new ContentValues();
         ContentValues values2 = new ContentValues();
 
+        // Swap exercises
         values1.put(DBContract.ExerciseTable.COLUMN_NAME, exercise1.getExerciseName());
         values1.put(DBContract.ExerciseTable.COLUMN_ONEREPMAX, String.valueOf(exercise1.getOneRepMax()));
 
@@ -701,7 +703,27 @@ public class DBHandler extends SQLiteOpenHelper {
         long id2 = db.update(DBContract.ExerciseTable.TABLE_NAME, values2, whereClauseExerciseTable,
                 new String[] { String.valueOf(exercise1.getId()) });
 
-        Pair<Exercise, Exercise> swapped = Pair.create(exercise2, exercise1);
+
+        String whereClauseExerciseSetTable = DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID + " =  ?";
+
+        long temp = System.currentTimeMillis();
+
+        values1.clear();
+        values1.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, temp);
+        db.update(DBContract.ExerciseSetTable.TABLE_NAME, values1, whereClauseExerciseSetTable,
+                new String[] { String.valueOf(exercise1.getId()) });
+
+        values2.clear();
+        values2.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, exercise1.getId());
+        db.update(DBContract.ExerciseSetTable.TABLE_NAME, values2, whereClauseExerciseSetTable,
+                new String[] { String.valueOf(exercise2.getId()) });
+
+        values1.clear();
+        values1.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, exercise2.getId());
+        db.update(DBContract.ExerciseSetTable.TABLE_NAME, values1, whereClauseExerciseSetTable,
+                new String[] { String.valueOf(temp) });
+        
+        Pair<Long, Long> swapped = Pair.create(exercise2.getId(), exercise1.getId());
         db.close();
         return swapped;
     }
