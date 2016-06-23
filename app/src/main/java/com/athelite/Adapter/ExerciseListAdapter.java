@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,23 +64,17 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                 switch(menuItem.getItemId()) {
                     case R.id.action_move_exercise_up:
                         if(_exerciseList.size() < 1 || position < 1) break;
-                        long id_up = _exerciseList.get(position).getId();
-                        _exerciseList.get(position).setId(id_up - 1);
-                        _exerciseList.get(position - 1).setId(id_up);
-                        _db.updateExercise(_exerciseList.get(position));
-                        _db.updateExercise(_exerciseList.get(position - 1));
+                        Pair<Exercise, Exercise> swappedUp = _db.swapExercises(_exerciseList.get(position), _exerciseList.get(position - 1));
+                        _exerciseList.get(position).setId(swappedUp.first.getId());
+                        _exerciseList.get(position - 1).setId(swappedUp.second.getId());
                         Collections.swap(_exerciseList, position, position - 1);
-                        notifyDataSetChanged();
                         break;
                     case R.id.action_move_exercise_down:
                         if(_exerciseList.size() < 1 || position >= _exerciseList.size() - 1) break;
-                        long id_down = _exerciseList.get(position).getId();
-                        _exerciseList.get(position).setId(id_down + 1);
-                        _exerciseList.get(position + 1).setId(id_down);
-                        _db.updateExercise(_exerciseList.get(position));
-                        _db.updateExercise(_exerciseList.get(position + 1));
+                        Pair<Exercise, Exercise> swappedDown = _db.swapExercises(_exerciseList.get(position), _exerciseList.get(position + 1));
+                        _exerciseList.get(position).setId(swappedDown.first.getId());
+                        _exerciseList.get(position + 1).setId(swappedDown.second.getId());
                         Collections.swap(_exerciseList, position, position + 1);
-                        notifyDataSetChanged();
                         break;
                     case R.id.action_delete_exercise:
                         _db.deleteExercise(_exerciseList.get(position));
@@ -89,10 +84,9 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
                             Toast.makeText(getContext(), "Exercise Deleted, Default Exercise Added", Toast.LENGTH_SHORT).show();
                             _exerciseList.add(_db.createExerciseForWorkoutPlanId(_workoutPlan.getId()));
                         }
-
-                        notifyDataSetChanged();
                         break;
                 }
+                notifyDataSetChanged();
                 return true;
             }
         });

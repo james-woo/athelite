@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.support.v4.util.ArrayMap;
 import android.util.Log;
+import android.util.Pair;
 
 import com.athelite.Model.Exercise;
 import com.athelite.Model.ExerciseSet;
@@ -681,6 +682,28 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return null;
+    }
+
+    public Pair<Exercise, Exercise> swapExercises(Exercise exercise1, Exercise exercise2) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values1 = new ContentValues();
+        ContentValues values2 = new ContentValues();
+
+        values1.put(DBContract.ExerciseTable.COLUMN_NAME, exercise1.getExerciseName());
+        values1.put(DBContract.ExerciseTable.COLUMN_ONEREPMAX, String.valueOf(exercise1.getOneRepMax()));
+
+        values2.put(DBContract.ExerciseTable.COLUMN_NAME, exercise2.getExerciseName());
+        values2.put(DBContract.ExerciseTable.COLUMN_ONEREPMAX, String.valueOf(exercise2.getOneRepMax()));
+
+        String whereClauseExerciseTable = DBContract.ExerciseTable.COLUMN_ID + " =  ?";
+        long id1 = db.update(DBContract.ExerciseTable.TABLE_NAME, values1, whereClauseExerciseTable,
+                new String[] { String.valueOf(exercise2.getId()) });
+        long id2 = db.update(DBContract.ExerciseTable.TABLE_NAME, values2, whereClauseExerciseTable,
+                new String[] { String.valueOf(exercise1.getId()) });
+
+        Pair<Exercise, Exercise> swapped = Pair.create(exercise2, exercise1);
+        db.close();
+        return swapped;
     }
 
     public boolean updateExercise(Exercise exercise) {

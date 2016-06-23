@@ -72,6 +72,16 @@ public class Exercise implements Comparable<Exercise> {
         _oneRepMax = maxWeight * (1 + (maxReps / 30.0));
     }
 
+    public boolean hasNoReps() {
+        boolean result = true;
+        for(ExerciseSet es : _exerciseSets) {
+            if(es.getSetReps() > 0) {
+                result = false;
+            }
+        }
+        return result;
+    }
+
     @Override
     public int compareTo(Exercise another) {
         return Comparators.NAME.compare(this, another);

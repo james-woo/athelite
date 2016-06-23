@@ -155,7 +155,7 @@ public class GraphTabFragment extends Fragment {
                         heaviestExercise.setExerciseDate(e.getExerciseDate());
                     }
                 }
-                if(heaviestExercise.getOneRepMax() != 0.0 &&
+                if(!heaviestExercise.hasNoReps() &&
                         heaviestExercise.getExerciseDate().getTime() < System.currentTimeMillis()) {
                     _exercises.add(heaviestExercise);
                 }
