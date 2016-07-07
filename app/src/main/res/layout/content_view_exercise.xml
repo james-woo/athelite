@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.athelite.Activity.ViewExercise"
+    tools:showIn="@layout/activity_view_exercise"
+    android:orientation="vertical"
+    android:paddingTop="110dp">
+
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <TableLayout
+            android:padding="10dip"
+            android:layout_gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/view_exercise_timer_minutes_title"
+                        android:text="Minutes"
+                        android:paddingRight="10dip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:textAlignment="textEnd"
+                        android:textSize="12sp"/>
+
+                    <Space
+                        android:layout_width="50dp"
+                        android:layout_height="20px" />
+
+                    <TextView
+                        android:id="@+id/view_exercise_timer_seconds_title"
+                        android:text="Seconds"
+                        android:paddingRight="10dip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:textAlignment="textStart"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/view_exercise_timer_minutes"
+                        android:paddingRight="10dip"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:layout_weight="0.5"
+                        android:textSize="64sp"
+                        android:text="00"
+                        android:inputType="time"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/timer_edittext_modified_states"
+                        android:cursorVisible="false"/>
+
+                    <TextView
+                        android:paddingEnd="10dip"
+                        android:paddingStart="0dip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:textAlignment="center"
+                        android:text="@string/view_exercise_timer_colon"
+                        android:textSize="64sp"/>
+
+                    <EditText
+                        android:id="@+id/view_exercise_timer_seconds"
+                        android:paddingRight="10dip"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:textAlignment="textStart"
+                        android:textSize="64sp"
+                        android:text="00"
+                        android:inputType="time"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/timer_edittext_modified_states"
+                        android:cursorVisible="false"/>
+
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+        <Button
+            android:id="@+id/view_exercise_timer_button"
+            android:text="Start"
+            android:background="@color/colorAccent"
+            android:textColor="@color/icons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/view_exercise_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+    </ListView>
+
+</LinearLayout>

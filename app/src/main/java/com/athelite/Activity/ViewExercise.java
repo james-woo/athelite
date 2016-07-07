@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.athelite.Adapter.ExerciseListAdapter;
 import com.athelite.Adapter.ExerciseSetListAdapter;
@@ -25,6 +28,7 @@ import com.athelite.Model.Exercise;
 import com.athelite.Model.ExerciseSet;
 import com.athelite.R;
 import com.athelite.Util.JsonSerializer;
+import com.athelite.Util.TextValidator;
 
 import java.util.ArrayList;
 
@@ -37,6 +41,13 @@ public class ViewExercise extends AppCompatActivity {
     private DBExerciseList _dbe;
     private ArrayAdapter _exerciseNameAdapter;
     private ListView _listView;
+
+    private WorkoutCountDownTimer _exerciseTimer;
+    private Button _exerciseTimerButton;
+    private TextView _exerciseTimerMinuteText;
+    private TextView _exerciseTimerSecondText;
+    private boolean _timerHasStarted = false;
+    private long _timeElapsed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +77,7 @@ public class ViewExercise extends AppCompatActivity {
             _listView.setAdapter(_adapter);
 
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.view_exercise_fab);
-        if(fabAdd != null)
+        if(fabAdd != null) {
             fabAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -75,6 +86,43 @@ public class ViewExercise extends AppCompatActivity {
                     addExerciseSet();
                 }
             });
+        }
+
+        _exerciseTimer = new WorkoutCountDownTimer(50000, 1000);
+        _exerciseTimerButton = (Button) findViewById(R.id.view_exercise_timer_button);
+        _exerciseTimerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!_timerHasStarted)
+                {
+                    _exerciseTimer.start();
+                    _timerHasStarted = true;
+                    _exerciseTimerButton.setText("START");
+                }
+                else
+                {
+                    _exerciseTimer.cancel();
+                    _timerHasStarted = false;
+                    _exerciseTimerButton.setText("RESET");
+                }
+            }
+        });
+        _exerciseTimerMinuteText = (TextView) findViewById(R.id.view_exercise_timer_minutes);
+        _exerciseTimerSecondText = (TextView) findViewById(R.id.view_exercise_timer_seconds);
+        _exerciseTimerMinuteText.setText("03");
+        _exerciseTimerSecondText.setText("00");
+
+        _exerciseTimerMinuteText.addTextChangedListener(new TextValidator(_exerciseTimerMinuteText) {
+            @Override
+            public void validate(TextView textView, String text) {
+                if(text.length() < 2) {
+                    textView.setText("0" + text);
+                } else if(text.length() > 2) {
+                    int minute = Integer.parseInt(text)/10;
+                    textView.setText(String.valueOf(minute));
+                }
+            }
+        });
     }
 
     void initExercise() {
@@ -180,6 +228,29 @@ public class ViewExercise extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    public class WorkoutCountDownTimer extends CountDownTimer {
+        long timerStartTime;
+
+        public WorkoutCountDownTimer(long startTime, long interval)
+        {
+            super(startTime, interval);
+            timerStartTime = startTime;
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            _exerciseTimerMinuteText.setText(String.valueOf((int)Math.floor(millisUntilFinished/1000/60)));
+            _exerciseTimerSecondText.setText(String.valueOf(millisUntilFinished/1000));
+            _timeElapsed = timerStartTime - millisUntilFinished;
+        }
+
+        @Override
+        public void onFinish() {
+            _exerciseTimerMinuteText.setText("00");
+            _exerciseTimerSecondText.setText("00");
+        }
     }
 
 }

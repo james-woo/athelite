@@ -246,5 +246,6 @@
 
     </string>
     <string name="about_license_title_string">Licenses</string>
+    <string name="view_exercise_timer_colon">:</string>
 
 </resources>

@@ -19,21 +19,21 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="156dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/card_graph_exercise_name"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#424242"
                 android:layout_margin="16dp"
-                android:layout_weight="0.65"/>
+                android:layout_weight="0.5"/>
 
             <TextView
-                android:layout_width="98dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/card_graph_exercise_one_rep_max"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#424242"
-                android:layout_weight="0.35"
+                android:layout_weight="0.5"
                 android:layout_margin="16dp" />
 
         </LinearLayout>

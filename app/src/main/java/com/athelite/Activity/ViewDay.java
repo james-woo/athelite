@@ -227,6 +227,10 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
 
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
+        } else if (fm.getBackStackEntryCount() == 0) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
 
         super.onBackPressed();

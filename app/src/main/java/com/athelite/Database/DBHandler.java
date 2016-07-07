@@ -722,7 +722,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values1.put(DBContract.ExerciseSetTable.COLUMN_WORKOUT_EXERCISE_ID, exercise2.getId());
         db.update(DBContract.ExerciseSetTable.TABLE_NAME, values1, whereClauseExerciseSetTable,
                 new String[] { String.valueOf(temp) });
-        
+
         Pair<Long, Long> swapped = Pair.create(exercise2.getId(), exercise1.getId());
         db.close();
         return swapped;
