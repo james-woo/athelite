@@ -49,9 +49,11 @@ public class WorkoutPlanTabFragment extends Fragment {
      */
     public static WorkoutPlanTabFragment newInstance(int sectionNumber) {
         WorkoutPlanTabFragment fragment = _wFragment;
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
+        if(!fragment.isAdded()) {
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+        }
         return fragment;
     }
 

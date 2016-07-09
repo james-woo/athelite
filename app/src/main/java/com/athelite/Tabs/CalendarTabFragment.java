@@ -41,9 +41,11 @@ public class CalendarTabFragment extends Fragment {
 
     public static CalendarTabFragment newInstance(int sectionNumber) {
         CalendarTabFragment fragment = getInstance();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
+        if(!fragment.isAdded()) {
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+        }
         return fragment;
     }
 

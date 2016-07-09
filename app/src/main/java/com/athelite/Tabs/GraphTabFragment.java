@@ -59,9 +59,11 @@ public class GraphTabFragment extends Fragment {
      */
     public static GraphTabFragment newInstance(int sectionNumber) {
         GraphTabFragment fragment = _gFragment;
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
+        if(!fragment.isAdded()) {
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+        }
         return fragment;
     }
 
