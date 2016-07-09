@@ -276,7 +276,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("units"));
             bindPreferenceSummaryToValue(findPreference("target_sets"));
             bindPreferenceSummaryToValue(findPreference("target_reps"));
-            bindPreferenceSummaryToValue(findPreference("rest_time"));
+            bindPreferenceSummaryToValue(findPreference("notification_time"));
         }
 
         @Override

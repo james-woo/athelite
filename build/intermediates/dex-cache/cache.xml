@@ -23,18 +23,18 @@
         <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\com.android.support-appcompat-v7-23.4.0_770ef8daf4ff867afb23371822f98995e530cac2\classes.dex" />
     </item>
     <item
-        jar="D:\James\Development\Athelite\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\com.android.support-recyclerview-v7-23.4.0_0e75be08927079fd4db2494b040404e9f4c3002f\classes.dex" />
-    </item>
-    <item
         jar="D:\James\Development\Athelite\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics\2.5.6\jars\classes.jar"
         jumboMode="true"
         revision="23.0.3"
         sha1="cb73560edb89cb7afe1d0d5455595c27866af7c6">
         <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\com.crashlytics.sdk.android-crashlytics-2.5.6_809edc1b118d4d9632c4d79522f91437c02d0683\classes.dex" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\com.android.support-recyclerview-v7-23.4.0_0e75be08927079fd4db2494b040404e9f4c3002f\classes.dex" />
     </item>
     <item
         jar="D:\James\Development\Athelite\app\build\intermediates\exploded-aar\com.jjoe64\graphview\4.0.1\jars\classes.jar"
@@ -72,18 +72,18 @@
         <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\com.crashlytics.sdk.android-beta-1.1.5_9bcf082e9b92471c73b466a45bb2665da3b25c6d\classes.dex" />
     </item>
     <item
-        jar="D:\James\Development\Athelite\app\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
-        <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\com.android.support-design-23.4.0_c88a86d4406eec7caf3f83d43b387210d9a22ed7\classes.dex" />
-    </item>
-    <item
         jar="D:\James\Development\Athelite\app\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.3.11\jars\classes.jar"
         jumboMode="true"
         revision="23.0.3"
         sha1="9505232840ada5bc281f012c9798a6e49900d4ea">
         <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\io.fabric.sdk.android-fabric-1.3.11_a625e1f55f071b0968d2e0564d02e65d51156b53\classes.dex" />
+    </item>
+    <item
+        jar="D:\James\Development\Athelite\app\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\com.android.support-design-23.4.0_c88a86d4406eec7caf3f83d43b387210d9a22ed7\classes.dex" />
     </item>
     <item
         jar="D:\James\Development\Athelite\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.9\jars\classes.jar"
@@ -124,7 +124,7 @@
         jar="D:\James\Development\Athelite\app\build\intermediates\incremental-classes\dev\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="a81ca7fd63219cb5910790d032b2daf1c9af5d23">
+        sha1="d58228bf00723b81b3cb1bad48c5594ad26ce163">
         <dex dex="D:\James\Development\Athelite\app\build\intermediates\transforms\dex\dev\debug\folders\1000\10\instant-run-bootstrap_0c005aef1c2d7c64fa96ffcee4442bfb0f331d0d\classes.dex" />
     </item>
     <item
