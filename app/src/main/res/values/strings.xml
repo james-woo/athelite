@@ -32,6 +32,15 @@
     <string name="action_move_up">Move Up</string>
     <string name="action_move_down">Move Down</string>
 
+    <string name="view_exercise_timer_colon">:</string>
+    <string name="view_exercise_timer_zero">"00"</string>
+    <string name="view_exercise_timer_pause">PAUSE</string>
+    <string name="view_exercise_timer_start">START</string>
+    <string name="view_exercise_timer_reset">RESET</string>
+    <string name="view_exercise_timer_resume">RESUME</string>
+    <string name="view_exercise_timer_minutes">Minutes</string>
+    <string name="view_exercise_timer_seconds">Seconds</string>
+
     <!-- View Day -->
     <string name="title_activity_view_day">ViewDay</string>
     <string name="add_a_workout">Add A Workout</string>
@@ -246,6 +255,6 @@
 
     </string>
     <string name="about_license_title_string">Licenses</string>
-    <string name="view_exercise_timer_colon">:</string>
+
 
 </resources>

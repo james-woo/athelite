@@ -156,15 +156,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             stringValue = String.valueOf(TimePreference.getHour(value.toString())) + ":0" + String.valueOf(TimePreference.getMinute(value.toString()));
                         }
                         break;
-                    case "rest_time":
-                        if(value.toString().equals("")) {
-                            Toast.makeText(settingsActivity, "Invalid time", Toast.LENGTH_SHORT).show();
-                            return false;
-                        } else if (TimePreference.getMinute(value.toString()) < 10) {
-                            stringValue = String.valueOf(TimePreference.getHour(value.toString())) + ":0" + String.valueOf(TimePreference.getMinute(value.toString()));
-                        }
-                        break;
-                }
+                    }
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
@@ -284,8 +276,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("units"));
             bindPreferenceSummaryToValue(findPreference("target_sets"));
             bindPreferenceSummaryToValue(findPreference("target_reps"));
-            bindPreferenceSummaryToValue(findPreference("notification_time"));
-
+            bindPreferenceSummaryToValue(findPreference("rest_time"));
         }
 
         @Override

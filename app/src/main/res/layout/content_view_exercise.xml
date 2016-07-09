@@ -29,8 +29,9 @@
 
                     <TextView
                         android:id="@+id/view_exercise_timer_minutes_title"
-                        android:text="Minutes"
-                        android:paddingRight="10dip"
+                        android:text="@string/view_exercise_timer_minutes"
+                        android:paddingEnd="10dip"
+                        android:paddingStart="10dip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
@@ -39,12 +40,13 @@
 
                     <Space
                         android:layout_width="50dp"
-                        android:layout_height="20px" />
+                        android:layout_height="20dp" />
 
                     <TextView
                         android:id="@+id/view_exercise_timer_seconds_title"
-                        android:text="Seconds"
-                        android:paddingRight="10dip"
+                        android:text="@string/view_exercise_timer_seconds"
+                        android:paddingEnd="10dip"
+                        android:paddingStart="10dip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
@@ -72,8 +74,8 @@
                         android:textAlignment="textEnd"
                         android:layout_weight="0.5"
                         android:textSize="64sp"
-                        android:text="00"
-                        android:inputType="time"
+                        android:text="@string/view_exercise_timer_zero"
+                        android:inputType="datetime"
                         android:background="@android:color/transparent"
                         android:textColor="@color/timer_edittext_modified_states"
                         android:cursorVisible="false"/>
@@ -96,22 +98,49 @@
                         android:layout_weight="0.5"
                         android:textAlignment="textStart"
                         android:textSize="64sp"
-                        android:text="00"
-                        android:inputType="time"
+                        android:text="@string/view_exercise_timer_zero"
+                        android:inputType="datetime"
                         android:background="@android:color/transparent"
                         android:textColor="@color/timer_edittext_modified_states"
                         android:cursorVisible="false"/>
 
                 </LinearLayout>
             </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/view_exercise_timer_button"
+                        android:text="Start"
+                        android:background="@color/colorAccent"
+                        android:textColor="@color/icons"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+
+                    <Space
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent" />
+
+                    <Button
+                        android:id="@+id/view_exercise_timer_reset_button"
+                        android:text="Reset"
+                        android:background="@color/colorAccent"
+                        android:textColor="@color/icons"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4" />
+                </LinearLayout>
+            </TableRow>
         </TableLayout>
-        <Button
-            android:id="@+id/view_exercise_timer_button"
-            android:text="Start"
-            android:background="@color/colorAccent"
-            android:textColor="@color/icons"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <ListView

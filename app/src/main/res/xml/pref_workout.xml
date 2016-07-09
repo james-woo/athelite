@@ -22,12 +22,12 @@
         android:defaultValue="0"
         android:key="@string/settings_key_target_reps"
         android:inputType="number" />
-
+<!--
     <EditTextPreference
         android:title="@string/settings_title_timer"
-        android:defaultValue="3"
+        android:defaultValue="03:00"
         android:key="@string/settings_key_timer"
-        android:inputType="number"/>
+        android:inputType="datetime"/>
 
     <ListPreference
         android:key="@string/settings_key_timer_alarm"
@@ -36,7 +36,7 @@
         android:defaultValue="1"
         android:entries="@array/soundArray"
         android:entryValues="@array/soundListValues" />
-
+-->
     <PreferenceCategory android:title="Notifications"/>
 
     <CheckBoxPreference
