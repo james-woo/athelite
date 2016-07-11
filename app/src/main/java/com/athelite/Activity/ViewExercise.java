@@ -243,6 +243,7 @@ public class ViewExercise extends AppCompatActivity {
         updateSets();
         _adapter.notifyDataSetChanged();
         _listView.smoothScrollToPositionFromTop(_adapter.getCount(), 0, 2);
+
     }
 
     private void updateSets() {

@@ -44,6 +44,10 @@ public class ExerciseSetListAdapter extends ArrayAdapter<ExerciseSet> {
         TextView setWeightType = (TextView) convertView.findViewById(R.id.view_exercise_set_weight_type);
         EditText setReps = (EditText) convertView.findViewById(R.id.view_exercise_set_reps);
         ImageView removeSetButton = (ImageView) convertView.findViewById(R.id.view_exercise_remove_set_button);
+
+        setWeight.setSelectAllOnFocus(true);
+        setReps.setSelectAllOnFocus(true);
+
         final ViewGroup p = parent;
         removeSetButton.setOnClickListener(new View.OnClickListener() {
             @Override
