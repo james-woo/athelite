@@ -4,10 +4,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +24,8 @@ import com.athelite.Dialog.PickWorkout;
 import com.athelite.Model.Exercise;
 import com.athelite.Model.WorkoutPlan;
 import com.athelite.R;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -34,7 +33,8 @@ import java.util.ArrayList;
 
 public class ViewDay extends AppCompatActivity implements DialogInterface.OnDismissListener{
 
-    private FloatingActionButton _fab;
+    private FloatingActionButton _fabWorkout, _fabTemplate, _fabCardio, _fabExercise;
+    private FloatingActionMenu _fam;
     private TextView _addAWorkoutTextView;
     private TextView _addAWorkoutTextViewHelp;
     private TextView _calendarTitle;
@@ -72,7 +72,12 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         _dateTime = intent.getLongExtra("VIEW_DAY_DATETIME", 0);
         _workoutDay = _db.getWorkoutForDay(new Date(_dateTime));
 
-        _fab = (FloatingActionButton) findViewById(R.id.view_day_fab);
+        _fam = (FloatingActionMenu) findViewById(R.id.view_day_fab);
+        _fabWorkout = (FloatingActionButton) findViewById(R.id.view_day_fab_workout);
+        _fabCardio = (FloatingActionButton) findViewById(R.id.view_day_fab_cardio);
+        _fabTemplate = (FloatingActionButton) findViewById(R.id.view_day_fab_template);
+        _fabExercise = (FloatingActionButton) findViewById(R.id.view_day_fab_exercise);
+
         _calendarTitle = (TextView)findViewById(R.id.view_day_title);
         _calendarTitle.setText(df.format(new Date(_dateTime)));
         _addAWorkoutTextView = (TextView) findViewById(R.id.view_day_add_a_workout);
@@ -83,13 +88,16 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
         if(_listView != null)
             _listView.setAdapter(_adapter);
 
-        setFabPickWorkout();
+        setFam();
+        setFabPickTemplate();
+        setFabPickCardio();
+        setFabNewWorkout();
 
         updateDay();
     }
 
-    void setFabPickWorkout(){
-        _fab.setOnClickListener(new View.OnClickListener() {
+    void setFabPickTemplate() {
+        _fabTemplate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getFragmentManager();
@@ -99,23 +107,56 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                     args.putLong("PickWorkout.dateTime", _dateTime);
                     emptyFragment.setArguments(args);
                     emptyFragment.show(fm, "Add A Template");
+                    _fam.close(true);
                 } else {
                     PickWorkout dialogFragment = new PickWorkout();
                     Bundle args = new Bundle();
                     args.putLong("PickWorkout.dateTime", _dateTime);
                     dialogFragment.setArguments(args);
                     dialogFragment.show(fm, "Select A Template");
+                    _fam.close(true);
                 }
             }
         });
     }
 
-    void setFabAddNewExercise() {
-        _fab.setOnClickListener(new View.OnClickListener() {
+    void setFabPickCardio() {
+        _fabCardio.setVisibility(View.INVISIBLE);
+        _fabCardio.setEnabled(false);
+        _fabCardio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Added new exercise", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    void setFabNewWorkout() {
+        _fabWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _workoutDay = _db.createNewWorkoutForDay(_dateTime);
+                _fam.close(true);
+                setFabAddNewExercise();
+                updateDay();
+            }
+        });
+    }
+
+    void setFam(){
+        _fam.setVisibility(View.VISIBLE);
+        _fam.setEnabled(true);
+        _fabExercise.setVisibility(View.INVISIBLE);
+        _fabExercise.setEnabled(false);
+    }
+
+    void setFabAddNewExercise() {
+        _fam.setVisibility(View.INVISIBLE);
+        _fam.setEnabled(false);
+        _fabExercise.setVisibility(View.VISIBLE);
+        _fabExercise.setEnabled(true);
+        _fabExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 try {
                     addExercise();
                 } catch (Exception e) {
@@ -145,7 +186,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 _addAWorkoutTextView.setVisibility(View.INVISIBLE);
                 _addAWorkoutTextViewHelp.setVisibility(View.INVISIBLE);
             } else {
-                setFabPickWorkout();
+                setFam();
                 DateFormat df = DateFormat.getDateInstance();
                 _calendarTitle.setText(df.format(new Date(_dateTime)));
                 _workoutName.setText(R.string.no_workout_selected);
@@ -202,7 +243,7 @@ public class ViewDay extends AppCompatActivity implements DialogInterface.OnDism
                 _workoutDay.setWorkoutPlanName(_workoutName.getText().toString());
                 _workoutDay.setExercises(_adapter.getExerciseList());
                 _adapter.setWorkout(_workoutDay);
-                _db.updateWorkoutPlan(_workoutDay);
+                //_db.updateWorkoutPlan(_workoutDay);
                 _db.updateWorkoutDay(_workoutDay);
             }
         } catch (Exception e) {

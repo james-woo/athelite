@@ -91,7 +91,7 @@ public class PickWorkout extends DialogFragment{
         _pickWorkoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                _db.createWorkoutPlanForDateTime(_workoutPlans.get(position), _dateTime);
+                _db.createWorkoutFromTemplateForDateTime(_workoutPlans.get(position), _dateTime);
                 try {
                     setNotification();
                 } catch (Exception e) {

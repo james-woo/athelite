@@ -77,15 +77,63 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
         </ListView>
-    </RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/view_day_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:tint="@color/icons"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_input_add"/>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/view_day_fab_exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_18px"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@android:color/background_light"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"/>
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/view_day_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_18px"
+            app:menu_colorNormal="@color/colorAccent"
+            app:menu_colorPressed="@color/colorAccent"
+            app:menu_colorRipple="@android:color/background_light"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/view_day_fab_template"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/colorAccent"
+                app:fab_colorPressed="@color/colorAccent"
+                app:fab_colorRipple="@android:color/background_light"
+                android:src="@drawable/ic_workout_icon_white_24dp"
+                app:fab_label="Add Template"
+                app:fab_size="mini" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/view_day_fab_workout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/colorAccent"
+                app:fab_colorPressed="@color/colorAccent"
+                app:fab_colorRipple="@android:color/background_light"
+                android:src="@drawable/ic_fitness_center_white_18px"
+                app:fab_label="New Workout"
+                app:fab_size="mini" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/view_day_fab_cardio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/colorAccent"
+                app:fab_colorPressed="@color/colorAccent"
+                app:fab_colorRipple="@android:color/background_light"
+                android:src="@drawable/ic_directions_run_white_18px"
+                app:fab_label="Add Cardio"
+                app:fab_size="mini" />
+        </com.github.clans.fab.FloatingActionMenu>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -4,8 +4,12 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -109,7 +113,7 @@ public class ViewExercise extends AppCompatActivity {
                 {
                     String minutes = _exerciseTimerMinuteText.getText().toString();
                     String seconds = _exerciseTimerSecondText.getText().toString();
-                    if(!_lastTimerMinute.equals(minutes)) {
+                    if(!_lastTimerMinute.equals(minutes) || (!minutes.equals("") && !seconds.equals(""))) {
                         _lastTimerMinute = minutes;
                         SharedPreferences.Editor edit = _sp.edit();
                         edit.putString("timer_minutes", minutes);
@@ -142,13 +146,7 @@ public class ViewExercise extends AppCompatActivity {
         _exerciseTimerResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _exerciseTimerMinuteText.setFocusableInTouchMode(true);
-                _exerciseTimerSecondText.setFocusableInTouchMode(true);
-                _exerciseTimerButton.setText(R.string.view_exercise_timer_start);
-                _exerciseTimer.cancel();
-                _timerHasStarted = false;
-                _exerciseTimerMinuteText.setText(_sp.getString("timer_minutes", "03"));
-                _exerciseTimerSecondText.setText(_sp.getString("timer_seconds", "00"));
+                resetTimer();
             }
         });
         _exerciseTimerMinuteText = (TextView) findViewById(R.id.view_exercise_timer_minutes);
@@ -206,6 +204,16 @@ public class ViewExercise extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    void resetTimer() {
+        _exerciseTimerMinuteText.setFocusableInTouchMode(true);
+        _exerciseTimerSecondText.setFocusableInTouchMode(true);
+        _exerciseTimerButton.setText(R.string.view_exercise_timer_start);
+        _exerciseTimer.cancel();
+        _timerHasStarted = false;
+        _exerciseTimerMinuteText.setText(_sp.getString("timer_minutes", "03"));
+        _exerciseTimerSecondText.setText(_sp.getString("timer_seconds", "00"));
     }
 
     void initExercise() {
@@ -335,15 +343,26 @@ public class ViewExercise extends AppCompatActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            _exerciseTimerMinuteText.setText(String.valueOf((int)Math.floor(millisUntilFinished/1000/60)));
-            _exerciseTimerSecondText.setText(String.valueOf((millisUntilFinished/1000) % 60));
+            _exerciseTimerMinuteText.setText(Long.toString(millisUntilFinished/1000/60));
+            _exerciseTimerSecondText.setText(Long.toString((millisUntilFinished/1000) % 60));
         }
 
         @Override
         public void onFinish() {
+            _timerHasStarted = false;
             _exerciseTimerMinuteText.setText(R.string.view_exercise_timer_zero);
             _exerciseTimerSecondText.setText(R.string.view_exercise_timer_zero);
             _exerciseTimerButton.setText(R.string.view_exercise_timer_start);
+            resetTimer();
+            try {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(1000);
+                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                r.play();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

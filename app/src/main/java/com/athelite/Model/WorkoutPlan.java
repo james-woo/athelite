@@ -14,6 +14,7 @@ public class WorkoutPlan {
         _id = builder.bId;
         _workoutPlanName = builder.bWorkoutPlanName;
         _exercises = builder.bExercises;
+        _date = builder.bDate;
     }
 
     public long getId() {
@@ -52,6 +53,7 @@ public class WorkoutPlan {
         private long bId;
         private String bWorkoutPlanName;
         private ArrayList<Exercise> bExercises = new ArrayList<>();
+        private Date bDate;
 
         public Builder(String name) {
             this.bWorkoutPlanName = name;
@@ -69,6 +71,11 @@ public class WorkoutPlan {
 
         public Builder exercise(Exercise exercise) {
             this.bExercises.add(exercise);
+            return this;
+        }
+
+        public Builder date(Date date) {
+            this.bDate = date;
             return this;
         }
 

@@ -338,6 +338,33 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     /****************************************WORKOUTS**********************************************/
+    public WorkoutPlan createNewWorkoutForDay(long dateTime) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        WorkoutPlan newWorkout = new WorkoutPlan.Builder("New Workout")
+                .date(new Date(dateTime))
+                .build();
+
+        ContentValues values = new ContentValues();
+        values.put(DBContract.WorkoutPlanTable.COLUMN_NAME, newWorkout.getWorkoutPlanName());
+        values.put(DBContract.WorkoutPlanTable.COLUMN_TEMPLATE, bool.FALSE);
+        long id = db.insert(DBContract.WorkoutPlanTable.TABLE_NAME, null, values);
+        newWorkout.setId(id);
+
+        values.clear();
+        values.put(DBContract.WorkoutHistory.COLUMN_DATE, dateTime);
+        values.put(DBContract.WorkoutHistory.COLUMN_WORKOUT_ID, id);
+        db.insert(DBContract.WorkoutHistory.TABLE_NAME, null, values);
+
+        values.clear();
+        values.put(DBContract.CalendarTable.COLUMN_DATE, dateTime);
+        values.put(DBContract.CalendarTable.COLUMN_WORKOUT_ID, id);
+        db.insert(DBContract.CalendarTable.TABLE_NAME, null, values);
+
+        db.close();
+
+        return newWorkout;
+    }
+
     public WorkoutPlan getWorkoutForDay(Date day) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -979,7 +1006,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     /*****************************************CALENDAR*********************************************/
 
-    public boolean createWorkoutPlanForDateTime(WorkoutPlan workoutPlan, long dateTime) {
+    public boolean createWorkoutFromTemplateForDateTime(WorkoutPlan workoutPlan, long dateTime) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         WorkoutPlan copiedWorkoutPlan = copyWorkoutPlan(db, workoutPlan);
